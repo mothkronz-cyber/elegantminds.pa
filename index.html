@@ -488,7 +488,7 @@ function renderDash(mine){
   const monQty=monS.reduce((t,x)=>t+saleQty(x),0);
   const pharmacies=new Set(monS.map(x=>String(x.pharmacy).trim())).size;
   let html=`${mine&&user.role==='expert'?checkinCardHTML():''}<div class="stat-grid">
-    <div class="stat"><div class="lbl">مبيعات اليوم</div><div class="val">${fmt(todTotal)} <small>د.أ</small></div></div>
+    <div class="stat" style="cursor:pointer" title="اضغط لعرض عمليات اليوم" onclick="gotoTodaySales(${mine})"><div class="lbl">مبيعات اليوم 🔎</div><div class="val">${fmt(todTotal)} <small>د.أ</small></div></div>
     <div class="stat gold"><div class="lbl">مبيعات هذا الشهر</div><div class="val">${fmt(monTotal)} <small>د.أ</small></div></div>
     <div class="stat blue"><div class="lbl">عدد العمليات (الشهر)</div><div class="val">${monS.length}</div></div>
     <div class="stat"><div class="lbl">قطع مباعة (الشهر)</div><div class="val">${monQty}</div></div>
@@ -508,25 +508,32 @@ function renderDash(mine){
 
 /* ---------- NEW SALE ---------- */
 let saleItems=[];
-function renderNewSale(){
-  saleItems=[{productId:'',qty:1,price:0,disc:0,src:''}];
+let editingSaleId=null;
+function gotoTodaySales(mine){const t=todayStr();_f={from:t,to:t,emp:''};go(mine?'mysales':'sales');}
+function canEditSale(x){if(!user)return false;if(user.role==='manager')return true;return x.employeeId===user.id&&x.date===todayStr()&&shiftStarted(user.id);}
+function editSale(id){const s=DB.sales.find(x=>x.id===id);if(!s)return;if(!canEditSale(s)){toast('التعديل مقفل — لازم يكون عندك دوام مفتوح لتعديل عمليات اليوم','bad');return;}go('newsale');renderNewSale(id);document.getElementById('pageTitle').textContent='تعديل عملية بيع';}
+function cancelSale(){if(editingSaleId){editingSaleId=null;go(user.role==='manager'?'sales':'mysales');}else renderNewSale();}
+function renderNewSale(editId){
+  editingSaleId=editId||null;
+  const _es=editingSaleId?DB.sales.find(x=>x.id===editingSaleId):null;
+  saleItems=_es?(_es.items||[]).map(i=>({productId:i.productId,qty:i.qty,price:i.price,disc:i.disc||0,src:i.src||''})):[{productId:'',qty:1,price:0,disc:0,src:''}];
   const isMgr=user.role==='manager';
   const pharmacyList=[...new Set(DB.sales.map(s=>s.pharmacy).filter(Boolean))];
   document.getElementById('view').innerHTML=`
     ${user.role==='expert'?checkinCardHTML():''}
     <div class="panel"><h3>🧾 تسجيل عملية بيع جديدة</h3>
       <div class="row" style="margin-bottom:16px">
-        <div class="field"><label>التاريخ</label><input type="date" id="s_date" value="${todayStr()}" ${isMgr?'':'onchange="syncSalePharm()"'}></div>
+        <div class="field"><label>التاريخ</label><input type="date" id="s_date" value="${_es?_es.date:todayStr()}" ${isMgr?'':'onchange="syncSalePharm()"'}></div>
         <div class="field"><label>الخبيرة</label>
-          ${isMgr?`<select id="s_emp" onchange="drawItems()">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
-        ${isMgr?`<div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>`:`<div class="field"><label>الصيدلية (من تسجيل الدوام)</label><input id="s_pharm" value="${esc(todayPharmacy(user.id))}" readonly style="background:#f0f4ee" placeholder="سجّلي دوامك أولاً"></div>`}
+          ${isMgr?`<select id="s_emp" onchange="drawItems()">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}" ${_es&&_es.employeeId===e.id?'selected':''}>${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
+        ${isMgr?`<div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off" value="${_es?esc(_es.pharmacy):''}"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>`:`<div class="field"><label>الصيدلية (من تسجيل الدوام)</label><input id="s_pharm" value="${esc(_es?_es.pharmacy:todayPharmacy(user.id))}" readonly style="background:#f0f4ee" placeholder="سجّلي دوامك أولاً"></div>`}
       </div>
       <div style="overflow-x:auto"><table class="items-table"><thead><tr><th style="width:22%">المنتج</th><th style="width:13%">المخزن</th><th class="num" style="width:8%">الكمية</th><th class="num" style="width:13%">سعر الوحدة</th><th class="num" style="width:10%">خصم %</th><th class="num" style="width:14%">الإجمالي</th><th class="num" style="width:19%">المحقق للهدف (كوست)</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table></div>
       <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="addItem()">＋ إضافة صنف</button>
-      <div class="field" style="margin-top:16px"><label>ملاحظات (اختياري)</label><textarea id="s_notes" rows="2" placeholder="أي ملاحظة..." style="font-family:inherit;direction:rtl;text-align:right"></textarea></div>
+      <div class="field" style="margin-top:16px"><label>ملاحظات (اختياري)</label><textarea id="s_notes" rows="2" placeholder="أي ملاحظة..." style="font-family:inherit;direction:rtl;text-align:right">${_es?esc(_es.notes||''):''}</textarea></div>
       <div class="grand">الإجمالي الكلي: <span class="amt" id="grandTotal">0.00</span> د.أ</div>
       <div class="grand" style="font-size:15px">المحقق للهدف (كوست): <span class="amt" id="grandCost" style="font-size:18px;color:var(--gold-d)">0.00</span> د.أ</div>
-      <div style="display:flex;gap:12px;margin-top:18px"><button class="btn" style="max-width:220px" onclick="saveSale()">💾 حفظ العملية</button><button class="btn btn-ghost" style="max-width:140px" onclick="renderNewSale()">إلغاء</button></div>
+      <div style="display:flex;gap:12px;margin-top:18px"><button class="btn" style="max-width:220px" onclick="saveSale()">${_es?'💾 حفظ التعديل':'💾 حفظ العملية'}</button><button class="btn btn-ghost" style="max-width:140px" onclick="cancelSale()">إلغاء</button></div>
     </div>`;
   drawItems();
 }
@@ -568,21 +575,31 @@ async function saveSale(){
   const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price),disc:Number(i.disc)||0,src:i.src||''};});
   if(!items.length){toast('أضِف منتج واحد على الأقل','bad');return;}
   if(items.some(i=>!i.src)){toast('حدد المخزن (صيدلية / مندوبة) لكل منتج — إجباري','bad');return;}
+  const editing=editingSaleId;const old=editing?DB.sales.find(x=>x.id===editing):null;
+  if(editing&&!old){toast('العملية غير موجودة','bad');return;}
+  if(old&&!canEditSale(old)){toast('التعديل مقفل — لازم دوام مفتوح لتعديل عمليات اليوم','bad');return;}
+  const oldNeed={};if(old)(old.items||[]).forEach(i=>{if(i.src==='rep')oldNeed[i.productId]=(oldNeed[i.productId]||0)+(Number(i.qty)||0);});
   const need={};items.forEach(i=>{if(i.src==='rep')need[i.productId]=(need[i.productId]||0)+i.qty;});
   for(const pid in need){
-    const have=repQty(empId,pid);
+    const have=repQty(empId,pid)+((old&&old.employeeId===empId)?(oldNeed[pid]||0):0);
     if(have<need[pid]){const p=prod(pid);toast('مخزون المندوبة غير كافٍ: '+(p?p.name:'')+' (المتوفر '+have+' والمطلوب '+need[pid]+')','bad');return;}
   }
   const repCnt=items.filter(i=>i.src==='rep').length;
-  const id=uid('s_');
-  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,source:repCnt===items.length?'rep':(repCnt?'mixed':'pharmacy'),total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:Date.now()};
-  showLoading('جاري حفظ العملية...');
+  const id=editing||uid('s_');
+  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,source:repCnt===items.length?'rep':(repCnt?'mixed':'pharmacy'),total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:(old&&old.createdAt)||Date.now()};
+  if(old)sale.updatedAt=Date.now();
+  showLoading(editing?'جاري حفظ التعديل...':'جاري حفظ العملية...');
   try{
     const batch=db.batch();
     batch.set(db.collection('sales').doc(id),sale);
-    for(const pid in need)batch.set(db.collection('repStock').doc(empId+'_'+pid),{employeeId:empId,productId:pid,qty:firebase.firestore.FieldValue.increment(-need[pid])},{merge:true});
+    const _ops={};
+    const _add=(emp,pid,amt)=>{const k=emp+'|'+pid;if(!_ops[k])_ops[k]={emp,pid,amt:0};_ops[k].amt+=amt;};
+    if(old)for(const pid in oldNeed)_add(old.employeeId,pid,oldNeed[pid]);
+    for(const pid in need)_add(empId,pid,-need[pid]);
+    for(const k in _ops){const o=_ops[k];if(!o.amt)continue;batch.set(db.collection('repStock').doc(o.emp+'_'+o.pid),{employeeId:o.emp,productId:o.pid,qty:firebase.firestore.FieldValue.increment(o.amt)},{merge:true});}
     await batch.commit();
-    toast('تم حفظ العملية ✓','ok');renderNewSale();
+    toast(editing?'تم حفظ التعديل ✓':'تم حفظ العملية ✓','ok');
+    if(editing){editingSaleId=null;go(user.role==='manager'?'sales':'mysales');}else renderNewSale();
   }catch(e){toast('فشل الحفظ — تحقق من الاتصال','bad');console.error(e);}finally{hideLoading();}
 }
 
@@ -616,9 +633,9 @@ function drawSales(mine){
     <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}${(x.source==='rep'||x.source==='mixed')?` <span class="tag" style="background:#f7eecb;color:var(--gold-d)">${x.source==='mixed'?'مختلط':'من مخزونها'}</span>`:''}</td>
     <td style="font-size:13px;color:var(--muted)">${(x.items||[]).map(i=>{const p=prod(i.productId);return (i.src==='rep'?'👜':'')+esc((p?p.code:(i.productCode||'?'))+'×'+i.qty)+((Number(i.disc)>0)?` (-${i.disc}%)`:'');}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
     <td class="num">${saleQty(x)}</td><td class="num"><b>${fmt(saleTotal(x))}</b></td>
-    <td class="no-print">${(isMgr||x.employeeId===user.id)?`<button class="icon-btn" onclick="delSale('${x.id}')">×</button>`:''}</td></tr>`).join('')}</tbody></table>`;
+    <td class="no-print">${canEditSale(x)?`<button class="icon-btn" title="تعديل العملية" onclick="editSale('${x.id}')">✎</button> <button class="icon-btn" onclick="delSale('${x.id}')">×</button>`:''}</td></tr>`).join('')}</tbody></table>`;
 }
-function delSale(id){const s=DB.sales.find(x=>x.id===id);const repItems=s?(s.items||[]).filter(i=>i.src==='rep'||(s.source==='rep'&&!i.src)):[];confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟'+(repItems.length?' سيُعاد مخزون المندوبة.':''),async()=>{showLoading('جاري الحذف...');try{const batch=db.batch();batch.delete(db.collection('sales').doc(id));repItems.forEach(i=>{batch.set(db.collection('repStock').doc(s.employeeId+'_'+i.productId),{employeeId:s.employeeId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(Number(i.qty)||0)},{merge:true});});await batch.commit();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
+function delSale(id){const s=DB.sales.find(x=>x.id===id);if(s&&!canEditSale(s)){toast('الحذف مقفل — لازم دوام مفتوح لحذف عمليات اليوم','bad');return;}const repItems=s?(s.items||[]).filter(i=>i.src==='rep'||(s.source==='rep'&&!i.src)):[];confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟'+(repItems.length?' سيُعاد مخزون المندوبة.':''),async()=>{showLoading('جاري الحذف...');try{const batch=db.batch();batch.delete(db.collection('sales').doc(id));repItems.forEach(i=>{batch.set(db.collection('repStock').doc(s.employeeId+'_'+i.productId),{employeeId:s.employeeId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(Number(i.qty)||0)},{merge:true});});await batch.commit();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
 function exportSalesCSV(mine){
   const s=filteredSales(mine);if(!s.length){toast('لا توجد بيانات','bad');return;}
   let rows=[['التاريخ','الخبيرة','الصيدلية','كود المنتج','المنتج','الكمية','سعر الوحدة','خصم %','الإجمالي']];
