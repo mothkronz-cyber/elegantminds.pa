@@ -225,7 +225,7 @@ const SEED_PRODUCTS=[
 ];
 
 let db=null;
-let DB={employees:[],products:[],sales:[],settings:{},attendance:[]};
+let DB={employees:[],products:[],sales:[],settings:{},attendance:[],repstock:[]};
 let user=null, currentPage=null;
 let bootDone=false, _seeded=false;
 const ready={emp:false,prod:false,sales:false};
@@ -277,6 +277,10 @@ function attachListeners(){
   },()=>{});
   db.collection('attendance').onSnapshot(snap=>{
     DB.attendance=snap.docs.map(d=>Object.assign({id:d.id},d.data()));
+    if(bootDone)liveRefresh();
+  },()=>{});
+  db.collection('repStock').onSnapshot(snap=>{
+    DB.repstock=snap.docs.map(d=>Object.assign({id:d.id},d.data()));
     if(bootDone)liveRefresh();
   },()=>{});
 }
@@ -358,8 +362,8 @@ function logout(){user=null;localStorage.removeItem(SESSION_KEY);
 
 /* ---------- NAV ---------- */
 const MENUS={
-  manager:[{k:'dash',label:'لوحة التحكم',ico:'📊'},{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'sales',label:'كل المبيعات',ico:'📁'},{k:'reports',label:'التقارير الشهرية',ico:'📈'},{k:'commission',label:'العمولات',ico:'🏆'},{k:'staff',label:'الخبيرات والموظفين',ico:'👥'},{k:'products',label:'المنتجات والأسعار',ico:'💊'}],
-  expert:[{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'mysales',label:'مبيعاتي',ico:'📁'},{k:'mydash',label:'ملخصي',ico:'📊'}]
+  manager:[{k:'dash',label:'لوحة التحكم',ico:'📊'},{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'sales',label:'كل المبيعات',ico:'📁'},{k:'reports',label:'التقارير الشهرية',ico:'📈'},{k:'commission',label:'العمولات',ico:'🏆'},{k:'attend',label:'الدوام والمواقع',ico:'🕒'},{k:'repstock',label:'مخزون المندوبات',ico:'📦'},{k:'backup',label:'نسخة احتياطية',ico:'💾'},{k:'staff',label:'الخبيرات والموظفين',ico:'👥'},{k:'products',label:'المنتجات والأسعار',ico:'💊'}],
+  expert:[{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'mysales',label:'مبيعاتي',ico:'📁'},{k:'mystock',label:'مخزوني',ico:'📦'},{k:'mydash',label:'ملخصي',ico:'📊'}]
 };
 function enterApp(){
   document.getElementById('loginScreen').classList.add('hidden');
@@ -374,7 +378,7 @@ function buildNav(){document.getElementById('navMenu').innerHTML=MENUS[user.role
 function go(k){
   currentPage=k;
   document.querySelectorAll('#navMenu button').forEach(b=>b.classList.toggle('active',b.dataset.k===k));
-  const titles={dash:'لوحة التحكم',newsale:'تسجيل عملية بيع',sales:'كل المبيعات',reports:'التقارير الشهرية',commission:'تقرير العمولات',staff:'الخبيرات والموظفين',products:'المنتجات والأسعار',mysales:'مبيعاتي',mydash:'ملخصي'};
+  const titles={dash:'لوحة التحكم',newsale:'تسجيل عملية بيع',sales:'كل المبيعات',reports:'التقارير الشهرية',commission:'تقرير العمولات',staff:'الخبيرات والموظفين',products:'المنتجات والأسعار',mysales:'مبيعاتي',mydash:'ملخصي',attend:'الدوام والمواقع',repstock:'مخزون المندوبات',mystock:'مخزوني',backup:'نسخة احتياطية'};
   document.getElementById('pageTitle').textContent=titles[k]||'';
   toggleMenu(false);
   const v=document.getElementById('view');
@@ -387,6 +391,10 @@ function go(k){
   else if(k==='commission')renderCommission();
   else if(k==='staff')renderStaff();
   else if(k==='products')renderProducts();
+  else if(k==='attend')renderAttend();
+  else if(k==='repstock')renderRepStock();
+  else if(k==='mystock')renderMyStock();
+  else if(k==='backup')renderBackup();
 }
 function toggleMenu(open){document.getElementById('sidebar').classList.toggle('open',open);document.getElementById('backdrop').classList.toggle('hidden',!open);}
 
@@ -406,32 +414,65 @@ function didCheckInToday(empId){const t=todayStr();return (DB.attendance||[]).so
 function todayPharmacy(empId){const t=todayStr();const a=(DB.attendance||[]).find(x=>x.employeeId===empId&&x.date===t);return a?(a.pharmacy||''):'';}
 function pharmacyForDate(empId,date){const a=(DB.attendance||[]).find(x=>x.employeeId===empId&&x.date===date);return a?(a.pharmacy||''):'';}
 function syncSalePharm(){const el=document.getElementById('s_pharm'),d=document.getElementById('s_date');if(el&&d&&user&&user.role==='expert')el.value=pharmacyForDate(user.id,d.value);}
-async function checkIn(){
+function attToday(empId){const t=todayStr();return (DB.attendance||[]).find(a=>a.employeeId===empId&&a.date===t);}
+function shiftStarted(empId){const a=attToday(empId);return !!(a&&(a.startAt||a.at));}
+function shiftEnded(empId){const a=attToday(empId);return !!(a&&a.endAt);}
+function fmtTime(ts){if(!ts)return '—';const d=new Date(ts);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function repQty(empId,productId){const r=(DB.repstock||[]).find(x=>x.employeeId===empId&&x.productId===productId);return r?(Number(r.qty)||0):0;}
+function getGPS(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>res({lat:+p.coords.latitude.toFixed(6),lng:+p.coords.longitude.toFixed(6),acc:Math.round(p.coords.accuracy||0)}),()=>res(null),{enableHighAccuracy:true,timeout:10000,maximumAge:60000});});}
+function mapLink(loc){return loc?`<a href="https://www.google.com/maps?q=${loc.lat},${loc.lng}" target="_blank" style="font-size:17px;text-decoration:none" title="دقة ${loc.acc||'?'} م">📍</a>`:'<span style="color:var(--muted)">—</span>';}
+async function startShift(){
   if(!user)return;
   const inp=document.getElementById('ci_pharm');
   const pharm=inp?inp.value.trim():'';
-  if(!pharm){toast('اكتب اسم الصيدلية أولاً','bad');if(inp)inp.focus();return;}
+  if(!pharm){toast('اكتبي اسم الصيدلية أولاً','bad');if(inp)inp.focus();return;}
   const t=todayStr();
-  showLoading('جاري تسجيل الدوام...');
+  showLoading('جاري تحديد الموقع وتسجيل بدء الدوام...');
   try{
-    await db.collection('attendance').doc(user.id+'_'+t).set({employeeId:user.id,date:t,pharmacy:pharm,at:Date.now()},{merge:true});
-    toast('تم تسجيل دوام اليوم ✓','ok');
+    const loc=await getGPS();
+    const a=attToday(user.id)||{};
+    const data={employeeId:user.id,date:t,pharmacy:pharm,at:a.at||Date.now()};
+    if(!a.startAt)data.startAt=Date.now();
+    if(loc)data.startLoc=loc;
+    await db.collection('attendance').doc(user.id+'_'+t).set(data,{merge:true});
+    toast(loc?'تم تسجيل بدء الدوام ✓':'تم البدء (بدون موقع — فعّلي GPS)','ok');
   }catch(e){toast('فشل التسجيل — تحقق من الاتصال','bad');console.error(e);}
+  finally{hideLoading();}
+}
+async function endShift(){
+  if(!user)return;
+  const t=todayStr();
+  if(!shiftStarted(user.id)){toast('سجّلي بدء الدوام أولاً','bad');return;}
+  showLoading('جاري تحديد الموقع وتسجيل نهاية الدوام...');
+  try{
+    const loc=await getGPS();
+    const data={endAt:Date.now()};
+    if(loc)data.endLoc=loc;
+    await db.collection('attendance').doc(user.id+'_'+t).set(data,{merge:true});
+    toast(loc?'تم تسجيل نهاية الدوام ✓':'تم الإنهاء (بدون موقع)','ok');
+  }catch(e){toast('فشل التسجيل','bad');console.error(e);}
   finally{hideLoading();}
 }
 function checkinCardHTML(){
   if(!user||user.role!=='expert')return '';
-  const mon=monthStr(),days=attendanceDays(user.id,mon),done=didCheckInToday(user.id);
+  const mon=monthStr(),days=attendanceDays(user.id,mon);
+  const a=attToday(user.id)||{};
+  const started=!!(a.startAt||a.at),ended=!!a.endAt;
   const plist=[...new Set((DB.sales||[]).map(s=>s.pharmacy).filter(Boolean))];
   const dl=`<datalist id="ciPharmList">${plist.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`;
+  let status='';
+  if(started)status+=`<div style="color:var(--green-d);font-weight:700;margin-bottom:6px">▶️ بدء الدوام: ${fmtTime(a.startAt||a.at)}${a.pharmacy?` — صيدلية ${esc(a.pharmacy)}`:''}</div>`;
+  if(ended)status+=`<div style="color:var(--gold-d);font-weight:700;margin-bottom:6px">⏹ نهاية الدوام: ${fmtTime(a.endAt)}</div>`;
   return `<div class="panel" style="border-right:4px solid var(--gold)">
-    <div class="panel-head"><h3>🕒 دوام اليوم</h3><span class="tag">${days} يوم هذا الشهر</span></div>
-    ${done?`<div style="color:var(--green-d);font-weight:700;margin-bottom:10px">✓ سجّلتِ دوام اليوم (${todayStr()})${todayPharmacy(user.id)?` — صيدلية ${esc(todayPharmacy(user.id))}`:''}</div>`:``}
-    <div class="row" style="align-items:flex-end">
-      <div class="field" style="margin-bottom:0"><label>اسم الصيدلية التي تداومين فيها اليوم</label><input id="ci_pharm" list="ciPharmList" value="${esc(todayPharmacy(user.id))}" placeholder="اكتب اسم الصيدلية" autocomplete="off">${dl}</div>
-      <button class="btn btn-gold" style="max-width:200px" onclick="checkIn()">🕒 ${done?'تحديث دوام اليوم':'سجّلت دوام اليوم'}</button>
+    <div class="panel-head"><h3>🕒 دوام اليوم (${todayStr()})</h3><span class="tag">${days} يوم هذا الشهر</span></div>
+    ${status}
+    ${!started?`<div class="row" style="align-items:flex-end">
+      <div class="field" style="margin-bottom:0"><label>اسم الصيدلية التي تداومين فيها اليوم</label><input id="ci_pharm" list="ciPharmList" value="${esc(a.pharmacy||'')}" placeholder="اكتب اسم الصيدلية" autocomplete="off">${dl}</div>
+      <button class="btn btn-gold" style="max-width:200px" onclick="startShift()">▶️ بدء الدوام</button>
     </div>
-    <div class="hint" style="margin-top:8px">كل يوم تضغطين فيه هذا الزر يُحتسب ضمن أيام الدوام لهدف العمولة.</div>
+    <div class="hint" style="margin-top:8px">يُسجَّل الوقت والموقع (GPS) عند البدء — اسمحي بالوصول للموقع. لا يمكن تسجيل مبيعات قبل بدء الدوام.</div>`
+    :(!ended?`<button class="btn btn-ghost" style="max-width:220px" onclick="confirmModal('إنهاء الدوام','هل أنتِ متأكدة من إنهاء دوام اليوم؟ لا يمكن تسجيل مبيعات بعد الإنهاء.',endShift)">⏹ إنهاء الدوام</button>`
+    :`<div class="hint">انتهى دوام اليوم 🌸</div>`)}
   </div>`;
 }
 function empTargetVal(e,mon){if(!e)return 0;if(e.commType==='fixed')return Number(e.commTarget)||0;if(e.commType==='daily'){const d=attendanceDays(e.id,mon);return (Number(e.commTarget)||0)*(Number(d)||0);}return 0;}
@@ -477,6 +518,7 @@ function renderNewSale(){
         <div class="field"><label>الخبيرة</label>
           ${isMgr?`<select id="s_emp">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
         ${isMgr?`<div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>`:`<div class="field"><label>الصيدلية (من تسجيل الدوام)</label><input id="s_pharm" value="${esc(todayPharmacy(user.id))}" readonly style="background:#f0f4ee" placeholder="سجّلي دوامك أولاً"></div>`}
+        <div class="field"><label>البيع من</label><select id="s_src"><option value="pharmacy">🏪 مخزون الصيدلية</option><option value="rep">👜 مخزون المندوبة</option></select><div class="hint">«مخزون المندوبة» يُنقص من مخزونها تلقائياً</div></div>
       </div>
       <div style="overflow-x:auto"><table class="items-table"><thead><tr><th style="width:26%">المنتج</th><th class="num" style="width:10%">الكمية</th><th class="num" style="width:13%">سعر الوحدة</th><th class="num" style="width:10%">خصم %</th><th class="num" style="width:14%">الإجمالي</th><th class="num" style="width:19%">المحقق للهدف (كوست)</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table></div>
       <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="addItem()">＋ إضافة صنف</button>
@@ -515,16 +557,32 @@ async function saveSale(){
   const pharm=user.role==='manager'?(document.getElementById('s_pharm')?document.getElementById('s_pharm').value.trim():''):pharmacyForDate(user.id,date);
   const notes=document.getElementById('s_notes').value.trim();
   const empId=user.role==='manager'?(document.getElementById('s_emp')?document.getElementById('s_emp').value:''):user.id;
+  const src=document.getElementById('s_src')?document.getElementById('s_src').value:'pharmacy';
   if(!date){toast('اختر التاريخ','bad');return;}
   if(!empId){toast('لا يوجد خبيرة محددة','bad');return;}
+  if(user.role==='expert'){
+    if(!shiftStarted(user.id)){toast('سجّلي بدء الدوام أولاً قبل تسجيل المبيعات','bad');return;}
+    if(shiftEnded(user.id)){toast('دوام اليوم منتهٍ — لا يمكن تسجيل مبيعات بعد الإنهاء','bad');return;}
+  }
   if(!pharm){toast(user.role==='manager'?'اكتب اسم الصيدلية':'سجّلي دوامك في الصيدلية لهذا اليوم أولاً','bad');return;}
   const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price),disc:Number(i.disc)||0};});
   if(!items.length){toast('أضِف منتج واحد على الأقل','bad');return;}
+  if(src==='rep'){
+    for(const i of items){
+      const have=repQty(empId,i.productId);
+      if(have<i.qty){const p=prod(i.productId);toast('مخزون المندوبة غير كافٍ: '+(p?p.name:'')+' (المتوفر '+have+')','bad');return;}
+    }
+  }
   const id=uid('s_');
-  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:Date.now()};
+  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,source:src,total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:Date.now()};
   showLoading('جاري حفظ العملية...');
-  try{await db.collection('sales').doc(id).set(sale);toast('تم حفظ العملية ✓','ok');renderNewSale();}
-  catch(e){toast('فشل الحفظ — تحقق من الاتصال','bad');console.error(e);}finally{hideLoading();}
+  try{
+    const batch=db.batch();
+    batch.set(db.collection('sales').doc(id),sale);
+    if(src==='rep')items.forEach(i=>{batch.set(db.collection('repStock').doc(empId+'_'+i.productId),{employeeId:empId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(-i.qty)},{merge:true});});
+    await batch.commit();
+    toast('تم حفظ العملية ✓','ok');renderNewSale();
+  }catch(e){toast('فشل الحفظ — تحقق من الاتصال','bad');console.error(e);}finally{hideLoading();}
 }
 
 /* ---------- SALES LIST ---------- */
@@ -554,12 +612,12 @@ function drawSales(mine){
   const isMgr=user.role==='manager';
   if(!s.length){document.getElementById('salesTable').innerHTML=`<div class="empty">لا توجد عمليات مطابقة</div>`;return;}
   document.getElementById('salesTable').innerHTML=`<table><thead><tr><th>التاريخ</th>${isMgr&&!mine?'<th>الخبيرة</th>':''}<th>الصيدلية</th><th>الأصناف</th><th class="num">القطع</th><th class="num">الإجمالي (د.أ)</th><th class="no-print"></th></tr></thead><tbody>${s.map(x=>`<tr>
-    <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}</td>
+    <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}${x.source==='rep'?` <span class="tag" style="background:#f7eecb;color:var(--gold-d)">من مخزونها</span>`:''}</td>
     <td style="font-size:13px;color:var(--muted)">${(x.items||[]).map(i=>{const p=prod(i.productId);return esc((p?p.code:(i.productCode||'?'))+'×'+i.qty)+((Number(i.disc)>0)?` (-${i.disc}%)`:'');}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
     <td class="num">${saleQty(x)}</td><td class="num"><b>${fmt(saleTotal(x))}</b></td>
     <td class="no-print">${(isMgr||x.employeeId===user.id)?`<button class="icon-btn" onclick="delSale('${x.id}')">×</button>`:''}</td></tr>`).join('')}</tbody></table>`;
 }
-function delSale(id){confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟',async()=>{showLoading('جاري الحذف...');try{await db.collection('sales').doc(id).delete();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
+function delSale(id){const s=DB.sales.find(x=>x.id===id);confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟'+(s&&s.source==='rep'?' سيُعاد المخزون للمندوبة.':''),async()=>{showLoading('جاري الحذف...');try{const batch=db.batch();batch.delete(db.collection('sales').doc(id));if(s&&s.source==='rep')(s.items||[]).forEach(i=>{batch.set(db.collection('repStock').doc(s.employeeId+'_'+i.productId),{employeeId:s.employeeId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(Number(i.qty)||0)},{merge:true});});await batch.commit();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
 function exportSalesCSV(mine){
   const s=filteredSales(mine);if(!s.length){toast('لا توجد بيانات','bad');return;}
   let rows=[['التاريخ','الخبيرة','الصيدلية','كود المنتج','المنتج','الكمية','سعر الوحدة','خصم %','الإجمالي']];
@@ -740,6 +798,101 @@ function delStaff(id){
   const cnt=DB.sales.filter(s=>s.employeeId===id).length;
   confirmModal('حذف موظف',`سيتم حذف الموظف.${cnt?` لديه ${cnt} عملية ستبقى محفوظة باسمه.`:''} متابعة؟`,async()=>{
     showLoading('جاري الحذف...');try{await db.collection('employees').doc(id).delete();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}
+  });
+}
+
+/* ---------- ATTENDANCE & LOCATIONS (manager) ---------- */
+let _attD='';
+function renderAttend(){
+  if(!_attD)_attD=todayStr();
+  document.getElementById('view').innerHTML=`<div class="panel"><div class="panel-head"><h3>🕒 الدوام والمواقع</h3></div>
+    <div class="row" style="margin-bottom:12px"><div class="field" style="margin-bottom:0;max-width:220px"><label>التاريخ</label><input type="date" id="att_d" value="${_attD}" onchange="_attD=this.value;renderAttend()"></div></div>
+    <div id="attBody"></div>
+    <div class="hint" style="margin-top:12px">📍 = فتح الموقع على خرائط Google. يُسجَّل الموقع تلقائياً عند بدء وإنهاء الدوام من جهاز المندوبة.</div></div>`;
+  drawAttend();
+}
+function drawAttend(){
+  const d=_attD;
+  const rows=(DB.attendance||[]).filter(a=>a.date===d).sort((a,b)=>((a.startAt||a.at||0)-(b.startAt||b.at||0)));
+  document.getElementById('attBody').innerHTML=rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>المندوبة</th><th>الصيدلية</th><th>بدء الدوام</th><th>موقع البدء</th><th>نهاية الدوام</th><th>موقع النهاية</th><th class="num">المدة</th></tr></thead><tbody>${rows.map(a=>{
+    const st=a.startAt||a.at,en=a.endAt;
+    const dur=st&&en?((en-st)/3600000).toFixed(1)+' ساعة':'—';
+    return `<tr><td><b>${esc(empName(a.employeeId))}</b></td><td>${esc(a.pharmacy||'—')}</td><td>${fmtTime(st)}</td><td>${mapLink(a.startLoc)}</td><td>${en?fmtTime(en):'<span class="tag">لم يُسجَّل</span>'}</td><td>${mapLink(a.endLoc)}</td><td class="num">${dur}</td></tr>`;}).join('')}</tbody></table></div>`
+  :`<div class="empty">لا يوجد تسجيل دوام في هذا اليوم</div>`;
+}
+
+/* ---------- REP STOCK ---------- */
+function renderRepStock(){
+  const experts=DB.employees.filter(e=>e.role==='expert');
+  document.getElementById('view').innerHTML=`<div class="panel"><div class="panel-head"><h3>📦 مخزون المندوبات</h3><button class="btn btn-sm" onclick="refillModal()">＋ تعبئة مخزون</button></div>
+    <div style="overflow-x:auto"><table><thead><tr><th>المنتج</th>${experts.map(e=>`<th class="num">${esc(e.name)}</th>`).join('')}</tr></thead><tbody>
+    ${DB.products.map(p=>`<tr><td><span class="tag">${esc(p.code)}</span> ${esc(String(p.name).slice(0,30))}</td>${experts.map(e=>{const q=repQty(e.id,p.id);return `<td class="num" style="${q>0?'font-weight:700':'color:var(--muted)'}">${q||'—'}</td>`;}).join('')}</tr>`).join('')}
+    </tbody></table></div>
+    <div class="hint" style="margin-top:12px">التعبئة من المدير فقط. البيع «من مخزون المندوبة» يُنقص الكمية تلقائياً، وحذف العملية يُعيدها.</div></div>`;
+}
+function refillModal(){
+  const experts=DB.employees.filter(e=>e.role==='expert');
+  if(!experts.length){toast('أضِف مندوبة أولاً','bad');return;}
+  openModal('تعبئة مخزون مندوبة',`
+    <div class="field"><label>المندوبة</label><select id="rs_emp">${experts.map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')}</select></div>
+    <div class="field"><label>المنتج</label><select id="rs_prod">${prodOptions('')}</select></div>
+    <div class="field"><label>الكمية المضافة</label><input id="rs_qty" type="number" step="1" value="1"><div class="hint">تُضاف فوق الكمية الحالية. لتصحيح خطأ أدخل رقماً سالباً.</div></div>`,
+  async()=>{
+    const empId=document.getElementById('rs_emp').value,pid=document.getElementById('rs_prod').value,q=Number(document.getElementById('rs_qty').value)||0;
+    if(!empId||!pid){toast('اختر المندوبة والمنتج','bad');return false;}
+    if(!q){toast('أدخل الكمية','bad');return false;}
+    showLoading('جاري الحفظ...');
+    try{await db.collection('repStock').doc(empId+'_'+pid).set({employeeId:empId,productId:pid,qty:firebase.firestore.FieldValue.increment(q)},{merge:true});toast('تمت التعبئة ✓','ok');}
+    catch(e){toast('فشل الحفظ','bad');console.error(e);}finally{hideLoading();}
+    return true;
+  });
+}
+function renderMyStock(){
+  const rows=(DB.repstock||[]).filter(r=>r.employeeId===user.id&&Number(r.qty)>0);
+  document.getElementById('view').innerHTML=`${checkinCardHTML()}<div class="panel"><h3>📦 مخزوني</h3>
+    ${rows.length?`<table><thead><tr><th>المنتج</th><th class="num">الكمية المتوفرة</th></tr></thead><tbody>${rows.map(r=>{const p=prod(r.productId);return `<tr><td>${p?esc(p.code+' · '+p.name):esc(r.productId)}</td><td class="num"><b>${Number(r.qty)||0}</b></td></tr>`;}).join('')}</tbody></table>`:`<div class="empty">لا يوجد مخزون لديك حالياً — التعبئة تتم من قبل المدير</div>`}
+    <div class="hint" style="margin-top:12px">عند البيع «من مخزون المندوبة» تُنقص الكمية تلقائياً.</div></div>`;
+}
+
+/* ---------- BACKUP ---------- */
+function renderBackup(){
+  document.getElementById('view').innerHTML=`<div class="panel"><h3>💾 النسخة الاحتياطية</h3>
+    <p style="color:var(--muted);font-size:14px;margin:10px 0 16px">تنزيل نسخة كاملة من كل البيانات (الموظفين، المنتجات، المبيعات، الدوام، المخزون، الإعدادات) بصيغة JSON — احتفظ بها في مكان آمن.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn" style="max-width:260px" onclick="downloadBackup()">⬇️ تنزيل نسخة احتياطية</button>
+      <label class="btn btn-ghost" style="max-width:260px;cursor:pointer;text-align:center">⬆️ استعادة من ملف<input type="file" accept=".json" style="display:none" onchange="restoreBackup(this)"></label>
+    </div>
+    <div class="hint" style="margin-top:14px">الاستعادة تدمج بيانات الملف مع الحالية (لا تحذف شيئاً). ننصح بتنزيل نسخة أسبوعياً.</div></div>`;
+}
+function downloadBackup(){
+  const data={app:'elegantminds',exportedAt:new Date().toISOString(),employees:DB.employees,products:DB.products,sales:DB.sales,attendance:DB.attendance,repstock:DB.repstock,settings:DB.settings};
+  const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_elegantminds_'+todayStr()+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  toast('تم تنزيل النسخة الاحتياطية ✓','ok');
+}
+async function restoreBackup(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;
+  let data;try{data=JSON.parse(await f.text());}catch(e){toast('ملف غير صالح','bad');inp.value='';return;}
+  if(!data||data.app!=='elegantminds'){toast('هذا ليس ملف نسخة احتياطية لهذا النظام','bad');inp.value='';return;}
+  confirmModal('استعادة نسخة احتياطية','سيتم دمج بيانات الملف مع البيانات الحالية (لن يُحذف شيء). متابعة؟',async()=>{
+    showLoading('جاري الاستعادة...');
+    try{
+      const colls={employees:'employees',products:'products',sales:'sales',attendance:'attendance',repstock:'repStock'};
+      const ops=[];let batch=db.batch(),n=0;
+      for(const k in colls){
+        const arr=Array.isArray(data[k])?data[k]:[];
+        for(const docu of arr){
+          const{id,...rest}=docu;if(!id)continue;
+          batch.set(db.collection(colls[k]).doc(id),rest,{merge:true});n++;
+          if(n%400===0){ops.push(batch.commit());batch=db.batch();}
+        }
+      }
+      if(data.settings)batch.set(db.collection('settings').doc('commission'),data.settings,{merge:true});
+      ops.push(batch.commit());
+      await Promise.all(ops);
+      toast('تمت الاستعادة بنجاح ✓','ok');
+    }catch(e){toast('فشلت الاستعادة','bad');console.error(e);}
+    finally{hideLoading();inp.value='';}
   });
 }
 
