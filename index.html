@@ -507,7 +507,7 @@ function renderDash(mine){
 /* ---------- NEW SALE ---------- */
 let saleItems=[];
 function renderNewSale(){
-  saleItems=[{productId:'',qty:1,price:0,disc:0}];
+  saleItems=[{productId:'',qty:1,price:0,disc:0,src:''}];
   const isMgr=user.role==='manager';
   const pharmacyList=[...new Set(DB.sales.map(s=>s.pharmacy).filter(Boolean))];
   document.getElementById('view').innerHTML=`
@@ -516,11 +516,10 @@ function renderNewSale(){
       <div class="row" style="margin-bottom:16px">
         <div class="field"><label>التاريخ</label><input type="date" id="s_date" value="${todayStr()}" ${isMgr?'':'onchange="syncSalePharm()"'}></div>
         <div class="field"><label>الخبيرة</label>
-          ${isMgr?`<select id="s_emp">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
+          ${isMgr?`<select id="s_emp" onchange="drawItems()">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
         ${isMgr?`<div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>`:`<div class="field"><label>الصيدلية (من تسجيل الدوام)</label><input id="s_pharm" value="${esc(todayPharmacy(user.id))}" readonly style="background:#f0f4ee" placeholder="سجّلي دوامك أولاً"></div>`}
-        <div class="field"><label>البيع من</label><select id="s_src"><option value="pharmacy">🏪 مخزون الصيدلية</option><option value="rep">👜 مخزون المندوبة</option></select><div class="hint">«مخزون المندوبة» يُنقص من مخزونها تلقائياً</div></div>
       </div>
-      <div style="overflow-x:auto"><table class="items-table"><thead><tr><th style="width:26%">المنتج</th><th class="num" style="width:10%">الكمية</th><th class="num" style="width:13%">سعر الوحدة</th><th class="num" style="width:10%">خصم %</th><th class="num" style="width:14%">الإجمالي</th><th class="num" style="width:19%">المحقق للهدف (كوست)</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table></div>
+      <div style="overflow-x:auto"><table class="items-table"><thead><tr><th style="width:22%">المنتج</th><th style="width:13%">المخزن</th><th class="num" style="width:8%">الكمية</th><th class="num" style="width:13%">سعر الوحدة</th><th class="num" style="width:10%">خصم %</th><th class="num" style="width:14%">الإجمالي</th><th class="num" style="width:19%">المحقق للهدف (كوست)</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table></div>
       <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="addItem()">＋ إضافة صنف</button>
       <div class="field" style="margin-top:16px"><label>ملاحظات (اختياري)</label><textarea id="s_notes" rows="2" placeholder="أي ملاحظة..." style="font-family:inherit;direction:rtl;text-align:right"></textarea></div>
       <div class="grand">الإجمالي الكلي: <span class="amt" id="grandTotal">0.00</span> د.أ</div>
@@ -530,9 +529,12 @@ function renderNewSale(){
   drawItems();
 }
 function prodOptions(sel){return `<option value="">— اختر المنتج —</option>`+DB.products.map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(p.code+' · '+p.name)}</option>`).join('');}
+function saleEmpId(){return user.role==='manager'?(document.getElementById('s_emp')?document.getElementById('s_emp').value:''):user.id;}
+function itemSrc(i,v){saleItems[i].src=v;drawItems();}
 function drawItems(){
   document.getElementById('itemsBody').innerHTML=saleItems.map((it,idx)=>`<tr>
     <td><select onchange="itemProd(${idx},this.value)">${prodOptions(it.productId)}</select></td>
+    <td><select onchange="itemSrc(${idx},this.value)" style="${it.src?'':'border:1.5px solid #d9534f'}"><option value="">— اختر المخزن —</option><option value="pharmacy" ${it.src==='pharmacy'?'selected':''}>🏪 الصيدلية</option><option value="rep" ${it.src==='rep'?'selected':''}>👜 المندوبة${it.productId?' (متوفر '+repQty(saleEmpId(),it.productId)+')':''}</option></select></td>
     <td><input type="number" min="1" step="1" value="${it.qty}" oninput="itemQty(${idx},this.value)"></td>
     <td><input type="number" min="0" step="0.01" value="${it.price}" oninput="itemPrice(${idx},this.value)"></td>
     <td><input type="number" min="0" max="100" step="1" value="${it.disc||0}" oninput="itemDisc(${idx},this.value)"></td>
@@ -546,7 +548,7 @@ function recalcTotals(){
   const g=document.getElementById('grandTotal');if(g)g.textContent=fmt(saleItems.reduce((t,i)=>t+itemNet(i),0));
   const gc=document.getElementById('grandCost');if(gc)gc.textContent=fmt(saleItems.reduce((t,i)=>t+itemCostFull(i),0));
 }
-function addItem(){saleItems.push({productId:'',qty:1,price:0,disc:0});drawItems();}
+function addItem(){saleItems.push({productId:'',qty:1,price:0,disc:0,src:''});drawItems();}
 function delItem(i){saleItems.splice(i,1);drawItems();}
 function itemProd(i,v){saleItems[i].productId=v;const p=prod(v);if(p)saleItems[i].price=p.price;drawItems();}
 function itemQty(i,v){saleItems[i].qty=Math.max(0,Number(v)||0);recalcTotals();}
@@ -557,7 +559,6 @@ async function saveSale(){
   const pharm=user.role==='manager'?(document.getElementById('s_pharm')?document.getElementById('s_pharm').value.trim():''):pharmacyForDate(user.id,date);
   const notes=document.getElementById('s_notes').value.trim();
   const empId=user.role==='manager'?(document.getElementById('s_emp')?document.getElementById('s_emp').value:''):user.id;
-  const src=document.getElementById('s_src')?document.getElementById('s_src').value:'pharmacy';
   if(!date){toast('اختر التاريخ','bad');return;}
   if(!empId){toast('لا يوجد خبيرة محددة','bad');return;}
   if(user.role==='expert'){
@@ -565,21 +566,22 @@ async function saveSale(){
     if(shiftEnded(user.id)){toast('دوام اليوم منتهٍ — لا يمكن تسجيل مبيعات بعد الإنهاء','bad');return;}
   }
   if(!pharm){toast(user.role==='manager'?'اكتب اسم الصيدلية':'سجّلي دوامك في الصيدلية لهذا اليوم أولاً','bad');return;}
-  const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price),disc:Number(i.disc)||0};});
+  const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price),disc:Number(i.disc)||0,src:i.src||''};});
   if(!items.length){toast('أضِف منتج واحد على الأقل','bad');return;}
-  if(src==='rep'){
-    for(const i of items){
-      const have=repQty(empId,i.productId);
-      if(have<i.qty){const p=prod(i.productId);toast('مخزون المندوبة غير كافٍ: '+(p?p.name:'')+' (المتوفر '+have+')','bad');return;}
-    }
+  if(items.some(i=>!i.src)){toast('حدد المخزن (صيدلية / مندوبة) لكل منتج — إجباري','bad');return;}
+  const need={};items.forEach(i=>{if(i.src==='rep')need[i.productId]=(need[i.productId]||0)+i.qty;});
+  for(const pid in need){
+    const have=repQty(empId,pid);
+    if(have<need[pid]){const p=prod(pid);toast('مخزون المندوبة غير كافٍ: '+(p?p.name:'')+' (المتوفر '+have+' والمطلوب '+need[pid]+')','bad');return;}
   }
+  const repCnt=items.filter(i=>i.src==='rep').length;
   const id=uid('s_');
-  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,source:src,total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:Date.now()};
+  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,source:repCnt===items.length?'rep':(repCnt?'mixed':'pharmacy'),total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:Date.now()};
   showLoading('جاري حفظ العملية...');
   try{
     const batch=db.batch();
     batch.set(db.collection('sales').doc(id),sale);
-    if(src==='rep')items.forEach(i=>{batch.set(db.collection('repStock').doc(empId+'_'+i.productId),{employeeId:empId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(-i.qty)},{merge:true});});
+    for(const pid in need)batch.set(db.collection('repStock').doc(empId+'_'+pid),{employeeId:empId,productId:pid,qty:firebase.firestore.FieldValue.increment(-need[pid])},{merge:true});
     await batch.commit();
     toast('تم حفظ العملية ✓','ok');renderNewSale();
   }catch(e){toast('فشل الحفظ — تحقق من الاتصال','bad');console.error(e);}finally{hideLoading();}
@@ -612,12 +614,12 @@ function drawSales(mine){
   const isMgr=user.role==='manager';
   if(!s.length){document.getElementById('salesTable').innerHTML=`<div class="empty">لا توجد عمليات مطابقة</div>`;return;}
   document.getElementById('salesTable').innerHTML=`<table><thead><tr><th>التاريخ</th>${isMgr&&!mine?'<th>الخبيرة</th>':''}<th>الصيدلية</th><th>الأصناف</th><th class="num">القطع</th><th class="num">الإجمالي (د.أ)</th><th class="no-print"></th></tr></thead><tbody>${s.map(x=>`<tr>
-    <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}${x.source==='rep'?` <span class="tag" style="background:#f7eecb;color:var(--gold-d)">من مخزونها</span>`:''}</td>
-    <td style="font-size:13px;color:var(--muted)">${(x.items||[]).map(i=>{const p=prod(i.productId);return esc((p?p.code:(i.productCode||'?'))+'×'+i.qty)+((Number(i.disc)>0)?` (-${i.disc}%)`:'');}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
+    <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}${(x.source==='rep'||x.source==='mixed')?` <span class="tag" style="background:#f7eecb;color:var(--gold-d)">${x.source==='mixed'?'مختلط':'من مخزونها'}</span>`:''}</td>
+    <td style="font-size:13px;color:var(--muted)">${(x.items||[]).map(i=>{const p=prod(i.productId);return (i.src==='rep'?'👜':'')+esc((p?p.code:(i.productCode||'?'))+'×'+i.qty)+((Number(i.disc)>0)?` (-${i.disc}%)`:'');}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
     <td class="num">${saleQty(x)}</td><td class="num"><b>${fmt(saleTotal(x))}</b></td>
     <td class="no-print">${(isMgr||x.employeeId===user.id)?`<button class="icon-btn" onclick="delSale('${x.id}')">×</button>`:''}</td></tr>`).join('')}</tbody></table>`;
 }
-function delSale(id){const s=DB.sales.find(x=>x.id===id);confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟'+(s&&s.source==='rep'?' سيُعاد المخزون للمندوبة.':''),async()=>{showLoading('جاري الحذف...');try{const batch=db.batch();batch.delete(db.collection('sales').doc(id));if(s&&s.source==='rep')(s.items||[]).forEach(i=>{batch.set(db.collection('repStock').doc(s.employeeId+'_'+i.productId),{employeeId:s.employeeId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(Number(i.qty)||0)},{merge:true});});await batch.commit();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
+function delSale(id){const s=DB.sales.find(x=>x.id===id);const repItems=s?(s.items||[]).filter(i=>i.src==='rep'||(s.source==='rep'&&!i.src)):[];confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟'+(repItems.length?' سيُعاد مخزون المندوبة.':''),async()=>{showLoading('جاري الحذف...');try{const batch=db.batch();batch.delete(db.collection('sales').doc(id));repItems.forEach(i=>{batch.set(db.collection('repStock').doc(s.employeeId+'_'+i.productId),{employeeId:s.employeeId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(Number(i.qty)||0)},{merge:true});});await batch.commit();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
 function exportSalesCSV(mine){
   const s=filteredSales(mine);if(!s.length){toast('لا توجد بيانات','bad');return;}
   let rows=[['التاريخ','الخبيرة','الصيدلية','كود المنتج','المنتج','الكمية','سعر الوحدة','خصم %','الإجمالي']];
