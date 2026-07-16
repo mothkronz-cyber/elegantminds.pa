@@ -432,11 +432,12 @@ async function startShift(){
   showLoading('جاري تحديد الموقع وتسجيل بدء الدوام...');
   try{
     const loc=await getGPS();
+    if(!loc){toast('تحديد الموقع إجباري ⚠️ فعّلي GPS واسمحي للمتصفح بالوصول للموقع ثم أعيدي المحاولة','bad');return;}
     const a=attToday(user.id);
     const sessions=sessOf(a).slice();
-    sessions.push({pharmacy:pharm,startAt:Date.now(),startLoc:loc||null,endAt:null,endLoc:null});
+    sessions.push({pharmacy:pharm,startAt:Date.now(),startLoc:loc,endAt:null,endLoc:null});
     await db.collection('attendance').doc(user.id+'_'+t).set({employeeId:user.id,date:t,pharmacy:pharm,at:(a&&a.at)||Date.now(),sessions},{merge:true});
-    toast(loc?'تم تسجيل بدء الدوام ✓':'تم البدء (بدون موقع — فعّلي GPS)','ok');
+    toast('تم تسجيل بدء الدوام ✓','ok');
   }catch(e){toast('فشل التسجيل — تحقق من الاتصال','bad');console.error(e);}
   finally{hideLoading();}
 }
@@ -450,9 +451,10 @@ async function endShift(){
   showLoading('جاري تحديد الموقع وتسجيل نهاية الدوام...');
   try{
     const loc=await getGPS();
-    last.endAt=Date.now();last.endLoc=loc||null;
+    if(!loc){toast('تحديد الموقع إجباري ⚠️ فعّلي GPS واسمحي للمتصفح بالوصول للموقع ثم أعيدي المحاولة','bad');return;}
+    last.endAt=Date.now();last.endLoc=loc;
     await db.collection('attendance').doc(user.id+'_'+t).set({employeeId:user.id,date:t,sessions},{merge:true});
-    toast(loc?'تم تسجيل نهاية الدوام ✓':'تم الإنهاء (بدون موقع)','ok');
+    toast('تم تسجيل نهاية الدوام ✓','ok');
   }catch(e){toast('فشل التسجيل','bad');console.error(e);}
   finally{hideLoading();}
 }
@@ -472,7 +474,7 @@ function checkinCardHTML(){
       <div class="field" style="margin-bottom:0"><label>اسم الصيدلية</label><input id="ci_pharm" list="ciPharmList" value="" placeholder="اكتب اسم الصيدلية" autocomplete="off">${dl}</div>
       <button class="btn btn-gold" style="max-width:200px" onclick="startShift()">▶️ ${sessions.length?'بدء دوام جديد':'بدء الدوام'}</button>
     </div>
-    <div class="hint" style="margin-top:8px">يمكنك بدء وإنهاء الدوام أكثر من مرة باليوم (حتى بصيدليات مختلفة). يُسجَّل الوقت والموقع GPS مع كل بدء وإنهاء، والبيع متاح فقط أثناء دوام مفتوح.</div>`}
+    <div class="hint" style="margin-top:8px">يمكنك بدء وإنهاء الدوام أكثر من مرة باليوم (حتى بصيدليات مختلفة). تحديد الموقع GPS إجباري مع كل بدء وإنهاء — لن يُسجَّل الدوام بدونه. البيع متاح فقط أثناء دوام مفتوح.</div>`}
   </div>`;
 }
 function empTargetVal(e,mon){if(!e)return 0;if(e.commType==='fixed')return Number(e.commTarget)||0;if(e.commType==='daily'){const d=attendanceDays(e.id,mon);return (Number(e.commTarget)||0)*(Number(d)||0);}return 0;}
