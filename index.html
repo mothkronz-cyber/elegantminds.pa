@@ -478,13 +478,23 @@
                 return;
             }
 
-            // Demo login verification
-            if (currentRole === 'manager' && email === 'admin@elegantminds.com' && password === 'admin123') {
-                currentUser = { name: 'المدير', email: email, role: 'manager' };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                loginSuccess();
-            } else if (currentRole === 'employee' && email === 'fatima@elegantminds.com' && password === 'employee123') {
-                currentUser = { name: 'فاطمة الزهراء', email: email, role: 'employee' };
+            // Demo login verification with username support
+            const demoCredentials = {
+                manager: [
+                    { username: 'admin', password: 'admin123', name: 'المدير' }
+                ],
+                employee: [
+                    { username: 'sojoud', password: 'password123', name: 'سجود نعواش' },
+                    { username: 'haneen', password: 'password123', name: 'حنين' },
+                    { username: 'test', password: 'password123', name: 'موظف تجريبي' }
+                ]
+            };
+
+            const credentials = demoCredentials[currentRole] || [];
+            const user = credentials.find(u => u.username === email && u.password === password);
+
+            if (user) {
+                currentUser = { name: user.name, username: email, role: currentRole };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 loginSuccess();
             } else {
