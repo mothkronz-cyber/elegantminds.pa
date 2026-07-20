@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>العقول الراقية — نظام مبيعات خبيرات التجميل (Google Sheets)</title>
+<title>العقول الراقية — نظام مبيعات خبيرات التجميل (Firebase)</title>
 <!-- ===== PWA / موبايل (أندرويد + آيفون) ===== -->
 <meta name="theme-color" content="#3f8a28">
 <meta name="mobile-web-app-capable" content="yes">
@@ -14,6 +14,8 @@
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAHK0lEQVR42u3d/09VdRzH8fc5914QFcVvCI1qpShX1+VbpZsappAZN6XE5bfa2lptbf4oP7TV1vwNN3+oP6CtLGUBCxpluib+kPQLxJep0GTDcmoL7AuwUPDefmC2lTnOuV/gnM/7+fhNOR64n/t+fd6fz8dz1RKPqagviguMdb6u3/LSz2NR7NAcCouih+YwWBQ+NAfBovChOQgWhQ/NQbAofGgOgk3xw09SXWMWhQ/N3cCm+KG5G9gUPzSHwKb4oTkENsUPzSGwKX5oDoFN8UNzCGyKH5pDYFP80BwCm+KH5hDYDBM0s5n9obkL2BQ/NIeAJRBYAjH7Q2sXoAOADsDsD61dgA4AOgCzP7R2AToA6ADM/tDaBegAoAMAqgPA8gdal0F0ANABAAIAEABAF4sNMOgAAAEACABAAAACABAAgAAABAAgAAABAAgAQAAAAgAQAIAAAAQAIAAAAQC8L+i1H+i9F4/LtqKdnh2w8dujUv3B03P+2i4MnpN3mt9O++tdvnClNLz1rQTsQErud/jkIem71kkHQHI2Pl4h+YsL0v59akr3p6z4WQIhdW+cZUtN6YG0fo9QIEOikb3sAeBN1ZFamReal7b7V66LSs78pQQA3rQwM1uq1u1K2/1fLjtkfieljPwtXUX6REG5FOaGCQC87bHlhVL6yIaU33ePgtmfANAF/teK7DzZUlhFAOAPm1Y/KysX5afsfjUlZh99EgDT3kQrILtLUnMkmhHMlGjxXj1jR/mYIRqplcxg8keileGoLM5aombcgia9mGPfvCttvY0qA7AoK0cqw9XS1tfkqf0EHQC+2QxHCspldW4RAYA/rcotkkhBecJ/fk/Zq/r2T5QNXUBk+uhzc2ElAYD3TN694/jaLYVVsiI7z/X3eKn0gOOjz8m7kxKXOAHA7Lhw5ZxMTP7l6NqAHZDdJftc3T8jmCnVkVrH17cPfC3xeIwAYHaM3RmTMxdbHF8fjeyVUCDD8fVujz6buz5lCYTZ1dx1wvG1OfOXyvbwC2nZN1y+0SuXb/QSAMyuoZFB6bzakfKiLi540tXRZ1PnJ2yC4f0usGbleln/UMmM1+0pd370eWt8WNoHThMAzI2OwXa5/vvPjq+fqbhzs/Nkc+F2x/dr7T4lU7EpAoC5EYvHpKX7pOPrn1nznCxbsOKBX68pPSC25fzos7WnwbgxNepZoCM7jsqRHUfTdv/jZ9+X1u5Tc/oa23ob5fVNh2VeKGvmN9cOyq6SffLRdx/e97WMYKarD7y3D5yWW+PDxgWADuAzY7dHXR2J7ip+RUKB0H2/XxWOyqKsnLTsPwgAPLMZXrJgmWxd+/x9v6/56JMA+NzQyKB0Xf3e8fX/Lfbih5+SVS6OPk2d/QmAjzV1OT+PD+dHJJwf+efXbp76NPHokwAYoGOwXW78cc1FFzgoIveOPrc5/nOtPQ0yeXeSAMBbYvGYfPHDZ46v37p2pyxZsExqSg+6O/qc41MvAoAHauttdPyUaCgQktqy1yTq6qlPM48+CYAhxm6PyplLrY6v37/hDY4+CYBZml08nGZbzt9uk48+CYBB3B6JMvv/G/8sigGauk5I2aMbU3a/38ZHjD76pAMYpmPwnKsj0Zm09Jwy+uiTABhm+kj0ZEruNRWbki+7G9SMHQEwRFvv5zIxOZH0fdoHTsvI+K8EAP4yfSTakvR9TPvIIwFQJNmTm/6bfSqOPgmAoYaGr0jXT4kfiTZ1nlA3ZgTAMIkW8fTR59cEAP6W6JGo6U99EgAlEjkSnYpNGf/UJwFQ5Ku+RldHotqOPgmA4YYn/pSzLp4S1fLcDwHQtBl2+JHJ/pt9cul6j9px4t8FSsCPv1yUNz+u9fRYDA1fka3HwswEdACAAAAEACAAAAEACABAAEAAAAIAEABAGauivijOMIAOABAAgAAABAAgAAABAAgAQAAAAgAQAIAAAAQAIAAAAQAIAEAAAAIAEACAAAAEAPCioJYXWp/HZ//dqLtp0QEofr20jFmQNxEzjZ/J3YA9ANgEM/tD61javGHQPKYsgcASCCAAAAEACABAAPxMy1/jM6YEgBAwlgQASJTRzwLdm7n4izFmftUdgOUQY6ayAxAC0AEAAgAQAIAAAAQAuBeA83X9HI9ApfN1/RYdACyBAAIAEABAYQDYCEPjBpgOADoAQwACwDIICpc/dADQAR6UDMD02Z8OADrATAkBTJ396QCgAzhNCmDa7E8HAB3AbWIAU2b/GTsAIYDJxc8SCCyBkk0Q4NfZ33EHIAQwsfhdLYEIAUwrftd7AEIAk4o/oU0wIYApxZ9QAAgBTCn+hANACGBC8ScVAEIAvxd/0gEgBPBz8YuIpLR4K+qL+M+44IvCT1kHoBvAr8Wf8g5AN4BfCj/tASAI8MOqYtaWLAQBXlxOz/qanSDAS/vIOd20EgbMRdF7JgCEgmKfa38D0eJf2jZdrkQAAAAASUVORK5CYII=">
 <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogItin2YTYudmC2YjZhCDYp9mE2LHYp9mC2YrYqSDigJQg2YXYqNmK2LnYp9iqINiu2KjZitix2KfYqiDYp9mE2KrYrNmF2YrZhCIsICJzaG9ydF9uYW1lIjogItin2YTYudmC2YjZhCDYp9mE2LHYp9mC2YrYqSIsICJsYW5nIjogImFyIiwgImRpciI6ICJydGwiLCAic3RhcnRfdXJsIjogIi4iLCAic2NvcGUiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjM2Y4YTI4IiwgInRoZW1lX2NvbG9yIjogIiMzZjhhMjgiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFNQUFBQURBQ0FZQUFBQlMzR3dIQUFBSEswbEVRVlI0MnUzZC8wOVZkUnpIOGZjNTkxNFFGY1Z2Q0kxcXBTaFgxK1ZicFpzYXBwQVpONlhFNWJmYTJscHRiZjRvUDdUVjF2d05OMytvUDZDdExHVUJDeHBsdWliK2tQUUx4SmVwMEdURGNtb0w3QXV3VVBEZWZtQzJsVG5PdVYvZ25NLzcrZmhOT1I2NG4vdCtmZDZmejhkejFSS1BxYWd2aWd1TWRiNnUzL0xTejJOUjdOQWNDb3VpaCtZd1dCUStOQWZCb3ZDaE9RZ1doUS9OUWJBb2ZHZ09nazN4dzA5U1hXTVdoUS9OM2NDbStLRzVHOWdVUHpTSHdLYjRvVGtFTnNVUHpTR3dLWDVvRG9GTjhVTnpDR3lLSDVwRFlGUDgwQndDbStLSDVoRFlEQk0wczVuOW9ia0wyQlEvTkllQUpSQllBakg3UTJzWG9BT0FEc0RzRDYxZGdBNEFPZ0N6UDdSMkFUb0E2QURNL3REYUJlZ0FvQU1BcWdQQThnZGFsMEYwQU5BQkFBSUFFQUJBRjRzTk1PZ0FBQUVBQ0FCQUFBQUNBQkFBZ0FBQUJBQWdBUUFBQUFnQVFBSUFBQUFRQUlBQUFBUUFJQUVBQUFBSUFFQUNBQUFBRUFQQ2lvSllYV3AvSFovL2RxTHRwMFFFb2ZyMjBqRm1RTnhFempaL0ozWUE5QU5nRU0vdEQ2MWphdkdIUVBLWXNnY0FTQ0NBQUFBRUFDQUJBQVB4TXkxL2pNNllFZ0JBd2xnUUFTSlRSendMZG03bjRpekZtZnRVZGdPVVFZNmF5QXhBQzBBRUFBZ0FRQUlBQUFBUUF1QmVBODNYOUhJOUFwZk4xL1JZZEFDeUJBQUlBRUFCQVlRRFlDRVBqQnBnT0FEb0FRd0FDd0RJSUNwYy9kQURRQVI2VURNRDAyWjhPQURyQVRBa0JUSjM5NlFDZ0F6aE5DbURhN0U4SEFCM0FiV0lBVTJiL0dUc0FJWURKeGM4U0NDeUJrazBRNE5mWjMzRUhJQVF3c2ZoZExZRUlBVXdyZnRkN0FFSUFrNG8vb1Uwd0lZQXB4WjlRQUFnQlRDbitoQU5BQ0dCQzhTY1ZBRUlBdnhkLzBnRWdCUEJ6OFl1SXBMUjRLK3FMK00rNDRJdkNUMWtIb0J2QXI4V2Y4ZzVBTjRCZkNqL3RBU0FJOE1PcVl0YVdMQVFCWGx4T3ovcWFuU0RBUy92SU9kMjBFZ2JNUmRGN0pnQ0VnbUtmYTM4RDBlSmYyalpkcmtRQUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQVlBQUFEMGVOVDZBQUFWajBsRVFWUjQydTNkV1pDVjVabkE4ZWVjYm5ZUWtVV0NJaUt5aXF6UnhJa0xiZ1JGZ1FZMUJDZTVTYzNkM0k1VlUzTTdOMlBWMU54T1RWV21hakxCTFdJM2lvSW1HbEVUbHdTYVhRZ0lpSWlneU40c1RTOXpFWk55RENEUXkzdk85LzUrZDFtS2M3N2xuUGYvUGVjN3AwdEJSYnJyeVFudDlnSlFCS3VmMkZxeUZ5cVBnMktCQnhBSUFnQ0xQWUFvRUFCWThBRUVnUURBZ2c4Z0NBU0FSUjhBTVNBQUxQb0FpQUVCWU5FSFFBd0lBQXMvQUVKQUFGajBBUkFEQXNEQ0Q0QVFFQUFXZmdDRWdBQ3c4QU1nQkFTQWhSOEFJU0FBTFB3QUNJRkxWYmI0QTBCK2EwZkp3UU9BL0tZQmhkc29DejhBUXVEYkZlb2pBSXMvQU5hWWpDWUFGbjRBVEFNeW13QlkvQUd3OW1RV0FCWi9BS3hCbDZka3B3TkF4MVRqUndKVk53R3crQU5nYmNvc0FDeitBRmlqT2tmSlRnV0F6bFVOSHdsVS9BVEE0ZytBYVVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQm1BV0R4QjBBRVpCWUFGbjhBUkVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQzZ0YkNjMndZRGdBaElFQUFXZndCSXZ6YVdpNzZCQUNBQ0VnYUF4UjhBS21ldExCZHRnd0JBQkZUUUJBQUFxQnhkSGdDdS9nR2c4dGJPY3JWdkFBQ0lnQW9LQUlzL0FGVHVXdW9lQUFESVVKY0VnS3QvQUtqc05iVmNMVThVQUVSQWhRYUF4UjhBcWlNQzNBTUFBQm5xdEFCdzlROEExVE1GS0ZmYUV3SUF1bjdOOVJFQUFHU293d0hnNmg4QXFtOEtZQUlBQUNZQXJ2NEJJSWNwUURuVkF3TUE2U0xBUndBQWtLSExDZ0JYL3dCUTNWTUFFd0FBTUFGdzlROEFPVXdCVEFBQXdBVEExVDhBNURBRk1BRUFBQk1BVi84QWtNTVV3QVFBQUV3QVhQMERRQTVUQUJNQUFEQUJBQUFFUUJqL0EwQzF1WmkxMndRQUFFd0FYUDBEUUE1VEFCTUFBREFCQUFDeURnRGpmd0NvYmhkYXkwMEFBTUFFQUFESU5nQ00vd0dnR002M3Bwc0FBSUFKQUFDUVpRQVkvd05Bc1p4cmJUY0JBQUFUQUFCQUFBQUF4UThBbi84RFFERjljNDAzQVFDQTNDY0FBSUFBQUFDS0hnQSsvd2VBWXZ2NldtOENBQUE1VHdBQUFBRUFBQWdBQUtCd0FlQUdRQURJdzEvV2ZCTUFBTWgxQWdBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFDcVFNbHZBQUNBQ1FBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFMcGVyVjJRenN4UnQ4Vy9QL2JmZGtRVitlanpyZkd6LzZsekhuV2hmMXYxTDdGeTR3dE90bk40Wk9aUDR4L3YrZWZDYk0rai8zbDNmSEY4dndOckFnQVFzWERHMzlzSjUxQ0tVaXlZdnNTT1FBQUF4VFIyMk1TWWZNME1PK0liYmgxOVIxdzdhSlFkZ1FBQWlqd0ZlTnhPK09ZK21XbWZJQUNBZ3J0ejNPd1kzRytvSGZHVmF3ZU5pbHRIMzJGSElBQ0FZcXN0MThhOGFZdnRpSy9VelhnOFNsR3lJeEFBUVBFOVBQV3hxQzM3b2xLZm5uMWp6dVE2SndRQ0FNakRWZjJHeEt6eGM3TGZEM051V2hEOWV2WjNRaUFBZ0h6ay9wWEFVcFNpemcyUkNBQWdONU5HVEkxeFY5K1U3ZlovOS9xL2krdXV1c0dKZ0FBQVRBRnNPd2dBSUFQM1Rud3dCdllabE4xMmo3aHlaSHp2aGp1ZEFBZ0FJRTg5YW5yR1ExTWZ6VzY3NjZZL0h1V1N0MmdFQUpDeCtkTitIT1ZTVFRiYjI3dEhuM2pnNW9VT1BBSUF5TnV3QWNQajlySDNaTE85czIrYUgvMTdEWERnRVFBQU9kMFF0M0M2ci80aEFBQWlJbUxheUZ0ajlKQ3hoZC9PR2FPK0g5Y1B1ZEVCUndBQS9FVU9QNHF6eUZmL0VBQUEvOS9zU2ZNSy9kbjQ4SUhYeEcxajduYWdFUUFBWDFmMHUrTVhUUHV4ci80aEFBRE9wVzc2a2tJdWtyMXFlOGVEVXg1eGdCRUFBT2N5NHNycjR0YlJkeFJ1dSs2ZjlIQmMwWHVnQTR3QUFEaWZoUVc4R2RCZi9VTUFBSHlMVzBiZkhpTUhYVitZN1prNjhwWVlNM1M4QTRzQUFMaVFVcFJpd1l3bGhkbWVSVE4rNHFBaUFBQXV4cHpKZGRHblo5K3EzNDdjZnVZWUFRRFFJZjE2OW84ZjNqUy82cmRqd2ZRbFdmMmhJd1FBUUNjc250Vjk0MXpQMmw0eDExZi9FQUFBbCtiNndXTml4cWp2ViszenYyL2lRekd3enlBSEVnRUFjS21xK2JmemZmV1BsR3J0QWk3a3B6K2ZHM3NPN2JRanFGaTNqWmtWVjE4eElnNGMyMWRWei92bWEyZkcyR0VUSFVCTUFBQXU2MDJzVkJNTHBsZmZWd0lYdXZwSEFBQjB6TndwajBTdjJ0NVY4M3lIOUw4NjdodzcyNEZEQUFCMHhCVzlCOGE5RStkV3pmT2RQMzF4MUpSOTlROEJBTkJoQzZ2a1pzQWVOVDNqb1NtUE9tQUlBSURPY09Pd0NUSDVtaGtWL3p6dm1mQkFET283MkFGREFBRGtOQVZZV01WZlcwUUFBRlNrTzhmZEgwUDZENnZZNTNmVGlHa3hmdmhrQndvQkFOQ1phc3UxOGZEVUg3bjZCd0VBNUdiZTFCOUZqNW9lRmZlOEJ2Y2JHbmVOLzZFRGhBQUE2QXFEK2cyT1dlUG5WRjZZVEZzY3RXVS92b29BQU9neWRSWDJWd0o3MVBTSWg2Yys1c0FnQUlBOHBQcDkva2tqcGxiVXpYYXp4cytKcS9vTlNmTFkrNDkrNmtSRUFBRGRxNkh4S1ZPQVNIdnpYOE82cDUySUNBQ2dlNzI2ZVhrMG5UbWU1TEh2bmZoZ1hObjNxdVQ3WU1Md20yUGlkNllrZWV4RFRRZGo5YlpYbllnSUFLQjduVHA3TWxadXFrL3kySlh5azd1TFpxYTcrbjl4M1RQUjB0YmlSRVFBQU4ydnZuRnB0RWQ3a3NlZU4yMXhsRXZwL3VqT29MNkRZOWI0QjVJOGRrdGJTN3k0L2xrbklBSUFTT1BUdzN2aWcxMXZKM25zWVFPR3grMWo3MDIyN1E5UGZTelpieEs4dVcxVkhHbzY2QVJFQUFEcExGdnp5MlNQdlNqUkRYaTE1ZHFZTjIxeHN1MStZZTB2blhnSUFDQ3RQK3g2Sno0NXZEdkpZMDhkZVV2Y01IUmN0ei91bmVObUovdTdCTnYyYjRvdCs5WTc4UkFBUUZydDBSNE5hL1A2U21ES3IvNjUra2NBQUJWajFhYjZPTlY4TXNsajN6OXBYdlR2TmFEYkhtL2MxWk5pOGpYVGsyenJrWk9ING8ydEs1MXdDQUNnTWpRMW40aFZteHVTUEhidkhyM2p3WnNYZGVQVi8wK1M3ZWVYTmp3WFoxdWJuWEFJQUtCeTFLOU45NVhBQmRPWFJMblU5Vzk1QS9zTWluc25QcGhrRzF2YldtTjU0ek5PTkFRQVVGbjJITm9aYTNhL20rU3hSMXc1TW00ZGZVZVhQODZmdi9yWE04azJ2clg5dFRoNDRvQVREUUVBVko2VU42aDE5VmNDYThvMU1UL3BWLytXT3NFUUFFQmxlbS9uNnRoMzVKTWtqLzNkMFQrSWtZT3U3N0ovLzQ2eDk4ZlFBY09UYk51T3o3Zkd4cjFybkdBSUFLQXl0YlczeGZKRWY2R3VGS1ZZTUdOSmwvMzd2dnFIQUFDNGdKYzNQQituejU1Szh0aHpKdGRGbjU1OU8vM2ZIVE5zUWt5NWRtYVNiVHAyNmtpOC91SExUaXdFQUZEWlRwdzVIcTl0ZVRISlkvZnIyVC9tM0xTZ1VGZi9Lelk4SDJkYVRqdXh1Q1MxZGdFWDhvdWY1WDFWOFlkZDc4US9QZjhQVG9RdVVMOTJhY3liK3FNa2o3MWcrcEtvYit5OFh5YThvdmZBdUcvaTNDVGIwdGJlbXV3akZVd0FBQzdacm9QYm8zSFArMGtlZTlUZ01URnoxRzJkOXU4OU5QWFI2RlhiTzhtMi9HN0hiK1BBc1gxT0tBUUFVRDFTM3JpMmNFYm4vSDJBY3FrbTVrLzdjWmI3RUFFQTBJR3IxOCtTUFBadFkrNk80UU92NmZDLzg0TWI3NDZycnhpUlpCdDJIOXlSYklxQ0FBQzRiSC8rL0RyTlh3a3NsOHF4b0JPdTNIMzFEd0VBY0JsUzNzSCs0SlJIT3ZUWi9lZ2hZMlA2ZGQ5TDh0eFRmcE1DQVFEUVlTbS93OTdSdS9kVFh2Mi9zbkZac3Q5U1FBQUFkSXFVbyt5NnkxekUrL2NhRVBkUG1wZmtPYmUxdDBWRDQxTk9IQVFBVU4xMmZMNDFOaVQ2SGZzYmgwMklteS9qRi96bVRua2tldmRJODlXLzkzZStsZXp2S1NBQUFBb3pCYmpVcndTV1MrVllNSDFKbHZzS0FRRFFxZDdlL3V0a2Y4dit6ckd6WTBqL1lSZjkvNzl0ekt6NHpzQnJrenpYVHc3dGlqL3UvcjBUQmdFQUZFTnJXMnNzYjN3bXlXUFhsR3RpM3JURmx6QXhTUGpWdjhhbDBSN3RUaGdFQUZBY0wyMTRMczYyTmlkNTdJZW5QQlk5YW5wODYvK3ZzMzlHK0ZJME5aK0lWemMxT0ZFUUFFQ3hIRGw1S043WXVqTEpZdy9xTnpobWpaOXpFVmYvanlmYlA2czIxY2ZKNWlZbkNnSUFLSjYwTndOZWVMVGZyOWVBbUQxcGZwTG4xaDd0MGJEV1YvOFFBRUJCYmR1L0tiYnNXNS9rc1NkK1owcU1Iejc1dlAvN0E1UHJvay9QdmttZTJ4OTJ2Uk9mSE43dEJFRUFBS1lBM1RrRktFVXA2cVkvbnVVK1FRQUFkSXMzdDYyS0w1dStTUExZOTB4NElLN3NlOVhmL1BmZnUrSE91R2JRZFVtZTA3NGplK0w5blc4N01SQUFRTEcxdExYRVMrdWVUZkxZUFdwNnhrTlRIdjJiLzM1UjByLzY1NnQvQ0FBZ0V5K3VmelphMmxxU1BQYjhhWXVqcGx6ejEvODhjdEQxOGQzUlAwanlYRTZmUFJVck45VTdJUkFBUUI0T05SMk1ON2V0U3ZMWVF3Y01qOXZIM3ZmWC8xdzM0L0VvUlNuSmMzbDFjME0wblRudWhFQUFBUGxJZWpQZ1Z6Zjg5ZTNaTCtaTXJrdjJQT3JYTG5VaUlBQ0F2R3padHo2MjdkK1U1TEduanJ3bGJoZzZMdVpNcm91K1Bmc2xlUTVyUDM0dmRuLzVrUk1CQVFDWUFuU25SVE4rRW5VSi8rcmZNbDk5UXdBQXVYcGo2OG80Y3ZKUWtzZCs0T2FGTWZLcTBVa2VlLy9SVCtQZGozN3JCRUFBQUhrNjI5b2NMMjE0THMwYlpDbmRXMlREdXFlanJiM05DWUFBQVBLMXZQR1phRzFyeldaN3o3U2NqbGMyUE8vQUl3Q0F2QjA4Y1NEZTN2N3JiTGIzTjF0V3hMSFRSeDE0QkFCQVRqZkUrZDEvQkFEQVZ6YnVYUk03UHQ5YStPMWN2L2VQOGRFWDJ4eHd1bHl0WGNDRi9QVG5jMlBQb1oxMkJCVnpaZnpFbkg4dDlEWXVXL08vRGpRbUFBQmY5NXNQVjhTeFUwY0t1MzFmSE44ZnY5dnh1nT05BQURBdVJ3NDlsbjhia2Z4ZmlIdjlROWZqcU9uRGp2QUNBQ0E4eW5pMStSZThGZi9FQUFBRjlhNDUvM1lkWEI3WWJabjA2ZU44YWNEbXgxWUJBREF0Nmt2MEJXekgvNUJBQUJjcE5lMkxJL2pwNDlWL1haODJmUkZ2UFduMXh4UUJBREF4VGg5OW5TOHNuRloxVy9IaSt1ZWlaYTJGZ2NVQVFCd3NSb2FuNnJxUDVsN3R2VnN2TFQrT1FjU0FRQndLVDQ3dWpmZTI3bTZhcC8vbTl0V3hhR21ndzRrQWdEZ1VsWHpEWFJ1L2tNQUFGeW1QKzcrZlZYK3dhcXQremZHaDU5dGNBQVJBQUNYcXhxL0V1anFId0VBMEVHck5qZEVVL09KcW5tK2gwOStHYi9kdXNxQlF3QUFkTVNwNXBPeGFsTjkxVHpmRmV1Zmk3T3R6UTRjQWdDZ28rclhMbzMyYUsvNDU5bmExaHJMMXozcmdDRUFBRHJEM3NNZnh3ZTczcTc0NS9uVzl0Zmk0SWtERGhnQ0FLQ3p2TENtOG04R1hMYkd6WDhJQUlCTzljR3V0MlB2NFk4cjl2bHQvL3pEMlBUcFdnY0tBUURRbWRxalBSb2FuNnJZNStlcmZ3Z0FnQzZ5Y3VNTGNhcjVaTVU5cjJPbmpzVHJINzdzQUNFQUFMcENVL09KZUhYejhvcDdYaXMyL0NxYVc4NDRRQWdBZ0s1UzMxaFpOd08ydGJmRzhuVlBPekFJQUlDdTlQR1hIOFdhajkrdG1PZnp6dlkzNHNDeHp4d1lCQUJBVjZ1a0crN2MvSWNBQU9nbTczNzBabngyZEcveTU3SHI0UFpZOThrSERnZ0NBS0E3dExXM1ZjUlhBbDM5SXdBQXV0a3JHNWZGNmJPbmt6MytpVFBINDlkYlhuUWdFQUFBM2VuNDZXTkpGK0NYTnp5Zk5FQkFBQURaU2pXQ2IydHY4OVUvQkFCQUtxbHV3bnR2NStyWWQrUVRCd0FCQUpEVEZNRE5md2dBZ01TNis0ZDQ5aHphR1d0MnYydkhJd0FBVXVydW4rS3RYN3MwMnFQZGprY0FBS1RXWFgrTXA2bjVSS3phM0dDSFUvRnE3UUl1NUJjLzgrZEx6MmZ4ZjkwWCs0OStha2RVaVdPbmpzVHMvNWhtUjRBSkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUFRQUFDQUFBQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBMEZWS2R6MDVvZDF1QUFBVEFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFCQUFBQUFBZ0FBS0t4YXU0Q1VuaHplYmllUXJTZjJsK3dFQkFBV2ZNajk5U0FJRUFCWStDSGoxNGtRb0R1NEJ3Q0xQM2pOWUFJQTNzVEFOQUFUQUxENGc5Y1NBZ0M4WVlIWEZBSUF2RkdCMXhZQ0FHOVEzcURBYXd3QkFBQUlBRnlaQUY1ckNBQzhJUUZlY3dnQUFFQUE0RW9FOE5wREFBQUFBZ0FBRUFBQWdBQ2cyL2dNRXJ3R0VRQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQW9ESzhjVCtrcDBBWG9NSUFBQkFBQUFBQWdBQUVBQVVoTThnd1dzUEFRQUFDQUJjaVFCZWN3Z0F2Q0VCWG1zSUFBQkFBT0RLQlBBYVF3RGdEUXJ3MmtJQTRJMEt2S1pBQU9BTkM3eVdvR05xN1FLNitvM3J5ZUh0ZGdaWStERUJ3QnNaNERXRENRQ21BWUNGSHdGQVhtOXdnZ0N2QnhBQWVBTUVvSnU0QndBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQVVnYkE2aWUyK2lrMkFNakk2aWUybGt3QUFDREhDWUJkQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBZ0dvS0FMOEZBQUI1K011YWJ3SUFBTGxPQUFBQUFRQUFDQUFBb0xBQjRFWkFBQ2kycjYvMUpnQUFrUE1FQUFBUUFBQkFMZ0hnUGdBQUtLWnZydkVtQUFDUSt3UUFBQkFBQUVBdUFlQStBQUFvbG5PdDdTWUFBR0FDQUFCa0d3QStCZ0NBWWpqZm1tNENBQUFtQUFCQTFnSGdZd0FBcUc0WFdzdE5BQURBQkFBQXlENEFmQXdBQU5YcDI5WndFd0FBTUFFd0JRQ0FvbC85bXdBQWdBa0FBQ0FBdnNiSEFBQlFIUzUyelRZQkFBQVRBRk1BQUNqNjFiOEpBQUNZQUpnQ0FFQU9WLzhtQUFCZ0FtQUtBQUE1WFAyYkFBQ0FDWUFwQUFEa2NQVnZBZ0FBSmdDbUFBQ1F3OVYvaHljQUlnQUFxbS94NzNBQUFBRFZxY01CWUFvQUFOVjE5VzhDQUFBbUFLWUFBSkREMVgrblRnQkVBQUJVeCtMZnFRRUFBRlNQVGcwQVV3QUFxUHlyL3k2WkFJZ0FBS2o4dGJWY0xVOFVBQ3orRlI0QUFFQmw2N0lBTUFVQWdNcGRTOHZWK3NRQndPSmZvUUVnQWdDZ010ZE85d0FBUUlhNkpRQk1BUUNnc3RiTWN0RTJDQUFzL2hVVUFDSUFBQ3BualN3WGZRTUJ3T0pmQVFFZ0FnQWcvWnBZem0yREFTRDN4VDlwQUlnQUFDeis2WlJ6M3dFQWtPUGFWN1lqQUNDL05hOXNod0JBZm10ZDJZNEJnUHpXdUxJZEJBRDVyVzFsT3dvQThsdlR5bllZQU9TM2xwWHRPQURJYncwcjI0RUFrTi9hVlZXTDYxMVBUbWgzV2dGZzRjOWdBbUFhQUlBMUt2TUFFQUVBV0pzNlIxVXZwajRTQU1EQ244a0V3RFFBQUd0UTVnRWdBZ0N3OWx5ZVFpMmVQaElBd01LZnlRVEFOQUFBYTB6bUV3RFRBQUFzL0prSGdCQUF3TUovZm1VSEVBRHlXenV5V2h4TkF3QncwWmhoQUFnQkFISmYrTE1PQUNFQVFLNEx2d0FRQWdBVy9vd0pBQ0VBWU9FWEFJZ0JBSXUrQUVBSUFGajRCWUFZRUFNQUZuMEJJQVlBc09nTEFERUFnRVZmQUFnQ0FDejRBa0FRQUdEQkZ3Q2lRQlFBV093RkFBSUJzTURUbmY0UFBOd0ZnSXlIWlJVQUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQVlBQUFEMGVOVDZBQUFWajBsRVFWUjQydTNkV1pDVjVabkE4ZWVjYm5ZUWtVV0NJaUt5aXF6UnhJa0xiZ1JGZ1FZMUJDZTVTYzNkM0k1VlUzTTdOMlBWMU54T1RWV21hakxCTFdJM2lvSW1HbEVUbHdTYVhRZ0lpSWlneU40c1RTOXpFWk55RENEUXkzdk85LzUrZDFtS2M3N2xuUGYvUGVjN3AwdEJSYnJyeVFudDlnSlFCS3VmMkZxeUZ5cVBnMktCQnhBSUFnQ0xQWUFvRUFCWThBRUVnUURBZ2c4Z0NBU0FSUjhBTVNBQUxQb0FpQUVCWU5FSFFBd0lBQXMvQUVKQUFGajBBUkFEQXNEQ0Q0QVFFQUFXZmdDRWdBQ3c4QU1nQkFTQWhSOEFJU0FBTFB3QUNJRkxWYmI0QTBCK2EwZkp3UU9BL0tZQmhkc29DejhBUXVEYkZlb2pBSXMvQU5hWWpDWUFGbjRBVEFNeW13QlkvQUd3OW1RV0FCWi9BS3hCbDZka3B3TkF4MVRqUndKVk53R3crQU5nYmNvc0FDeitBRmlqT2tmSlRnV0F6bFVOSHdsVS9BVEE0ZytBYVVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQm1BV0R4QjBBRVpCWUFGbjhBUkVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQzZ0YkNjMndZRGdBaElFQUFXZndCSXZ6YVdpNzZCQUNBQ0VnYUF4UjhBS21ldExCZHRnd0JBQkZUUUJBQUFxQnhkSGdDdS9nR2c4dGJPY3JWdkFBQ0lnQW9LQUlzL0FGVHVXdW9lQUFESVVKY0VnS3QvQUtqc05iVmNMVThVQUVSQWhRYUF4UjhBcWlNQzNBTUFBQm5xdEFCdzlROEExVE1GS0ZmYUV3SUF1bjdOOVJFQUFHU293d0hnNmg4QXFtOEtZQUlBQUNZQXJ2NEJJSWNwUURuVkF3TUE2U0xBUndBQWtLSExDZ0JYL3dCUTNWTUFFd0FBTUFGdzlROEFPVXdCVEFBQXdBVEExVDhBNURBRk1BRUFBQk1BVjc4QWtNTVV3QVFBQUV3QVhQMERRQTVUQUJNQUFEQUJBQUFFUUJqL0EwQzF1WmkxMndRQUFFd0FYUDBEUUE1VEFCTUFBREFCQUFDeURnRGpmd0NvYmhkYXkwMEFBTUFFQUFESU5nQ00vd0dnR002M3Bwc0FBSUFKQUFDUVpRQVkvd05Bc1p4cmJUY0JBQUFUQUFCQUFBQUF4UThBbi84RFFERjljNDAzQVFDQTNDY0FBSUFBQUFDS0hnQSsvd2VBWXZ2NldtOENBQUE1VHdBQUFBRUFBQWdBQUtCd0FlQUdRQURJdzEvV2ZCTUFBTWgxQWdBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFDcVFNbHZBQUNBQ1FBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFMcGVyVjJRenN4UnQ4Vy9QL2JmZGtRVitlanpyZkd6LzZsekhuV2hmMXYxTDdGeTR3dE90bk40Wk9aUDR4L3YrZWZDYk0rai8zbDNmSEY4dndOckFnQVFzWERHMzlzSjUxQ0tVaXlZdnNTT1FBQUF4VFIyMk1TWWZNME1PK0liYmgxOVIxdzdhSlFkZ1FBQWlqd0ZlTnhPK09ZK21XbWZJQUNBZ3J0ejNPd1kzRytvSGZHVmF3ZU5pbHRIMzJGSElBQ0FZcXN0MThhOGFZdnRpSy9VelhnOFNsR3lJeEFBUVBFOVBQV3hxQzM3b2xLZm5uMWp6dVE2SndRQ0FNakRWZjJHeEt6eGM3TGZEM051V2hEOWV2WjNRaUFBZ0h6ay9wWEFVcFNpemcyUkNBQWdONU5HVEkxeFY5K1U3ZlovOS9xL2krdXV1c0dKZ0FBQVRBRnNPd2dBSUFQM1Rud3dCdllabE4xMmo3aHlaSHp2aGp1ZEFBZ0FJRTg5YW5yR1ExTWZ6VzY3NjZZL0h1V1N0MmdFQUpDeCtkTitIT1ZTVFRiYjI3dEhuM2pnNW9VT1BBSUF5TnV3QWNQajlySDNaTE85czIrYUgvMTdEWERnRVFBQU9kMFF0M0M2ci80aEFBQWlJbUxheUZ0ajlKQ3hoZC9PR2FPK0g5Y1B1ZEVCUndBQS9FVU9QNHF6eUZmL0VBQUEvOS9zU2ZNSy9kbjQ4SUhYeEcxajduYWdFUUFBWDFmMHUrTVhUUHV4ci80aEFBRE9wVzc2a2tJdWtyMXFlOGVEVXg1eGdCRUFBT2N5NHNycjR0YlJkeFJ1dSs2ZjlIQmMwWHVnQTR3QUFEaWZoUVc4R2RCZi9VTUFBSHlMVzBiZkhpTUhYVitZN1prNjhwWVlNM1M4QTRzQUFMaVFVcFJpd1l3bGhkbWVSVE4rNHFBaUFBQXV4cHpKZGRHblo5K3EzNDdjZnVZWUFRRFFJZjE2OW84ZjNqUy82cmRqd2ZRbFdmMmhJd1FBUUNjc250Vjk0MXpQMmw0eDExZi9FQUFBbCtiNndXTml4cWp2ViszenYyL2lRekd3enlBSEVnRUFjS21xK2JmemZmV1BsR3J0QWk3a3B6K2ZHM3NPN2JRanFGaTNqWmtWVjE4eElnNGMyMWRWei92bWEyZkcyR0VUSFVCTUFBQXU2MDJzVkJNTHBsZmZWd0lYdXZwSEFBQjB6TndwajBTdjJ0NVY4M3lIOUw4NjdodzcyNEZEQUFCMHhCVzlCOGE5RStkV3pmT2RQMzF4MUpSOTlROEJBTkJoQzZ2a1pzQWVOVDNqb1NtUE9tQUlBSURPY09Pd0NUSDVtaGtWL3p6dm1mQkFET283MkFGREFBRGtOQVZZV01WZlcwUUFBRlNrTzhmZEgwUDZENnZZNTNmVGlHa3hmdmhrQndvQkFOQ1phc3UxOGZEVUg3bjZCd0VBNUdiZTFCOUZqNW9lRmZlOEJ2Y2JHbmVOLzZFRGhBQUE2QXFEK2cyT1dlUG5WRjZZVEZzY3RXVS92b29BQU9neWRSWDJWd0o3MVBTSWg2Yys1c0FnQUlBOHBQcDkva2tqcGxiVXpYYXp4cytKcS9vTlNmTFkrNDkrNmtSRUFBRGRxNkh4S1ZPQVNIdnpYOE82cDUySUNBQ2dlNzI2ZVhrMG5UbWU1TEh2bmZoZ1hObjNxdVQ3WU1Md20yUGlkNllrZWV4RFRRZGo5YlpYbllnSUFLQjduVHA3TWxadXFrL3kySlh5azd1TFpxYTcrbjl4M1RQUjB0YmlSRVFBQU4ydnZuRnB0RWQ3a3NlZU4yMXhsRXZwL3VqT29MNkRZOWI0QjVJOGRrdGJTN3k0L2xrbklBSUFTT1BUdzN2aWcxMXZKM25zWVFPR3grMWo3MDIyN1E5UGZTelpieEs4dVcxVkhHbzY2QVJFQUFEcExGdnp5MlNQdlNqUkRYaTE1ZHFZTjIxeHN1MStZZTB2blhnSUFDQ3RQK3g2Sno0NXZEdkpZMDhkZVV2Y01IUmN0ei91bmVObUovdTdCTnYyYjRvdCs5WTc4UkFBUUZydDBSNE5hL1A2U21ES3IvNjUra2NBQUJWajFhYjZPTlY4TXNsajN6OXBYdlR2TmFEYkhtL2MxWk5pOGpYVGsyenJrWk9ING8ydEs1MXdDQUNnTWpRMW40aFZteHVTUEhidkhyM2p3WnNYZGVQVi8wK1M3ZWVYTmp3WFoxdWJuWEFJQUtCeTFLOU45NVhBQmRPWFJMblU5Vzk1QS9zTWluc25QcGhrRzF2YldtTjU0ek5PTkFRQVVGbjJITm9aYTNhL20rU3hSMXc1TW00ZGZVZVhQODZmdi9yWE04azJ2clg5dFRoNDRvQVREUUVBVko2VU42aDE5VmNDYThvMU1UL3BWLytXT3NFUUFFQmxlbS9uNnRoMzVKTWtqLzNkMFQrSWtZT3U3N0ovLzQ2eDk4ZlFBY09UYk51T3o3Zkd4cjFybkdBSUFLQXl0YlczeGZKRWY2R3VGS1ZZTUdOSmwvMzd2dnFIQUFDNGdKYzNQQituejU1Szh0aHpKdGRGbjU1OU8vM2ZIVE5zUWt5NWRtYVNiVHAyNmtpOC91SExUaXdFQUZEWlRwdzVIcTl0ZVRISlkvZnIyVC9tM0xTZ1VGZi9Lelk4SDJkYVRqdXh1Q1MxZGdFWDhvdWY1WDFWOFlkZDc4US9QZjhQVG9RdVVMOTJhY3liK3FNa2o3MWcrcEtvYit5OFh5YThvdmZBdUcvaTNDVGIwdGJlbXV3akZVd0FBQzdacm9QYm8zSFArMGtlZTlUZ01URnoxRzJkOXU4OU5QWFI2RlhiTzhtMi9HN0hiK1BBc1gxT0tBUUFVRDFTM3JpMmNFYm4vSDJBY3FrbTVrLzdjWmI3RUFFQTBJR3IxOCtTUFBadFkrNk80UU92NmZDLzg0TWI3NDZycnhpUlpCdDJIOXlSYklxQ0FBQzRiSC8rL0RyTlh3a3NsOHF4b0JPdTNIMzFEd0VBY0JsUzNzSCs0SlJIT3ZUWi9lZ2hZMlA2ZGQ5TDh0eFRmcE1DQVFEUVlTbS93OTdSdS9kVFh2Mi9zbkZac3Q5U1FBQUFkSXFVbyt5NnkxekUrL2NhRVBkUG1wZmtPYmUxdDBWRDQxTk9IQVFBVU4xMmZMNDFOaVQ2SGZzYmgwMklteS9qRi96bVRua2tldmRJODlXLzkzZStsZXp2S1NBQUFBb3pCYmpVcndTV1MrVllNSDFKbHZzS0FRRFFxZDdlL3V0a2Y4dit6ckd6WTBqL1lSZjkvNzl0ekt6NHpzQnJrenpYVHc3dGlqL3UvcjBUQmdFQUZFTnJXMnNzYjN3bXlXUFhsR3RpM3JURmx6QXhTUGpWdjhhbDBSN3RUaGdFQUZBY0wyMTRMczYyTmlkNTdJZW5QQlk5YW5wODYvK3ZzMzlHK0ZJME5aK0lWemMxT0ZFUUFFQ3hIRGw1S043WXVqTEpZdy9xTnpobWpaOXpFVmYvanlmYlA2czIxY2ZKNWlZbkNnSUFLSjYwTndOZWVMVGZyOWVBbUQxcGZwTG4xaDd0MGJEV1YvOFFBRUJCYmR1L0tiYnNXNS9rc1NkK1owcU1Iejc1dlAvN0E1UHJvay9QdmttZTJ4OTJ2Uk9mSE43dEJFRUFBS1lBM1RrRktFVXA2cVkvbnVVK1FRQUFkSXMzdDYyS0w1dStTUExZOTB4NElLN3NlOVhmL1BmZnUrSE91R2JRZFVtZTA3NGplK0w5blc4N01SQUFRTEcxdExYRVMrdWVUZkxZUFdwNnhrTlRIdjJiLzM1UjByLzY1NnQvQ0FBZ0V5K3VmelphMmxxU1BQYjhhWXVqcGx6ejEvODhjdEQxOGQzUlAwanlYRTZmUFJVck45VTdJUkFBUUI0T05SMk1ON2V0U3ZMWVF3Y01qOXZIM3ZmWC8xdzM0L0VvUlNuSmMzbDFjME0wblRudWhFQUFBUGxJZWpQZ1Z6Zjg5ZTNaTCtaTXJrdjJQT3JYTG5VaUlBQ0F2R3padHo2MjdkK1U1TEduanJ3bGJoZzZMdVpNcm91K1Bmc2xlUTVyUDM0dmRuLzVrUk1CQVFDWUFuU25SVE4rRW5VSi8rcmZNbDk5UXdBQXVYcGo2OG80Y3ZKUWtzZCs0T2FGTWZLcTBVa2VlLy9SVCtQZGozN3JCRUFBQUhrNjI5b2NMMjE0THMwYlpDbmRXMlREdXFlanJiM05DWUFBQVBLMXZQR1phRzFyeldaN3o3U2NqbGMyUE8vQUl3Q0F2QjA4Y1NEZTN2N3JiTGIzTjF0V3hMSFRSeDE0QkFCQVRqZkUrZDEvQkFEQVZ6YnVYUk03UHQ5YStPMWN2L2VQOGRFWDJ4eHd1bHl0WGNDRi9QVG5jMlBQb1oxMkJCVnpaZnpFbkg4dDlEWXVXL08vRGpRbUFBQmY5NXNQVjhTeFUwY0t1MzFmSE44ZnY5dnh1nT05BQURBdVJ3NDlsbjhia2Z4ZmlIdjlROWZqcU9uRGp2QUNBQ0E4eW5pMStSZThGZi9FQUFBRjlhNDUvM1lkWEI3WWJabjA2ZU44YWNEbXgxWUJBREF0Nmt2MEJXekgvNUJBQUJjcE5lMkxJL2pwNDlWL1haODJmUkZ2UFduMXh4UUJBREF4VGg5OW5TOHNuRloxVy9IaSt1ZWlaYTJGZ2NVQVFCd3NSb2FuNnJxUDVsN3R2VnN2TFQrT1FjU0FRQndLVDQ3dWpmZTI3bTZhcC8vbTl0V3hhR21ndzRrQWdEZ1VsWHpEWFJ1L2tNQUFGeW1QKzcrZlZYK3dhcXQremZHaDU5dGNBQVJBQUNYcXhxL0V1anFId0VBMEVHck5qZEVVL09KcW5tK2gwOStHYi9kdXNxQlF3QUFkTVNwNXBPeGFsTjkxVHpmRmV1Zmk3T3R6UTRjQWdDZ28rclhMbzMyYUsvNDU5bmExaHJMMXozcmdDRUFBRHJEM3NNZnh3ZTczcTc0NS9uVzl0Zmk0SWtERGhnQ0FLQ3p2TENtOG04R1hMYkd6WDhJQUlCTzljR3V0MlB2NFk4cjl2bHQvL3pEMlBUcFdnY0tBUURRbWRxalBSb2FuNnJZNStlcmZ3Z0FnQzZ5Y3VNTGNhcjVaTVU5cjJPbmpzVHJINzdzQUNFQUFMcENVL09KZUhYejhvcDdYaXMyL0NxYVc4NDRRQWdBZ0s1UzMxaFpOd08ydGJmRzhuVlBPekFJQUlDdTlQR1hIOFdhajkrdG1PZnp6dlkzNHNDeHp4d1lCQUJBVjZ1a0crN2MvSWNBQU9nbTczNzBabngyZEcveTU3SHI0UFpZOThrSERnZ0NBS0E3dExXM1ZjUlhBbDM5SXdBQXV0a3JHNWZGNmJPbmt6MytpVFBINDlkYlhuUWdFQUFBM2VuNDZXTkpGK0NYTnp5Zk5FQkFBQURaU2pXQ2IydHY4OVUvQkFCQUtxbHV3bnR2NStyWWQrUVRCd0FCQUpEVEZNRE5md2dBZ01TNis0ZDQ5aHphR1d0MnYydkhJd0FBVXVydW4rS3RYN3MwMnFQZGprY0FBS1RXWFgrTXA2bjVSS3phM0dDSFUvRnE3UUl1NUJjLzgrZEx6MmZ4ZjkwWCs0OStha2RVaVdPbmpzVHMvNWhtUjRBSkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUFRQUFDQUFBQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBMEZWS2R6MDVvZDF1QUFBVEFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFCQUFBQUFBZ0FBS0t4YXU0Q1VuaHplYmllUXJTZjJsK3dFQkFBV2ZNajk5U0FJRUFCWStDSGoxNGtRb0R1NEJ3Q0xQM2pOWUFJQTNzVEFOQUFUQUxENGc5Y1NBZ0M4WVlIWEZBSUF2RkdCMXhZQ0FHOVEzcURBYXd3QkFBQUlBRnlaQUY1ckNBQzhJUUZlY3dnQUFFQUE0RW9FOE5wREFBQUFBZ0FBRUFBQWdBQ2cyL2dNRXJ3R0VRQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQW9ESzhjVCtrcDBBWG9NSUFBQkFBQUFBQWdBQUVBQVVoTThnd1dzUEFRQUFDQUJjaVFCZWN3Z0F2Q0VCWG1zSUFBQkFBT0RLQlBBYVF3RGdEUXJ3MmtJQTRJMEt2S1pBQU9BTkM3eVdvR05xN1FLNitvM3J5ZUh0ZGdaWStERUJ3QnNaNERXRENRQ21BWUNGSHdGQVhtOXdnZ0N2QnhBQWVBTUVvSnU0QndBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQVVnYkE2aWUyK2lrMkFNakk2aWUybGt3QUFDREhDWUJkQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBZ0dvS0FMOEZBQUI1K011YWJ3SUFBTGxPQUFBQUFRQUFDQUFBb0xBQjRFWkFBQ2kycjYvMUpnQUFrUE1FQUFBUUFBQkFMZ0hnUGdBQUtLWnZydkVtQUFDUSt3UUFBQkFBQUVBdUFlQStBQUFvbG5PdDdTWUFBR0FDQUFCa0d3QStCZ0NBWWpqZm1tNENBQUFtQUFCQTFnSGdZd0FBcUc0WFdzdE5BQURBQkFBQXlENEFmQXdBQU5YcDI5WndFd0FBTUFFd0JRQ0FvbC85bXdBQWdBa0FBQ0FBdnNiSEFBQlFIUzUyelRZQkFBQVRBRk1BQUNqNjFiOEpBQUNZQUpnQ0FFQU9WLzhtQUFCZ0FtQUtBQUE1WFAyYkFBQ0FDWUFwQUFEa2NQVnZBZ0FBSmdDbUFBQ1F3OVYvaHljQUlnQUFxbS94NzNBQUFBRFZxY01CWUFvQUFOVjE5VzhDQUFBbUFLWUFBSkREMVgrblRnQkVBQUJVeCtMZnFRRUFBRlNQVGcwQVV3QUFxUHlyL3k2WkFJZ0FBS2o4dGJWY0xVOFVBQ3orRlI0QUFFQmw2N0lBTUFVQWdNcGRTOHZWK3NRQndPSmZvUUVnQWdDZ010ZE85d0FBUUlhNkpRQk1BUUNnc3RiTWN0RTJDQUFzL2hVVUFDSUFBQ3BualN3WGZRTUJ3T0pmQVFFZ0FnQWcvWnBZem0yREFTRDN4VDlwQUlnQUFDeis2WlJ6M3dFQWtPUGFWN1lqQUNDL05hOXNod0JBZm10ZDJZNEJnUHpXdUxJZEJBRDVyVzFsT3dvQThsdlR5bllZQU9TM2xwWHRPQURJYncwcjI0RUFrTi9hVlZXTDYxMVBUbWgzV2dGZzRjOWdBbUFhQUlBMUt2TUFFQUVBV0pzNlIxVXZwajRTQU1EQ244a0V3RFFBQUd0UTVnRWdBZ0N3OWx5ZVFpMmVQaElBd01LZnlRVEFOQUFBYTB6bUV3RFRBQUFzL0prSGdCQUF3TUovZm1VSEVBRHlXenV5V2h4TkF3QncwWmhoQUFnQkFISmYrTE1PQUNFQVFLNEx2d0FRQWdBVy9vd0pBQ0VBWU9FWEFJZ0JBSXUrQUVBSUFGajRCWUFZRUFNQUZuMEJJQVlBc09nTEFERUFnRVZmQUFnQ0FDejRBa0FRQUdEQkZ3Q2lRQlFBV093RkFBSUJzTURUbmY0UFBOd0ZnSXlIWlJVQUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogIm1hc2thYmxlIn1dfQ==">
 <!-- ===== نهاية إعدادات الموبايل ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <style>
   :root{
     --green:#5cab3e; --green-d:#3f8a28; --green-l:#eaf6e4;
@@ -126,30 +128,35 @@
 </head>
 <body>
 
-<!-- ===== SETUP (Google Sheets Web App) ===== -->
+<!-- ===== SETUP (Firebase config) ===== -->
 <div id="setupScreen" class="center-screen hidden">
   <div class="login-card">
     <div class="brand">Elegant<span class="gold">Minds</span></div>
-    <div class="brand-sub">ربط التطبيق بجدول Google Sheets</div>
+    <div class="brand-sub">ربط التطبيق بقاعدة بيانات Firebase</div>
     <h2>إعداد الاتصال</h2>
     <div class="field">
-      <label>الصق رابط Web App (ينتهي بـ /exec)</label>
-      <textarea id="cfgInput" rows="4" placeholder="https://script.google.com/macros/s/AKfycb.../exec"></textarea>
+      <label>الصق إعدادات Firebase (firebaseConfig)</label>
+      <textarea id="cfgInput" rows="9" placeholder='{
+  apiKey: "...",
+  authDomain: "....firebaseapp.com",
+  projectId: "....",
+  ...
+}'></textarea>
     </div>
     <button class="btn" onclick="saveConfig()">اتصال وحفظ</button>
     <div class="err" id="setupErr"></div>
     <div class="steps">
-      <b>من وين أجيب الرابط؟</b><br>
-      ١. افتح ملف Google Sheets الخاص بالنظام.<br>
-      ٢. <b>Extensions ← Apps Script</b> والصق كود «Code.gs».<br>
-      ٣. <b>Deploy ← New deployment ← Web app</b><br>
-      &nbsp;&nbsp;&nbsp;Execute as: <b>Me</b> — Who has access: <b>Anyone</b>.<br>
-      ٤. انسخ <b>Web app URL</b> والصقه فوق.
+      <b>من وين أجيب الإعدادات؟</b><br>
+      ١. افتح <b>console.firebase.google.com</b> وأنشئ مشروع.<br>
+      ٢. <b>Build ← Firestore Database ← Create database ← Test mode</b>.<br>
+      ٣. ⚙️ <b>Project settings ← Your apps ← Web (&lt;/&gt;)</b> وسجّل تطبيق.<br>
+      ٤. انسخ كائن <b>firebaseConfig</b> كاملاً والصقه فوق.<br>
+      (التفاصيل في ملف «دليل_إعداد_Firebase»)
     </div>
   </div>
 </div>
 
-<!-- ===== LOGIN ===== --><!-- ===== LOGIN ===== -->
+<!-- ===== LOGIN ===== -->
 <div id="loginScreen" class="center-screen hidden">
   <div class="login-card">
     <div class="brand">Elegant<span class="gold">Minds</span></div>
@@ -195,9 +202,9 @@
 
 <script>
 /* =================================================================
-   العقول الراقية — نظام مبيعات (Google Sheets — عبر Apps Script Web App)
+   العقول الراقية — نظام مبيعات (Firebase Firestore — مزامنة لحظية)
    ================================================================= */
-const CFG_KEY='elegantminds_gs_url';
+const CFG_KEY='elegantminds_fb_config';
 const SESSION_KEY='elegantminds_session';
 
 const SEED_PRODUCTS=[
@@ -217,7 +224,8 @@ const SEED_PRODUCTS=[
   {id:'p1013',code:'1013',name:'BIOTOX Face Serum 30ml',cat:'Anti-Aging',price:43.95,cost:35.16}
 ];
 
-let DB={employees:[],products:[],sales:[],settings:{},attendance:[]};
+let db=null;
+let DB={employees:[],products:[],sales:[],settings:{},attendance:[],repstock:[]};
 let user=null, currentPage=null;
 let bootDone=false, _seeded=false;
 const ready={emp:false,prod:false,sales:false};
@@ -233,49 +241,75 @@ function prod(id){return DB.products.find(p=>p.id===id);}
 function toast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(type||'');setTimeout(()=>t.className='toast',2400);}
 function showLoading(m){document.getElementById('overlayMsg').textContent=m||'';document.getElementById('overlay').classList.remove('hidden');}
 function hideLoading(){document.getElementById('overlay').classList.add('hidden');}
-function setSync(on){const d=document.getElementById('syncDot'),t=document.getElementById('syncTxt');if(!d)return;d.className='dot'+(on?'':' off');t.textContent=on?'متصل — Google Sheets':'غير متصل';}
+function setSync(on){const d=document.getElementById('syncDot'),t=document.getElementById('syncTxt');if(!d)return;d.className='dot'+(on?'':' off');t.textContent=on?'مزامنة لحظية':'غير متصل';}
 
-/* ---------- GOOGLE SHEETS API ---------- */
-let API_URL='';
+/* ---------- FIREBASE INIT ---------- */
 function parseConfig(text){
-  const m=String(text).match(/https:\/\/script\.google\.com\/macros\/s\/[^\s"']+\/exec/);
-  if(!m)throw new Error('الصق رابط Web App الصحيح (ينتهي بـ /exec)');
-  return m[0];
+  const i=text.indexOf('{'), j=text.lastIndexOf('}');
+  if(i<0||j<0)throw new Error('الصق كائن الإعدادات كاملاً بين { }');
+  const obj=(new Function('return ('+text.slice(i,j+1)+')'))();
+  if(!obj.apiKey||!obj.projectId)throw new Error('الإعدادات ناقصة (apiKey/projectId)');
+  return obj;
 }
-async function api(action,params){
-  if(!API_URL)throw new Error('لا يوجد رابط سيرفر');
-  const body=new URLSearchParams(Object.assign({action:action},params||{}));
-  const res=await fetch(API_URL,{method:'POST',body:body});
-  const out=await res.json();
-  if(!out.ok)throw new Error(out.error||'خطأ من السيرفر');
-  return out;
+function initFirebase(cfg){
+  if(typeof firebase==='undefined')throw new Error('تعذّر تحميل مكتبة Firebase — تأكد من الاتصال بالإنترنت');
+  if(!firebase.apps.length)firebase.initializeApp(cfg);
+  db=firebase.firestore();
 }
-async function loadData(silent){
-  try{
-    const out=await api('load',{});
-    const d=out.data||{};
-    DB.employees=d.employees||[];
-    DB.products=d.products||[];
-    DB.sales=d.sales||[];
-    DB.attendance=d.attendance||[];
-    DB.settings=(d.settings&&d.settings.full)?d.settings:{full:1,half:0.5};
-    if(user){const u=DB.employees.find(x=>x.id===user.id);if(u)user=u;}
-    setSync(true);
-    if(!bootDone){bootDone=true;afterInitialLoad();}
-    else liveRefresh();
-  }catch(e){
-    setSync(false);console.error(e);
-    if(!silent)toast('انقطع الاتصال بقاعدة البيانات','bad');
-    if(!bootDone){hideLoading();document.getElementById('setupScreen').classList.remove('hidden');}
+function attachListeners(){
+  const onErr=(e)=>{setSync(false);console.error(e);toast('انقطع الاتصال بقاعدة البيانات','bad');};
+  db.collection('employees').onSnapshot(snap=>{
+    DB.employees=snap.docs.map(d=>Object.assign({id:d.id},d.data()));
+    onData('emp');
+  },onErr);
+  db.collection('products').onSnapshot(snap=>{
+    DB.products=snap.docs.map(d=>Object.assign({id:d.id},d.data()));
+    onData('prod');
+  },onErr);
+  db.collection('sales').onSnapshot(snap=>{
+    DB.sales=snap.docs.map(d=>Object.assign({id:d.id},d.data()));
+    onData('sales');
+  },onErr);
+  /* إعدادات العمولة العامة (معدلات القطعة) — لا تُعيق الإقلاع */
+  db.collection('settings').doc('commission').onSnapshot(d=>{
+    DB.settings=d.exists?d.data():{full:1,half:0.5};
+    if(bootDone&&user&&currentPage==='commission')go('commission');
+  },()=>{});
+  db.collection('attendance').onSnapshot(snap=>{
+    DB.attendance=snap.docs.map(d=>Object.assign({id:d.id},d.data()));
+    if(bootDone)liveRefresh();
+  },()=>{});
+  db.collection('repStock').onSnapshot(snap=>{
+    DB.repstock=snap.docs.map(d=>Object.assign({id:d.id},d.data()));
+    if(bootDone)liveRefresh();
+  },()=>{});
+}
+function onData(which){
+  ready[which]=true;setSync(true);
+  refreshLoginUsers();
+  if(!bootDone){
+    if(ready.emp&&ready.prod&&ready.sales){bootDone=true;afterInitialLoad();}
+  }else{
+    liveRefresh();
   }
 }
-async function reloadData(){await loadData(true);}
-let _pollTimer=null;
-function startPolling(){if(_pollTimer)clearInterval(_pollTimer);_pollTimer=setInterval(()=>{if(bootDone)loadData(true);},60000);}
+async function seedIfEmpty(){
+  if(!_seeded&&DB.products.length===0){
+    _seeded=true;
+    const batch=db.batch();
+    SEED_PRODUCTS.forEach(p=>{const{id,...rest}=p;batch.set(db.collection('products').doc(id),rest);});
+    try{await batch.commit();}catch(e){console.error(e);}
+  }
+  if(DB.employees.length===0){
+    try{await db.collection('employees').doc('u_admin').set({name:'المدير',role:'manager',pin:'1234'});}catch(e){console.error(e);}
+  }
+  /* بذرة معدلات العمولة الافتراضية */
+  try{await db.collection('settings').doc('commission').set({full:1,half:0.5},{merge:true});}catch(e){console.error(e);}
+}
 async function afterInitialLoad(){
+  await seedIfEmpty();
   hideLoading();
   refreshLoginUsers();
-  startPolling();
   const sid=localStorage.getItem(SESSION_KEY);
   const e=sid?DB.employees.find(x=>x.id===sid):null;
   if(e){user=e;enterApp();}
@@ -283,28 +317,28 @@ async function afterInitialLoad(){
 }
 function liveRefresh(){
   refreshLoginUsers();
-  if(user&&currentPage&&currentPage!=='newsale')go(currentPage);
+  if(user&&currentPage&&currentPage!=='newsale'&&currentPage!=='repstock')go(currentPage);
 }
 
 /* ---------- SETUP ---------- */
 function openSetup(){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('cfgInput').value=localStorage.getItem(CFG_KEY)||'';document.getElementById('setupScreen').classList.remove('hidden');}
 async function saveConfig(){
   const raw=document.getElementById('cfgInput').value.trim();
-  let url;
-  try{url=parseConfig(raw);}catch(e){document.getElementById('setupErr').textContent=e.message;return;}
+  let cfg;
+  try{cfg=parseConfig(raw);}catch(e){document.getElementById('setupErr').textContent=e.message;return;}
   showLoading('جاري الاتصال بقاعدة البيانات...');
-  API_URL=url;
   try{
-    await api('load',{});
-    localStorage.setItem(CFG_KEY,url);
+    initFirebase(cfg);
+    localStorage.setItem(CFG_KEY,JSON.stringify(cfg));
     document.getElementById('setupErr').textContent='';
     document.getElementById('setupScreen').classList.add('hidden');
-    bootDone=false;
-    await loadData();
-  }catch(e){hideLoading();document.getElementById('setupErr').textContent='فشل الاتصال: '+e.message;document.getElementById('setupScreen').classList.remove('hidden');}
+    bootDone=false;ready.emp=ready.prod=ready.sales=false;
+    attachListeners();
+    setTimeout(()=>{if(!bootDone){hideLoading();toast('تحقق من الإعدادات وقواعد Firestore','bad');document.getElementById('setupScreen').classList.remove('hidden');}},12000);
+  }catch(e){hideLoading();document.getElementById('setupErr').textContent=e.message;document.getElementById('setupScreen').classList.remove('hidden');}
 }
 
-/* ---------- LOGIN ---------- *//* ---------- LOGIN ---------- */
+/* ---------- LOGIN ---------- */
 function refreshLoginUsers(){
   const sel=document.getElementById('loginUser');if(!sel)return;
   const cur=sel.value;
@@ -328,8 +362,8 @@ function logout(){user=null;localStorage.removeItem(SESSION_KEY);
 
 /* ---------- NAV ---------- */
 const MENUS={
-  manager:[{k:'dash',label:'لوحة التحكم',ico:'📊'},{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'sales',label:'كل المبيعات',ico:'📁'},{k:'reports',label:'التقارير الشهرية',ico:'📈'},{k:'commission',label:'العمولات',ico:'🏆'},{k:'staff',label:'الخبيرات والموظفين',ico:'👥'},{k:'products',label:'المنتجات والأسعار',ico:'💊'}],
-  expert:[{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'mysales',label:'مبيعاتي',ico:'📁'},{k:'mydash',label:'ملخصي',ico:'📊'}]
+  manager:[{k:'dash',label:'لوحة التحكم',ico:'📊'},{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'sales',label:'كل المبيعات',ico:'📁'},{k:'reports',label:'التقارير الشهرية',ico:'📈'},{k:'commission',label:'العمولات',ico:'🏆'},{k:'attend',label:'الدوام والمواقع',ico:'🕒'},{k:'repstock',label:'مخزون المندوبات',ico:'📦'},{k:'backup',label:'نسخة احتياطية',ico:'💾'},{k:'staff',label:'الخبيرات والموظفين',ico:'👥'},{k:'products',label:'المنتجات والأسعار',ico:'💊'}],
+  expert:[{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'mysales',label:'مبيعاتي',ico:'📁'},{k:'mystock',label:'مخزوني',ico:'📦'},{k:'mydash',label:'ملخصي',ico:'📊'}]
 };
 function enterApp(){
   document.getElementById('loginScreen').classList.add('hidden');
@@ -344,7 +378,7 @@ function buildNav(){document.getElementById('navMenu').innerHTML=MENUS[user.role
 function go(k){
   currentPage=k;
   document.querySelectorAll('#navMenu button').forEach(b=>b.classList.toggle('active',b.dataset.k===k));
-  const titles={dash:'لوحة التحكم',newsale:'تسجيل عملية بيع',sales:'كل المبيعات',reports:'التقارير الشهرية',commission:'تقرير العمولات',staff:'الخبيرات والموظفين',products:'المنتجات والأسعار',mysales:'مبيعاتي',mydash:'ملخصي'};
+  const titles={dash:'لوحة التحكم',newsale:'تسجيل عملية بيع',sales:'كل المبيعات',reports:'التقارير الشهرية',commission:'تقرير العمولات',staff:'الخبيرات والموظفين',products:'المنتجات والأسعار',mysales:'مبيعاتي',mydash:'ملخصي',attend:'الدوام والمواقع',repstock:'مخزون المندوبات',mystock:'مخزوني',backup:'نسخة احتياطية'};
   document.getElementById('pageTitle').textContent=titles[k]||'';
   toggleMenu(false);
   const v=document.getElementById('view');
@@ -357,6 +391,10 @@ function go(k){
   else if(k==='commission')renderCommission();
   else if(k==='staff')renderStaff();
   else if(k==='products')renderProducts();
+  else if(k==='attend')renderAttend();
+  else if(k==='repstock')renderRepStock();
+  else if(k==='mystock')renderMyStock();
+  else if(k==='backup')renderBackup();
 }
 function toggleMenu(open){document.getElementById('sidebar').classList.toggle('open',open);document.getElementById('backdrop').classList.toggle('hidden',!open);}
 
@@ -373,35 +411,70 @@ function salePieces(s){let full=0,half=0;(s.items||[]).forEach(i=>{const q=Numbe
 function commRates(){const s=DB.settings||{};return{full:(s.full!=null?Number(s.full):1),half:(s.half!=null?Number(s.half):0.5)};}
 function attendanceDays(empId,mon){const seen={};(DB.attendance||[]).forEach(a=>{if(a.employeeId===empId&&String(a.date).slice(0,7)===mon)seen[a.date]=1;});return Object.keys(seen).length;}
 function didCheckInToday(empId){const t=todayStr();return (DB.attendance||[]).some(a=>a.employeeId===empId&&a.date===t);}
-function todayPharmacy(empId){const t=todayStr();const a=(DB.attendance||[]).find(x=>x.employeeId===empId&&x.date===t);return a?(a.pharmacy||''):'';}
-function pharmacyForDate(empId,date){const a=(DB.attendance||[]).find(x=>x.employeeId===empId&&x.date===date);return a?(a.pharmacy||''):'';}
+function sessOf(a){if(!a)return [];if(Array.isArray(a.sessions))return a.sessions;if(a.startAt||a.at)return [{pharmacy:a.pharmacy||'',startAt:a.startAt||a.at,startLoc:a.startLoc||null,endAt:a.endAt||null,endLoc:a.endLoc||null}];return [];}
+function attToday(empId){const t=todayStr();return (DB.attendance||[]).find(a=>a.employeeId===empId&&a.date===t);}
+function activeSess(empId){const s=sessOf(attToday(empId));const last=s[s.length-1];return (last&&!last.endAt)?last:null;}
+function shiftStarted(empId){return !!activeSess(empId);}
+function todayPharmacy(empId){const act=activeSess(empId);if(act&&act.pharmacy)return act.pharmacy;const s=sessOf(attToday(empId));return s.length?(s[s.length-1].pharmacy||''):'';}
+function pharmacyForDate(empId,date){const a=(DB.attendance||[]).find(x=>x.employeeId===empId&&x.date===date);if(!a)return '';const s=sessOf(a);return s.length?(s[s.length-1].pharmacy||a.pharmacy||''):(a.pharmacy||'');}
 function syncSalePharm(){const el=document.getElementById('s_pharm'),d=document.getElementById('s_date');if(el&&d&&user&&user.role==='expert')el.value=pharmacyForDate(user.id,d.value);}
-async function checkIn(){
+function fmtTime(ts){if(!ts)return '—';const d=new Date(ts);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function repQty(empId,productId){const r=(DB.repstock||[]).find(x=>x.employeeId===empId&&x.productId===productId);return r?(Number(r.qty)||0):0;}
+function getGPS(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>res({lat:+p.coords.latitude.toFixed(6),lng:+p.coords.longitude.toFixed(6),acc:Math.round(p.coords.accuracy||0)}),()=>res(null),{enableHighAccuracy:true,timeout:10000,maximumAge:60000});});}
+function mapLink(loc){return loc?`<a href="https://www.google.com/maps?q=${loc.lat},${loc.lng}" target="_blank" style="font-size:17px;text-decoration:none" title="دقة ${loc.acc||'?'} م">📍</a>`:'<span style="color:var(--muted)">—</span>';}
+async function startShift(){
   if(!user)return;
   const inp=document.getElementById('ci_pharm');
   const pharm=inp?inp.value.trim():'';
-  if(!pharm){toast('اكتب اسم الصيدلية أولاً','bad');if(inp)inp.focus();return;}
+  if(!pharm){toast('اكتبي اسم الصيدلية أولاً','bad');if(inp)inp.focus();return;}
+  if(activeSess(user.id)){toast('عندك دوام مفتوح حالياً — أنهيه أولاً','bad');return;}
   const t=todayStr();
-  showLoading('جاري تسجيل الدوام...');
+  showLoading('جاري تحديد الموقع وتسجيل بدء الدوام...');
   try{
-    await api('saveCheckin',{payload:JSON.stringify({id:user.id+'_'+t,employeeId:user.id,date:t,pharmacy:pharm,at:Date.now()})});await reloadData();
-    toast('تم تسجيل دوام اليوم ✓','ok');
+    const loc=await getGPS();
+    if(!loc){toast('تحديد الموقع إجباري ⚠️ فعّلي GPS واسمحي للمتصفح بالوصول للموقع ثم أعيدي المحاولة','bad');return;}
+    const a=attToday(user.id);
+    const sessions=sessOf(a).slice();
+    sessions.push({pharmacy:pharm,startAt:Date.now(),startLoc:loc,endAt:null,endLoc:null});
+    await db.collection('attendance').doc(user.id+'_'+t).set({employeeId:user.id,date:t,pharmacy:pharm,at:(a&&a.at)||Date.now(),sessions},{merge:true});
+    toast('تم تسجيل بدء الدوام ✓','ok');
   }catch(e){toast('فشل التسجيل — تحقق من الاتصال','bad');console.error(e);}
+  finally{hideLoading();}
+}
+async function endShift(){
+  if(!user)return;
+  const t=todayStr();
+  const a=attToday(user.id);
+  const sessions=sessOf(a).slice();
+  const last=sessions[sessions.length-1];
+  if(!last||last.endAt){toast('لا يوجد دوام مفتوح — ابدئي الدوام أولاً','bad');return;}
+  showLoading('جاري تحديد الموقع وتسجيل نهاية الدوام...');
+  try{
+    const loc=await getGPS();
+    if(!loc){toast('تحديد الموقع إجباري ⚠️ فعّلي GPS واسمحي للمتصفح بالوصول للموقع ثم أعيدي المحاولة','bad');return;}
+    last.endAt=Date.now();last.endLoc=loc;
+    await db.collection('attendance').doc(user.id+'_'+t).set({employeeId:user.id,date:t,sessions},{merge:true});
+    toast('تم تسجيل نهاية الدوام ✓','ok');
+  }catch(e){toast('فشل التسجيل','bad');console.error(e);}
   finally{hideLoading();}
 }
 function checkinCardHTML(){
   if(!user||user.role!=='expert')return '';
-  const mon=monthStr(),days=attendanceDays(user.id,mon),done=didCheckInToday(user.id);
+  const mon=monthStr(),days=attendanceDays(user.id,mon);
+  const sessions=sessOf(attToday(user.id));
+  const act=(sessions.length&&!sessions[sessions.length-1].endAt)?sessions[sessions.length-1]:null;
   const plist=[...new Set((DB.sales||[]).map(s=>s.pharmacy).filter(Boolean))];
   const dl=`<datalist id="ciPharmList">${plist.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`;
+  const rows=sessions.map((s,i)=>`<div style="font-size:13.5px;margin-bottom:4px">${i+1}. ${esc(s.pharmacy||'—')} — ▶️ ${fmtTime(s.startAt)} ${s.endAt?`← ⏹ ${fmtTime(s.endAt)}`:'<b style="color:var(--green-d)">(مفتوح الآن)</b>'}</div>`).join('');
   return `<div class="panel" style="border-right:4px solid var(--gold)">
-    <div class="panel-head"><h3>🕒 دوام اليوم</h3><span class="tag">${days} يوم هذا الشهر</span></div>
-    ${done?`<div style="color:var(--green-d);font-weight:700;margin-bottom:10px">✓ سجّلتِ دوام اليوم (${todayStr()})${todayPharmacy(user.id)?` — صيدلية ${esc(todayPharmacy(user.id))}`:''}</div>`:``}
-    <div class="row" style="align-items:flex-end">
-      <div class="field" style="margin-bottom:0"><label>اسم الصيدلية التي تداومين فيها اليوم</label><input id="ci_pharm" list="ciPharmList" value="${esc(todayPharmacy(user.id))}" placeholder="اكتب اسم الصيدلية" autocomplete="off">${dl}</div>
-      <button class="btn btn-gold" style="max-width:200px" onclick="checkIn()">🕒 ${done?'تحديث دوام اليوم':'سجّلت دوام اليوم'}</button>
+    <div class="panel-head"><h3>🕒 دوام اليوم (${todayStr()})</h3><span class="tag">${days} يوم هذا الشهر</span></div>
+    ${rows}
+    ${act?`<button class="btn btn-ghost" style="max-width:230px;margin-top:6px" onclick="confirmModal('إنهاء الدوام','إنهاء الدوام الحالي في صيدلية ${esc(act.pharmacy||'')}؟ يمكنك بدء دوام جديد بعدها في أي وقت.',endShift)">⏹ إنهاء الدوام الحالي</button>`
+    :`<div class="row" style="align-items:flex-end;margin-top:6px">
+      <div class="field" style="margin-bottom:0"><label>اسم الصيدلية</label><input id="ci_pharm" list="ciPharmList" value="" placeholder="اكتب اسم الصيدلية" autocomplete="off">${dl}</div>
+      <button class="btn btn-gold" style="max-width:200px" onclick="startShift()">▶️ ${sessions.length?'بدء دوام جديد':'بدء الدوام'}</button>
     </div>
-    <div class="hint" style="margin-top:8px">كل يوم تضغطين فيه هذا الزر يُحتسب ضمن أيام الدوام لهدف العمولة.</div>
+    <div class="hint" style="margin-top:8px">يمكنك بدء وإنهاء الدوام أكثر من مرة باليوم (حتى بصيدليات مختلفة). تحديد الموقع GPS إجباري مع كل بدء وإنهاء — لن يُسجَّل الدوام بدونه. البيع متاح فقط أثناء دوام مفتوح.</div>`}
   </div>`;
 }
 function empTargetVal(e,mon){if(!e)return 0;if(e.commType==='fixed')return Number(e.commTarget)||0;if(e.commType==='daily'){const d=attendanceDays(e.id,mon);return (Number(e.commTarget)||0)*(Number(d)||0);}return 0;}
@@ -415,7 +488,7 @@ function renderDash(mine){
   const monQty=monS.reduce((t,x)=>t+saleQty(x),0);
   const pharmacies=new Set(monS.map(x=>String(x.pharmacy).trim())).size;
   let html=`${mine&&user.role==='expert'?checkinCardHTML():''}<div class="stat-grid">
-    <div class="stat"><div class="lbl">مبيعات اليوم</div><div class="val">${fmt(todTotal)} <small>د.أ</small></div></div>
+    <div class="stat" style="cursor:pointer" title="اضغط لعرض عمليات اليوم" onclick="gotoTodaySales(${mine})"><div class="lbl">مبيعات اليوم 🔎</div><div class="val">${fmt(todTotal)} <small>د.أ</small></div></div>
     <div class="stat gold"><div class="lbl">مبيعات هذا الشهر</div><div class="val">${fmt(monTotal)} <small>د.أ</small></div></div>
     <div class="stat blue"><div class="lbl">عدد العمليات (الشهر)</div><div class="val">${monS.length}</div></div>
     <div class="stat"><div class="lbl">قطع مباعة (الشهر)</div><div class="val">${monQty}</div></div>
@@ -435,32 +508,42 @@ function renderDash(mine){
 
 /* ---------- NEW SALE ---------- */
 let saleItems=[];
-function renderNewSale(){
-  saleItems=[{productId:'',qty:1,price:0,disc:0}];
+let editingSaleId=null;
+function gotoTodaySales(mine){const t=todayStr();_f={from:t,to:t,emp:''};go(mine?'mysales':'sales');}
+function canEditSale(x){if(!user)return false;if(user.role==='manager')return true;return x.employeeId===user.id&&x.date===todayStr()&&shiftStarted(user.id);}
+function editSale(id){const s=DB.sales.find(x=>x.id===id);if(!s)return;if(!canEditSale(s)){toast('التعديل مقفل — لازم يكون عندك دوام مفتوح لتعديل عمليات اليوم','bad');return;}go('newsale');renderNewSale(id);document.getElementById('pageTitle').textContent='تعديل عملية بيع';}
+function cancelSale(){if(editingSaleId){editingSaleId=null;go(user.role==='manager'?'sales':'mysales');}else renderNewSale();}
+function renderNewSale(editId){
+  editingSaleId=editId||null;
+  const _es=editingSaleId?DB.sales.find(x=>x.id===editingSaleId):null;
+  saleItems=_es?(_es.items||[]).map(i=>({productId:i.productId,qty:i.qty,price:i.price,disc:i.disc||0,src:i.src||''})):[{productId:'',qty:1,price:0,disc:0,src:''}];
   const isMgr=user.role==='manager';
   const pharmacyList=[...new Set(DB.sales.map(s=>s.pharmacy).filter(Boolean))];
   document.getElementById('view').innerHTML=`
     ${user.role==='expert'?checkinCardHTML():''}
     <div class="panel"><h3>🧾 تسجيل عملية بيع جديدة</h3>
       <div class="row" style="margin-bottom:16px">
-        <div class="field"><label>التاريخ</label><input type="date" id="s_date" value="${todayStr()}" ${isMgr?'':'onchange="syncSalePharm()"'}></div>
+        <div class="field"><label>التاريخ</label><input type="date" id="s_date" value="${_es?_es.date:todayStr()}" ${isMgr?'':'onchange="syncSalePharm()"'}></div>
         <div class="field"><label>الخبيرة</label>
-          ${isMgr?`<select id="s_emp">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
-        ${isMgr?`<div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>`:`<div class="field"><label>الصيدلية (من تسجيل الدوام)</label><input id="s_pharm" value="${esc(todayPharmacy(user.id))}" readonly style="background:#f0f4ee" placeholder="سجّلي دوامك أولاً"></div>`}
+          ${isMgr?`<select id="s_emp" onchange="drawItems()">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}" ${_es&&_es.employeeId===e.id?'selected':''}>${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
+        ${isMgr?`<div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off" value="${_es?esc(_es.pharmacy):''}"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>`:`<div class="field"><label>الصيدلية (من تسجيل الدوام)</label><input id="s_pharm" value="${esc(_es?_es.pharmacy:todayPharmacy(user.id))}" readonly style="background:#f0f4ee" placeholder="سجّلي دوامك أولاً"></div>`}
       </div>
-      <div style="overflow-x:auto"><table class="items-table"><thead><tr><th style="width:26%">المنتج</th><th class="num" style="width:10%">الكمية</th><th class="num" style="width:13%">سعر الوحدة</th><th class="num" style="width:10%">خصم %</th><th class="num" style="width:14%">الإجمالي</th><th class="num" style="width:19%">المحقق للهدف (كوست)</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table></div>
+      <div style="overflow-x:auto"><table class="items-table"><thead><tr><th style="width:22%">المنتج</th><th style="width:13%">المخزن</th><th class="num" style="width:8%">الكمية</th><th class="num" style="width:13%">سعر الوحدة</th><th class="num" style="width:10%">خصم %</th><th class="num" style="width:14%">الإجمالي</th><th class="num" style="width:19%">المحقق للهدف (كوست)</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table></div>
       <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="addItem()">＋ إضافة صنف</button>
-      <div class="field" style="margin-top:16px"><label>ملاحظات (اختياري)</label><textarea id="s_notes" rows="2" placeholder="أي ملاحظة..." style="font-family:inherit;direction:rtl;text-align:right"></textarea></div>
+      <div class="field" style="margin-top:16px"><label>ملاحظات (اختياري)</label><textarea id="s_notes" rows="2" placeholder="أي ملاحظة..." style="font-family:inherit;direction:rtl;text-align:right">${_es?esc(_es.notes||''):''}</textarea></div>
       <div class="grand">الإجمالي الكلي: <span class="amt" id="grandTotal">0.00</span> د.أ</div>
       <div class="grand" style="font-size:15px">المحقق للهدف (كوست): <span class="amt" id="grandCost" style="font-size:18px;color:var(--gold-d)">0.00</span> د.أ</div>
-      <div style="display:flex;gap:12px;margin-top:18px"><button class="btn" style="max-width:220px" onclick="saveSale()">💾 حفظ العملية</button><button class="btn btn-ghost" style="max-width:140px" onclick="renderNewSale()">إلغاء</button></div>
+      <div style="display:flex;gap:12px;margin-top:18px"><button class="btn" style="max-width:220px" onclick="saveSale()">${_es?'💾 حفظ التعديل':'💾 حفظ العملية'}</button><button class="btn btn-ghost" style="max-width:140px" onclick="cancelSale()">إلغاء</button></div>
     </div>`;
   drawItems();
 }
 function prodOptions(sel){return `<option value="">— اختر المنتج —</option>`+DB.products.map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(p.code+' · '+p.name)}</option>`).join('');}
+function saleEmpId(){return user.role==='manager'?(document.getElementById('s_emp')?document.getElementById('s_emp').value:''):user.id;}
+function itemSrc(i,v){saleItems[i].src=v;drawItems();}
 function drawItems(){
   document.getElementById('itemsBody').innerHTML=saleItems.map((it,idx)=>`<tr>
     <td><select onchange="itemProd(${idx},this.value)">${prodOptions(it.productId)}</select></td>
+    <td><select onchange="itemSrc(${idx},this.value)" style="${it.src?'':'border:1.5px solid #d9534f'}"><option value="">— اختر المخزن —</option><option value="pharmacy" ${it.src==='pharmacy'?'selected':''}>🏪 الصيدلية</option><option value="rep" ${it.src==='rep'?'selected':''}>👜 المندوبة${it.productId?' (متوفر '+repQty(saleEmpId(),it.productId)+')':''}</option></select></td>
     <td><input type="number" min="1" step="1" value="${it.qty}" oninput="itemQty(${idx},this.value)"></td>
     <td><input type="number" min="0" step="0.01" value="${it.price}" oninput="itemPrice(${idx},this.value)"></td>
     <td><input type="number" min="0" max="100" step="1" value="${it.disc||0}" oninput="itemDisc(${idx},this.value)"></td>
@@ -474,7 +557,7 @@ function recalcTotals(){
   const g=document.getElementById('grandTotal');if(g)g.textContent=fmt(saleItems.reduce((t,i)=>t+itemNet(i),0));
   const gc=document.getElementById('grandCost');if(gc)gc.textContent=fmt(saleItems.reduce((t,i)=>t+itemCostFull(i),0));
 }
-function addItem(){saleItems.push({productId:'',qty:1,price:0,disc:0});drawItems();}
+function addItem(){saleItems.push({productId:'',qty:1,price:0,disc:0,src:''});drawItems();}
 function delItem(i){saleItems.splice(i,1);drawItems();}
 function itemProd(i,v){saleItems[i].productId=v;const p=prod(v);if(p)saleItems[i].price=p.price;drawItems();}
 function itemQty(i,v){saleItems[i].qty=Math.max(0,Number(v)||0);recalcTotals();}
@@ -487,14 +570,37 @@ async function saveSale(){
   const empId=user.role==='manager'?(document.getElementById('s_emp')?document.getElementById('s_emp').value:''):user.id;
   if(!date){toast('اختر التاريخ','bad');return;}
   if(!empId){toast('لا يوجد خبيرة محددة','bad');return;}
+  if(user.role==='expert'&&!activeSess(user.id)){toast('لا يوجد دوام مفتوح — سجّلي بدء الدوام أولاً','bad');return;}
   if(!pharm){toast(user.role==='manager'?'اكتب اسم الصيدلية':'سجّلي دوامك في الصيدلية لهذا اليوم أولاً','bad');return;}
-  const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price),disc:Number(i.disc)||0};});
+  const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price),disc:Number(i.disc)||0,src:i.src||''};});
   if(!items.length){toast('أضِف منتج واحد على الأقل','bad');return;}
-  const id=uid('s_');
-  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:Date.now()};
-  showLoading('جاري حفظ العملية...');
-  try{await api('addSale',{payload:JSON.stringify(Object.assign({id:id},sale))});await reloadData();toast('تم حفظ العملية ✓','ok');renderNewSale();}
-  catch(e){toast('فشل الحفظ — تحقق من الاتصال','bad');console.error(e);}finally{hideLoading();}
+  if(items.some(i=>!i.src)){toast('حدد المخزن (صيدلية / مندوبة) لكل منتج — إجباري','bad');return;}
+  const editing=editingSaleId;const old=editing?DB.sales.find(x=>x.id===editing):null;
+  if(editing&&!old){toast('العملية غير موجودة','bad');return;}
+  if(old&&!canEditSale(old)){toast('التعديل مقفل — لازم دوام مفتوح لتعديل عمليات اليوم','bad');return;}
+  const oldNeed={};if(old)(old.items||[]).forEach(i=>{if(i.src==='rep')oldNeed[i.productId]=(oldNeed[i.productId]||0)+(Number(i.qty)||0);});
+  const need={};items.forEach(i=>{if(i.src==='rep')need[i.productId]=(need[i.productId]||0)+i.qty;});
+  for(const pid in need){
+    const have=repQty(empId,pid)+((old&&old.employeeId===empId)?(oldNeed[pid]||0):0);
+    if(have<need[pid]){const p=prod(pid);toast('مخزون المندوبة غير كافٍ: '+(p?p.name:'')+' (المتوفر '+have+' والمطلوب '+need[pid]+')','bad');return;}
+  }
+  const repCnt=items.filter(i=>i.src==='rep').length;
+  const id=editing||uid('s_');
+  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,source:repCnt===items.length?'rep':(repCnt?'mixed':'pharmacy'),total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:(old&&old.createdAt)||Date.now()};
+  if(old)sale.updatedAt=Date.now();
+  showLoading(editing?'جاري حفظ التعديل...':'جاري حفظ العملية...');
+  try{
+    const batch=db.batch();
+    batch.set(db.collection('sales').doc(id),sale);
+    const _ops={};
+    const _add=(emp,pid,amt)=>{const k=emp+'|'+pid;if(!_ops[k])_ops[k]={emp,pid,amt:0};_ops[k].amt+=amt;};
+    if(old)for(const pid in oldNeed)_add(old.employeeId,pid,oldNeed[pid]);
+    for(const pid in need)_add(empId,pid,-need[pid]);
+    for(const k in _ops){const o=_ops[k];if(!o.amt)continue;batch.set(db.collection('repStock').doc(o.emp+'_'+o.pid),{employeeId:o.emp,productId:o.pid,qty:firebase.firestore.FieldValue.increment(o.amt)},{merge:true});}
+    await batch.commit();
+    toast(editing?'تم حفظ التعديل ✓':'تم حفظ العملية ✓','ok');
+    if(editing){editingSaleId=null;go(user.role==='manager'?'sales':'mysales');}else renderNewSale();
+  }catch(e){toast('فشل الحفظ — تحقق من الاتصال','bad');console.error(e);}finally{hideLoading();}
 }
 
 /* ---------- SALES LIST ---------- */
@@ -524,12 +630,12 @@ function drawSales(mine){
   const isMgr=user.role==='manager';
   if(!s.length){document.getElementById('salesTable').innerHTML=`<div class="empty">لا توجد عمليات مطابقة</div>`;return;}
   document.getElementById('salesTable').innerHTML=`<table><thead><tr><th>التاريخ</th>${isMgr&&!mine?'<th>الخبيرة</th>':''}<th>الصيدلية</th><th>الأصناف</th><th class="num">القطع</th><th class="num">الإجمالي (د.أ)</th><th class="no-print"></th></tr></thead><tbody>${s.map(x=>`<tr>
-    <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}</td>
-    <td style="font-size:13px;color:var(--muted)">${(x.items||[]).map(i=>{const p=prod(i.productId);return esc((p?p.code:(i.productCode||'?'))+'×'+i.qty)+((Number(i.disc)>0)?` (-${i.disc}%)`:'');}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
+    <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}${(x.source==='rep'||x.source==='mixed')?` <span class="tag" style="background:#f7eecb;color:var(--gold-d)">${x.source==='mixed'?'مختلط':'من مخزونها'}</span>`:''}</td>
+    <td style="font-size:13px;color:var(--muted)">${(x.items||[]).map(i=>{const p=prod(i.productId);return (i.src==='rep'?'👜':'')+esc((p?p.code:(i.productCode||'?'))+'×'+i.qty)+((Number(i.disc)>0)?` (-${i.disc}%)`:'');}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
     <td class="num">${saleQty(x)}</td><td class="num"><b>${fmt(saleTotal(x))}</b></td>
-    <td class="no-print">${(isMgr||x.employeeId===user.id)?`<button class="icon-btn" onclick="delSale('${x.id}')">×</button>`:''}</td></tr>`).join('')}</tbody></table>`;
+    <td class="no-print">${canEditSale(x)?`<button class="icon-btn" title="تعديل العملية" onclick="editSale('${x.id}')">✎</button> <button class="icon-btn" onclick="delSale('${x.id}')">×</button>`:''}</td></tr>`).join('')}</tbody></table>`;
 }
-function delSale(id){confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟',async()=>{showLoading('جاري الحذف...');try{await api('deleteSale',{id:id});await reloadData();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
+function delSale(id){const s=DB.sales.find(x=>x.id===id);if(s&&!canEditSale(s)){toast('الحذف مقفل — لازم دوام مفتوح لحذف عمليات اليوم','bad');return;}const repItems=s?(s.items||[]).filter(i=>i.src==='rep'||(s.source==='rep'&&!i.src)):[];confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟'+(repItems.length?' سيُعاد مخزون المندوبة.':''),async()=>{showLoading('جاري الحذف...');try{const batch=db.batch();batch.delete(db.collection('sales').doc(id));repItems.forEach(i=>{batch.set(db.collection('repStock').doc(s.employeeId+'_'+i.productId),{employeeId:s.employeeId,productId:i.productId,qty:firebase.firestore.FieldValue.increment(Number(i.qty)||0)},{merge:true});});await batch.commit();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
 function exportSalesCSV(mine){
   const s=filteredSales(mine);if(!s.length){toast('لا توجد بيانات','bad');return;}
   let rows=[['التاريخ','الخبيرة','الصيدلية','كود المنتج','المنتج','الكمية','سعر الوحدة','خصم %','الإجمالي']];
@@ -593,7 +699,7 @@ async function saveCommRates(){
   const full=Number(document.getElementById('c_full').value)||0;
   const half=Number(document.getElementById('c_half').value)||0;
   showLoading('حفظ المعدلات...');
-  try{await api('saveSettings',{payload:JSON.stringify({full:full,half:half})});await reloadData();toast('تم حفظ المعدلات','ok');}
+  try{await db.collection('settings').doc('commission').set({full,half},{merge:true});toast('تم حفظ المعدلات','ok');}
   catch(e){toast('فشل الحفظ','bad');console.error(e);}finally{hideLoading();}
 }
 async function saveWorkDays(empId){
@@ -601,7 +707,7 @@ async function saveWorkDays(empId){
   const val=Number(document.getElementById('wd_'+empId).value)||0;
   const e=DB.employees.find(x=>x.id===empId);const wd=Object.assign({},(e&&e.workDays)||{});wd[mon]=val;
   showLoading('حفظ أيام الدوام...');
-  try{const _cur=DB.employees.find(e=>e.id===empId)||{id:empId};await api('saveEmployee',{payload:JSON.stringify(Object.assign({},_cur,{id:empId,workDays:wd}))});await reloadData();toast('تم الحفظ','ok');drawCommission();}
+  try{await db.collection('employees').doc(empId).set({workDays:wd},{merge:true});toast('تم الحفظ','ok');drawCommission();}
   catch(err){toast('فشل الحفظ','bad');console.error(err);}finally{hideLoading();}
 }
 function commissionData(mon){
@@ -700,7 +806,7 @@ function staffModal(id){
     if(DB.employees.some(x=>String(x.pin)===pin&&(!e||x.id!==e.id))){toast('هذا الرقم السري مستخدم','bad');return false;}
     const docId=e?e.id:uid('u_');
     showLoading('جاري الحفظ...');
-    try{const _cur=DB.employees.find(e=>e.id===docId)||{};await api('saveEmployee',{payload:JSON.stringify(Object.assign({},_cur,{id:docId,name:name,role:role,pin:pin,commType:commType,commTarget:commTarget}))});await reloadData();toast('تم الحفظ','ok');}
+    try{await db.collection('employees').doc(docId).set({name,role,pin,commType,commTarget},{merge:true});toast('تم الحفظ','ok');}
     catch(err){toast('فشل الحفظ','bad');console.error(err);}finally{hideLoading();}
     return true;
   });
@@ -709,7 +815,114 @@ function staffModal(id){
 function delStaff(id){
   const cnt=DB.sales.filter(s=>s.employeeId===id).length;
   confirmModal('حذف موظف',`سيتم حذف الموظف.${cnt?` لديه ${cnt} عملية ستبقى محفوظة باسمه.`:''} متابعة؟`,async()=>{
-    showLoading('جاري الحذف...');try{await api('deleteEmployee',{id:id});await reloadData();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}
+    showLoading('جاري الحذف...');try{await db.collection('employees').doc(id).delete();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}
+  });
+}
+
+/* ---------- ATTENDANCE & LOCATIONS (manager) ---------- */
+let _attD='';
+function renderAttend(){
+  if(!_attD)_attD=todayStr();
+  document.getElementById('view').innerHTML=`<div class="panel"><div class="panel-head"><h3>🕒 الدوام والمواقع</h3></div>
+    <div class="row" style="margin-bottom:12px"><div class="field" style="margin-bottom:0;max-width:220px"><label>التاريخ</label><input type="date" id="att_d" value="${_attD}" onchange="_attD=this.value;renderAttend()"></div></div>
+    <div id="attBody"></div>
+    <div class="hint" style="margin-top:12px">📍 = فتح الموقع على خرائط Google. يُسجَّل الموقع تلقائياً عند بدء وإنهاء الدوام من جهاز المندوبة.</div></div>`;
+  drawAttend();
+}
+function drawAttend(){
+  const d=_attD;
+  const recs=(DB.attendance||[]).filter(a=>a.date===d);
+  const rows=[];
+  recs.forEach(a=>{sessOf(a).forEach((s,i)=>rows.push({emp:a.employeeId,n:i+1,ph:s.pharmacy||a.pharmacy||'',st:s.startAt,sl:s.startLoc,en:s.endAt,el:s.endLoc}));});
+  rows.sort((x,y)=>(x.st||0)-(y.st||0));
+  let tot={};rows.forEach(r=>{if(r.st&&r.en)tot[r.emp]=(tot[r.emp]||0)+(r.en-r.st);});
+  document.getElementById('attBody').innerHTML=rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>المندوبة</th><th class="num">#</th><th>الصيدلية</th><th>البدء</th><th>موقع</th><th>النهاية</th><th>موقع</th><th class="num">المدة</th></tr></thead><tbody>${rows.map(r=>{
+    const dur=r.st&&r.en?((r.en-r.st)/3600000).toFixed(1)+' ساعة':'—';
+    return `<tr><td><b>${esc(empName(r.emp))}</b></td><td class="num">${r.n}</td><td>${esc(r.ph||'—')}</td><td>${fmtTime(r.st)}</td><td>${mapLink(r.sl)}</td><td>${r.en?fmtTime(r.en):'<span class="tag">مفتوح الآن</span>'}</td><td>${mapLink(r.el)}</td><td class="num">${dur}</td></tr>`;}).join('')}</tbody></table></div>`+
+    (Object.keys(tot).length?`<div class="hint" style="margin-top:10px">إجمالي ساعات اليوم: ${Object.entries(tot).map(([id,ms])=>esc(empName(id))+': '+(ms/3600000).toFixed(1)+' س').join(' · ')}</div>`:'')
+  :`<div class="empty">لا يوجد تسجيل دوام في هذا اليوم</div>`;
+}
+
+/* ---------- REP STOCK ---------- */
+let _rsEmp='';
+function renderRepStock(){
+  const experts=DB.employees.filter(e=>e.role==='expert');
+  if(!_rsEmp&&experts.length)_rsEmp=experts[0].id;
+  if(_rsEmp&&!experts.some(e=>e.id===_rsEmp))_rsEmp=experts.length?experts[0].id:'';
+  document.getElementById('view').innerHTML=`<div class="panel"><div class="panel-head"><h3>📦 تعبئة مخزون مندوبة</h3></div>
+    <div class="row" style="margin-bottom:10px"><div class="field" style="max-width:280px;margin-bottom:0"><label>المندوبة</label><select onchange="_rsEmp=this.value;renderRepStock()">${experts.map(e=>`<option value="${e.id}" ${e.id===_rsEmp?'selected':''}>${esc(e.name)}</option>`).join('')}</select></div></div>
+    ${_rsEmp?`<div style="overflow-x:auto"><table><thead><tr><th>المنتج</th><th class="num">الكمية الحالية</th><th class="num" style="width:140px">إضافة +</th></tr></thead><tbody>
+      ${DB.products.map(p=>`<tr><td><span class="tag">${esc(p.code)}</span> ${esc(String(p.name).slice(0,32))}</td><td class="num"><b>${repQty(_rsEmp,p.id)||'—'}</b></td><td class="num"><input type="number" step="1" placeholder="0" id="rq_${p.id}" style="max-width:110px;text-align:center"></td></tr>`).join('')}
+    </tbody></table></div>
+    <button class="btn" style="max-width:220px;margin-top:14px" onclick="saveRefill()">💾 حفظ التعبئة</button>
+    <div class="hint" style="margin-top:10px">أدخل الكميات المضافة لأي عدد من المنتجات ثم احفظ الكل بضغطة واحدة. لتصحيح خطأ استخدم رقماً سالباً.</div>`:`<div class="empty">أضِف مندوبة أولاً من صفحة الخبيرات والموظفين</div>`}
+  </div>
+  <div class="panel"><h3>📊 جدول المخزون الكامل (كل المندوبات)</h3>
+    <div style="overflow-x:auto"><table><thead><tr><th>المنتج</th>${experts.map(e=>`<th class="num">${esc(e.name)}</th>`).join('')}</tr></thead><tbody>
+    ${DB.products.map(p=>`<tr><td><span class="tag">${esc(p.code)}</span> ${esc(String(p.name).slice(0,30))}</td>${experts.map(e=>{const q=repQty(e.id,p.id);return `<td class="num" style="${q>0?'font-weight:700':'color:var(--muted)'}">${q||'—'}</td>`;}).join('')}</tr>`).join('')}
+    </tbody></table></div>
+    <div class="hint" style="margin-top:12px">التعبئة من المدير فقط. البيع «من مخزون المندوبة» يُنقص الكمية تلقائياً، وحذف العملية يُعيدها.</div></div>`;
+}
+async function saveRefill(){
+  if(!_rsEmp){toast('اختر المندوبة','bad');return;}
+  const adds=[];
+  DB.products.forEach(p=>{const el=document.getElementById('rq_'+p.id);const q=el?Number(el.value)||0:0;if(q)adds.push({pid:p.id,q});});
+  if(!adds.length){toast('أدخل كمية لمنتج واحد على الأقل','bad');return;}
+  showLoading('جاري حفظ التعبئة...');
+  try{
+    const batch=db.batch();
+    adds.forEach(a=>batch.set(db.collection('repStock').doc(_rsEmp+'_'+a.pid),{employeeId:_rsEmp,productId:a.pid,qty:firebase.firestore.FieldValue.increment(a.q)},{merge:true}));
+    await batch.commit();
+    toast('تمت التعبئة: '+adds.length+' منتج ✓','ok');
+    setTimeout(()=>{if(currentPage==='repstock')renderRepStock();},900);
+  }catch(e){toast('فشل الحفظ','bad');console.error(e);}finally{hideLoading();}
+}
+function renderMyStock(){
+  const rows=(DB.repstock||[]).filter(r=>r.employeeId===user.id&&Number(r.qty)>0);
+  document.getElementById('view').innerHTML=`${checkinCardHTML()}<div class="panel"><h3>📦 مخزوني</h3>
+    ${rows.length?`<table><thead><tr><th>المنتج</th><th class="num">الكمية المتوفرة</th></tr></thead><tbody>${rows.map(r=>{const p=prod(r.productId);return `<tr><td>${p?esc(p.code+' · '+p.name):esc(r.productId)}</td><td class="num"><b>${Number(r.qty)||0}</b></td></tr>`;}).join('')}</tbody></table>`:`<div class="empty">لا يوجد مخزون لديك حالياً — التعبئة تتم من قبل المدير</div>`}
+    <div class="hint" style="margin-top:12px">عند البيع «من مخزون المندوبة» تُنقص الكمية تلقائياً.</div></div>`;
+}
+
+/* ---------- BACKUP ---------- */
+function renderBackup(){
+  document.getElementById('view').innerHTML=`<div class="panel"><h3>💾 النسخة الاحتياطية</h3>
+    <p style="color:var(--muted);font-size:14px;margin:10px 0 16px">تنزيل نسخة كاملة من كل البيانات (الموظفين، المنتجات، المبيعات، الدوام، المخزون، الإعدادات) بصيغة JSON — احتفظ بها في مكان آمن.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn" style="max-width:260px" onclick="downloadBackup()">⬇️ تنزيل نسخة احتياطية</button>
+      <label class="btn btn-ghost" style="max-width:260px;cursor:pointer;text-align:center">⬆️ استعادة من ملف<input type="file" accept=".json" style="display:none" onchange="restoreBackup(this)"></label>
+    </div>
+    <div class="hint" style="margin-top:14px">الاستعادة تدمج بيانات الملف مع الحالية (لا تحذف شيئاً). ننصح بتنزيل نسخة أسبوعياً.</div></div>`;
+}
+function downloadBackup(){
+  const data={app:'elegantminds',exportedAt:new Date().toISOString(),employees:DB.employees,products:DB.products,sales:DB.sales,attendance:DB.attendance,repstock:DB.repstock,settings:DB.settings};
+  const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_elegantminds_'+todayStr()+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  toast('تم تنزيل النسخة الاحتياطية ✓','ok');
+}
+async function restoreBackup(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;
+  let data;try{data=JSON.parse(await f.text());}catch(e){toast('ملف غير صالح','bad');inp.value='';return;}
+  if(!data||data.app!=='elegantminds'){toast('هذا ليس ملف نسخة احتياطية لهذا النظام','bad');inp.value='';return;}
+  confirmModal('استعادة نسخة احتياطية','سيتم دمج بيانات الملف مع البيانات الحالية (لن يُحذف شيء). متابعة؟',async()=>{
+    showLoading('جاري الاستعادة...');
+    try{
+      const colls={employees:'employees',products:'products',sales:'sales',attendance:'attendance',repstock:'repStock'};
+      const ops=[];let batch=db.batch(),n=0;
+      for(const k in colls){
+        const arr=Array.isArray(data[k])?data[k]:[];
+        for(const docu of arr){
+          const{id,...rest}=docu;if(!id)continue;
+          batch.set(db.collection(colls[k]).doc(id),rest,{merge:true});n++;
+          if(n%400===0){ops.push(batch.commit());batch=db.batch();}
+        }
+      }
+      if(data.settings)batch.set(db.collection('settings').doc('commission'),data.settings,{merge:true});
+      ops.push(batch.commit());
+      await Promise.all(ops);
+      toast('تمت الاستعادة بنجاح ✓','ok');
+    }catch(e){toast('فشلت الاستعادة','bad');console.error(e);}
+    finally{hideLoading();inp.value='';}
   });
 }
 
@@ -738,12 +951,12 @@ function prodModal(id){
     if(!name){toast('اكتب اسم المنتج','bad');return false;}
     const docId=p?p.id:uid('p_');
     showLoading('جاري الحفظ...');
-    try{await api('saveProduct',{payload:JSON.stringify({id:docId,code:code,name:name,cat:cat,price:price,cost:cost,halfComm:halfComm})});await reloadData();toast('تم الحفظ','ok');}
+    try{await db.collection('products').doc(docId).set({code,name,cat,price,cost,halfComm});toast('تم الحفظ','ok');}
     catch(err){toast('فشل الحفظ','bad');console.error(err);}finally{hideLoading();}
     return true;
   });
 }
-function delProd(id){confirmModal('حذف منتج','سيتم حذف المنتج. العمليات القديمة تبقى محفوظة. متابعة؟',async()=>{showLoading('جاري الحذف...');try{await api('deleteProduct',{id:id});await reloadData();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
+function delProd(id){confirmModal('حذف منتج','سيتم حذف المنتج. العمليات القديمة تبقى محفوظة. متابعة؟',async()=>{showLoading('جاري الحذف...');try{await db.collection('products').doc(id).delete();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
 
 /* ---------- MODALS ---------- */
 function openModal(title,body,onSave){
@@ -764,15 +977,27 @@ function downloadCSV(rows,name){
 }
 
 /* ---------- BOOT ---------- */
-/* رابط Web App الافتراضي — ضع رابطك هنا ليعمل التطبيق على أي جهاز بدون إعداد */
-const DEFAULT_API_URL="https://script.google.com/macros/s/AKfycbyNxs8wlW1qIGw90CawyniwyDpRo6dpurWGit3kE5YuIALD18vuhPhVlpskzSx2YkAR/exec";
+/* إعدادات Firebase المدمجة — يعمل التطبيق على أي جهاز بدون لصق إعدادات */
+const DEFAULT_CFG={
+  apiKey: "AIzaSyBYlJ4hBw9A_qVWw0u0kxV1qfSBRec8N_I",
+  authDomain: "beauty-experts-salon.firebaseapp.com",
+  projectId: "beauty-experts-salon",
+  storageBucket: "beauty-experts-salon.firebasestorage.app",
+  messagingSenderId: "699574952078",
+  appId: "1:699574952078:web:1c1707f1d9fb094da6e9df",
+  measurementId: "G-5EWSC8NWLV"
+};
 function boot(){
   const saved=localStorage.getItem(CFG_KEY);
-  API_URL=saved||DEFAULT_API_URL;
-  if(!API_URL){document.getElementById('setupScreen').classList.remove('hidden');return;}
+  let cfg=null;
+  if(saved){try{cfg=JSON.parse(saved);}catch(e){cfg=null;}}
+  if(!cfg)cfg=DEFAULT_CFG;
   showLoading('جاري الاتصال بقاعدة البيانات...');
-  loadData();
-  setTimeout(()=>{if(!bootDone){hideLoading();toast('بطء بالاتصال — تحقق من الإنترنت','bad');}},15000);
+  try{
+    initFirebase(cfg);
+    attachListeners();
+    setTimeout(()=>{if(!bootDone){hideLoading();document.getElementById('loginScreen').classList.remove('hidden');toast('بطء بالاتصال — تحقق من الإنترنت','bad');}},15000);
+  }catch(e){hideLoading();document.getElementById('setupScreen').classList.remove('hidden');toast(e.message,'bad');}
 }
 boot();
 </script>
