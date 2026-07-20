@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>العقول الراقية — نظام مبيعات خبيرات التجميل (سحابي)</title>
+<title>العقول الراقية — نظام مبيعات خبيرات التجميل (Google Sheets)</title>
+<!-- ===== PWA / موبايل (أندرويد + آيفون) ===== -->
+<meta name="theme-color" content="#3f8a28">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="العقول الراقية">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogItin2YTYudmC2YjZhCDYp9mE2LHYp9mC2YrYqSDigJQg2YXYqNmK2LnYp9iqINiu2KjZitix2KfYqiDYp9mE2KrYrNmF2YrZhCIsICJzaG9ydF9uYW1lIjogItin2YTYudmC2YjZhCDYp9mE2LHYp9mC2YrYqSIsICJsYW5nIjogImFyIiwgImRpciI6ICJydGwiLCAic3RhcnRfdXJsIjogIi4iLCAic2NvcGUiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjM2Y4YTI4IiwgInRoZW1lX2NvbG9yIjogIiMzZjhhMjgiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFNQUFBQURBQ0FZQUFBQlMzR3dIQUFBSEswbEVRVlI0MnUzZC8wOVZkUnpIOGZjNTkxNFFGY1Z2Q0kxcXBTaFgxK1ZicFpzYXBwQVpONlhFNWJmYTJscHRiZjRvUDdUVjF2d05OMytvUDZDdExHVUJDeHBsdWliK2tQUUx4SmVwMEdURGNtb0w3QXV3VVBEZWZtQzJsVG5PdVYvZ25NLzcrZmhOT1I2NG4vdCtmZDZmejhkejFSS1BxYWd2aWd1TWRiNnUzL0xTejJOUjdOQWNDb3VpaCtZd1dCUStOQWZCb3ZDaE9RZ1doUS9OUWJBb2ZHZ09nazN4dzA5U1hXTVdoUS9OM2NDbStLRzVHOWdVUHpTSHdLYjRvVGtFTnNVUHpTR3dLWDVvRG9GTjhVTnpDR3lLSDVwRFlGUDgwQndDbStLSDVoRFlEQk0wczVuOW9ia0wyQlEvTkllQUpSQllBakg3UTJzWG9BT0FEc0RzRDYxZGdBNEFPZ0N6UDdSMkFUb0E2QURNL3REYUJlZ0FvQU1BcWdQQThnZGFsMEYwQU5BQkFBSUFFQUJBRjRzTk1PZ0FBQUVBQ0FCQUFBQUNBQkFBZ0FBQUJBQWdBUUFBQUFnQVFBSUFBQUFRQUlBQUFBUUFJQUVBQUFBSUFFQUNBQUFBRUFQQ2lvSllYV3AvSFovL2RxTHRwMFFFb2ZyMjBqRm1RTnhFempaL0ozWUE5QU5nRU0vdEQ2MWphdkdIUVBLWXNnY0FTQ0NBQUFBRUFDQUJBQVB4TXkxL2pNNllFZ0JBd2xnUUFTSlRSendMZG03bjRpekZtZnRVZGdPVVFZNmF5QXhBQzBBRUFBZ0FRQUlBQUFBUUF1QmVBODNYOUhJOUFwZk4xL1JZZEFDeUJBQUlBRUFCQVlRRFlDRVBqQnBnT0FEb0FRd0FDd0RJSUNwYy9kQURRQVI2VURNRDAyWjhPQURyQVRBa0JUSjM5NlFDZ0F6aE5DbURhN0U4SEFCM0FiV0lBVTJiL0dUc0FJWURKeGM4U0NDeUJrazBRNE5mWjMzRUhJQVF3c2ZoZExZRUlBVXdyZnRkN0FFSUFrNG8vb1Uwd0lZQXB4WjlRQUFnQlRDbitoQU5BQ0dCQzhTY1ZBRUlBdnhkLzBnRWdCUEJ6OFl1SXBMUjRLK3FMK00rNDRJdkNUMWtIb0J2QXI4V2Y4ZzVBTjRCZkNqL3RBU0FJOE1PcVl0YVdMQVFCWGx4T3ovcWFuU0RBUy92SU9kMjBFZ2JNUmRGN0pnQ0VnbUtmYTM4RDBlSmYyalpkcmtRQUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQVlBQUFEMGVOVDZBQUFWajBsRVFWUjQydTNkV1pDVjVabkE4ZWVjYm5ZUWtVV0NJaUt5aXF6UnhJa0xiZ1JGZ1FZMUJDZTVTYzNkM0k1VlUzTTdOMlBWMU54T1RWV21hakxCTFdJM2lvSW1HbEVUbHdTYVhRZ0lpSWlneU40c1RTOXpFWk55RENEUXkzdk85LzUrZDFtS2M3N2xuUGYvUGVjN3AwdEJSYnJyeVFudDlnSlFCS3VmMkZxeUZ5cVBnMktCQnhBSUFnQ0xQWUFvRUFCWThBRUVnUURBZ2c4Z0NBU0FSUjhBTVNBQUxQb0FpQUVCWU5FSFFBd0lBQXMvQUVKQUFGajBBUkFEQXNEQ0Q0QVFFQUFXZmdDRWdBQ3c4QU1nQkFTQWhSOEFJU0FBTFB3QUNJRkxWYmI0QTBCK2EwZkp3UU9BL0tZQmhkc29DejhBUXVEYkZlb2pBSXMvQU5hWWpDWUFGbjRBVEFNeW13QlkvQUd3OW1RV0FCWi9BS3hCbDZka3B3TkF4MVRqUndKVk53R3crQU5nYmNvc0FDeitBRmlqT2tmSlRnV0F6bFVOSHdsVS9BVEE0ZytBYVVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQm1BV0R4QjBBRVpCWUFGbjhBUkVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQzZ0YkNjMndZRGdBaElFQUFXZndCSXZ6YVdpNzZCQUNBQ0VnYUF4UjhBS21ldExCZHRnd0JBQkZUUUJBQUFxQnhkSGdDdS9nR2c4dGJPY3JWdkFBQ0lnQW9LQUlzL0FGVHVXdW9lQUFESVVKY0VnS3QvQUtqc05iVmNMVThVQUVSQWhRYUF4UjhBcWlNQzNBTUFBQm5xdEFCdzlROEExVE1GS0ZmYUV3SUF1bjdOOVJFQUFHU293d0hnNmg4QXFtOEtZQUlBQUNZQXJ2NEJJSWNwUURuVkF3TUE2U0xBUndBQWtLSExDZ0JYL3dCUTNWTUFFd0FBTUFGdzlROEFPVXdCVEFBQXdBVEExVDhBNURBRk1BRUFBQk1BVi84QWtNTVV3QVFBQUV3QVhQMERRQTVUQUJNQUFEQUJBQUFFUUJqL0EwQzF1WmkxMndRQUFFd0FYUDBEUUE1VEFCTUFBREFCQUFDeURnRGpmd0NvYmhkYXkwMEFBTUFFQUFESU5nQ00vd0dnR002M3Bwc0FBSUFKQUFDUVpRQVkvd05Bc1p4cmJUY0JBQUFUQUFCQUFBQUF4UThBbi84RFFERjljNDAzQVFDQTNDY0FBSUFBQUFDS0hnQSsvd2VBWXZ2NldtOENBQUE1VHdBQUFBRUFBQWdBQUtCd0FlQUdRQURJdzEvV2ZCTUFBTWgxQWdBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFDcVFNbHZBQUNBQ1FBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFMcGVyVjJRenN4UnQ4Vy9QL2JmZGtRVitlanpyZkd6LzZsekhuV2hmMXYxTDdGeTR3dE90bk40Wk9aUDR4L3YrZWZDYk0rai8zbDNmSEY4dndOckFnQVFzWERHMzlzSjUxQ0tVaXlZdnNTT1FBQUF4VFIyMk1TWWZNME1PK0liYmgxOVIxdzdhSlFkZ1FBQWlqd0ZlTnhPK09ZK21XbWZJQUNBZ3J0ejNPd1kzRytvSGZHVmF3ZU5pbHRIMzJGSElBQ0FZcXN0MThhOGFZdnRpSy9VelhnOFNsR3lJeEFBUVBFOVBQV3hxQzM3b2xLZm5uMWp6dVE2SndRQ0FNakRWZjJHeEt6eGM3TGZEM051V2hEOWV2WjNRaUFBZ0h6ay9wWEFVcFNpemcyUkNBQWdONU5HVEkxeFY5K1U3ZlovOS9xL2krdXV1c0dKZ0FBQVRBRnNPd2dBSUFQM1Rud3dCdllabE4xMmo3aHlaSHp2aGp1ZEFBZ0FJRTg5YW5yR1ExTWZ6VzY3NjZZL0h1V1N0MmdFQUpDeCtkTitIT1ZTVFRiYjI3dEhuM2pnNW9VT1BBSUF5TnV3QWNQajlySDNaTE85czIrYUgvMTdEWERnRVFBQU9kMFF0M0M2ci80aEFBQWlJbUxheUZ0ajlKQ3hoZC9PR2FPK0g5Y1B1ZEVCUndBQS9FVU9QNHF6eUZmL0VBQUEvOS9zU2ZNSy9kbjQ4SUhYeEcxajduYWdFUUFBWDFmMHUrTVhUUHV4ci80aEFBRE9wVzc2a2tJdWtyMXFlOGVEVXg1eGdCRUFBT2N5NHNycjR0YlJkeFJ1dSs2ZjlIQmMwWHVnQTR3QUFEaWZoUVc4R2RCZi9VTUFBSHlMVzBiZkhpTUhYVitZN1prNjhwWVlNM1M4QTRzQUFMaVFVcFJpd1l3bGhkbWVSVE4rNHFBaUFBQXV4cHpKZGRHblo5K3EzNDdjZnVZWUFRRFFJZjE2OW84ZjNqUy82cmRqd2ZRbFdmMmhJd1FBUUNjc250Vjk0MXpQMmw0eDExZi9FQUFBbCtiNndXTml4cWp2ViszenYyL2lRekd3enlBSEVnRUFjS21xK2JmemZmV1BsR3J0QWk3a3B6K2ZHM3NPN2JRanFGaTNqWmtWVjE4eElnNGMyMWRWei92bWEyZkcyR0VUSFVCTUFBQXU2MDJzVkJNTHBsZmZWd0lYdXZwSEFBQjB6TndwajBTdjJ0NVY4M3lIOUw4NjdodzcyNEZEQUFCMHhCVzlCOGE5RStkV3pmT2RQMzF4MUpSOTlROEJBTkJoQzZ2a1pzQWVOVDNqb1NtUE9tQUlBSURPY09Pd0NUSDVtaGtWL3p6dm1mQkFET283MkFGREFBRGtOQVZZV01WZlcwUUFBRlNrTzhmZEgwUDZENnZZNTNmVGlHa3hmdmhrQndvQkFOQ1phc3UxOGZEVUg3bjZCd0VBNUdiZTFCOUZqNW9lRmZlOEJ2Y2JHbmVOLzZFRGhBQUE2QXFEK2cyT1dlUG5WRjZZVEZzY3RXVS92b29BQU9neWRSWDJWd0o3MVBTSWg2Yys1c0FnQUlBOHBQcDkva2tqcGxiVXpYYXp4cytKcS9vTlNmTFkrNDkrNmtSRUFBRGRxNkh4S1ZPQVNIdnpYOE82cDUySUNBQ2dlNzI2ZVhrMG5UbWU1TEh2bmZoZ1hObjNxdVQ3WU1Md20yUGlkNllrZWV4RFRRZGo5YlpYbllnSUFLQjduVHA3TWxadXFrL3kySlh5azd1TFpxYTcrbjl4M1RQUjB0YmlSRVFBQU4ydnZuRnB0RWQ3a3NlZU4yMXhsRXZwL3VqT29MNkRZOWI0QjVJOGRrdGJTN3k0L2xrbklBSUFTT1BUdzN2aWcxMXZKM25zWVFPR3grMWo3MDIyN1E5UGZTelpieEs4dVcxVkhHbzY2QVJFQUFEcExGdnp5MlNQdlNqUkRYaTE1ZHFZTjIxeHN1MStZZTB2blhnSUFDQ3RQK3g2Sno0NXZEdkpZMDhkZVV2Y01IUmN0ei91bmVObUovdTdCTnYyYjRvdCs5WTc4UkFBUUZydDBSNE5hL1A2U21ES3IvNjUra2NBQUJWajFhYjZPTlY4TXNsajN6OXBYdlR2TmFEYkhtL2MxWk5pOGpYVGsyenJrWk9ING8ydEs1MXdDQUNnTWpRMW40aFZteHVTUEhidkhyM2p3WnNYZGVQVi8wK1M3ZWVYTmp3WFoxdWJuWEFJQUtCeTFLOU45NVhBQmRPWFJMblU5Vzk1QS9zTWluc25QcGhrRzF2YldtTjU0ek5PTkFRQVVGbjJITm9aYTNhL20rU3hSMXc1TW00ZGZVZVhQODZmdi9yWE04azJ2clg5dFRoNDRvQVREUUVBVko2VU42aDE5VmNDYThvMU1UL3BWLytXT3NFUUFFQmxlbS9uNnRoMzVKTWtqLzNkMFQrSWtZT3U3N0ovLzQ2eDk4ZlFBY09UYk51T3o3Zkd4cjFybkdBSUFLQXl0YlczeGZKRWY2R3VGS1ZZTUdOSmwvMzd2dnFIQUFDNGdKYzNQQituejU1Szh0aHpKdGRGbjU1OU8vM2ZIVE5zUWt5NWRtYVNiVHAyNmtpOC91SExUaXdFQUZEWlRwdzVIcTl0ZVRISlkvZnIyVC9tM0xTZ1VGZi9Lelk4SDJkYVRqdXh1Q1MxZGdFWDhvdWY1WDFWOFlkZDc4US9QZjhQVG9RdVVMOTJhY3liK3FNa2o3MWcrcEtvYit5OFh5YThvdmZBdUcvaTNDVGIwdGJlbXV3akZVd0FBQzdacm9QYm8zSFArMGtlZTlUZ01URnoxRzJkOXU4OU5QWFI2RlhiTzhtMi9HN0hiK1BBc1gxT0tBUUFVRDFTM3JpMmNFYm4vSDJBY3FrbTVrLzdjWmI3RUFFQTBJR3IxOCtTUFBadFkrNk80UU92NmZDLzg0TWI3NDZycnhpUlpCdDJIOXlSYklxQ0FBQzRiSC8rL0RyTlh3a3NsOHF4b0JPdTNIMzFEd0VBY0JsUzNzSCs0SlJIT3ZUWi9lZ2hZMlA2ZGQ5TDh0eFRmcE1DQVFEUVlTbS93OTdSdS9kVFh2Mi9zbkZac3Q5U1FBQUFkSXFVbyt5NnkxekUrL2NhRVBkUG1wZmtPYmUxdDBWRDQxTk9IQVFBVU4xMmZMNDFOaVQ2SGZzYmgwMklteS9qRi96bVRua2tldmRJODlXLzkzZStsZXp2S1NBQUFBb3pCYmpVcndTV1MrVllNSDFKbHZzS0FRRFFxZDdlL3V0a2Y4dit6ckd6WTBqL1lSZjkvNzl0ekt6NHpzQnJrenpYVHc3dGlqL3UvcjBUQmdFQUZFTnJXMnNzYjN3bXlXUFhsR3RpM3JURmx6QXhTUGpWdjhhbDBSN3RUaGdFQUZBY0wyMTRMczYyTmlkNTdJZW5QQlk5YW5wODYvK3ZzMzlHK0ZJME5aK0lWemMxT0ZFUUFFQ3hIRGw1S043WXVqTEpZdy9xTnpobWpaOXpFVmYvanlmYlA2czIxY2ZKNWlZbkNnSUFLSjYwTndOZWVMVGZyOWVBbUQxcGZwTG4xaDd0MGJEV1YvOFFBRUJCYmR1L0tiYnNXNS9rc1NkK1owcU1Iejc1dlAvN0E1UHJvay9QdmttZTJ4OTJ2Uk9mSE43dEJFRUFBS1lBM1RrRktFVXA2cVkvbnVVK1FRQUFkSXMzdDYyS0w1dStTUExZOTB4NElLN3NlOVhmL1BmZnUrSE91R2JRZFVtZTA3NGplK0w5blc4N01SQUFRTEcxdExYRVMrdWVUZkxZUFdwNnhrTlRIdjJiLzM1UjByLzY1NnQvQ0FBZ0V5K3VmelphMmxxU1BQYjhhWXVqcGx6ejEvODhjdEQxOGQzUlAwanlYRTZmUFJVck45VTdJUkFBUUI0T05SMk1ON2V0U3ZMWVF3Y01qOXZIM3ZmWC8xdzM0L0VvUlNuSmMzbDFjME0wblRudWhFQUFBUGxJZWpQZ1Z6Zjg5ZTNaTCtaTXJrdjJQT3JYTG5VaUlBQ0F2R3padHo2MjdkK1U1TEduanJ3bGJoZzZMdVpNcm91K1Bmc2xlUTVyUDM0dmRuLzVrUk1CQVFDWUFuU25SVE4rRW5VSi8rcmZNbDk5UXdBQXVYcGo2OG80Y3ZKUWtzZCs0T2FGTWZLcTBVa2VlLy9SVCtQZGozN3JCRUFBQUhrNjI5b2NMMjE0THMwYlpDbmRXMlREdXFlanJiM05DWUFBQVBLMXZQR1phRzFyeldaN3o3U2NqbGMyUE8vQUl3Q0F2QjA4Y1NEZTN2N3JiTGIzTjF0V3hMSFRSeDE0QkFCQVRqZkUrZDEvQkFEQVZ6YnVYUk03UHQ5YStPMWN2L2VQOGRFWDJ4eHd1bHl0WGNDRi9QVG5jMlBQb1oxMkJCVnpaZnpFbkg4dDlEWXVXL08vRGpRbUFBQmY5NXNQVjhTeFUwY0t1MzFmSE44ZnY5dnh1nT05BQURBdVJ3NDlsbjhia2Z4ZmlIdjlROWZqcU9uRGp2QUNBQ0E4eW5pMStSZThGZi9FQUFBRjlhNDUvM1lkWEI3WWJabjA2ZU44YWNEbXgxWUJBREF0Nmt2MEJXekgvNUJBQUJjcE5lMkxJL2pwNDlWL1haODJmUkZ2UFduMXh4UUJBREF4VGg5OW5TOHNuRloxVy9IaSt1ZWlaYTJGZ2NVQVFCd3NSb2FuNnJxUDVsN3R2VnN2TFQrT1FjU0FRQndLVDQ3dWpmZTI3bTZhcC8vbTl0V3hhR21ndzRrQWdEZ1VsWHpEWFJ1L2tNQUFGeW1QKzcrZlZYK3dhcXQremZHaDU5dGNBQVJBQUNYcXhxL0V1anFId0VBMEVHck5qZEVVL09KcW5tK2gwOStHYi9kdXNxQlF3QUFkTVNwNXBPeGFsTjkxVHpmRmV1Zmk3T3R6UTRjQWdDZ28rclhMbzMyYUsvNDU5bmExaHJMMXozcmdDRUFBRHJEM3NNZnh3ZTczcTc0NS9uVzl0Zmk0SWtERGhnQ0FLQ3p2TENtOG04R1hMYkd6WDhJQUlCTzljR3V0MlB2NFk4cjl2bHQvL3pEMlBUcFdnY0tBUURRbWRxalBSb2FuNnJZNStlcmZ3Z0FnQzZ5Y3VNTGNhcjVaTVU5cjJPbmpzVHJINzdzQUNFQUFMcENVL09KZUhYejhvcDdYaXMyL0NxYVc4NDRRQWdBZ0s1UzMxaFpOd08ydGJmRzhuVlBPekFJQUlDdTlQR1hIOFdhajkrdG1PZnp6dlkzNHNDeHp4d1lCQUJBVjZ1a0crN2MvSWNBQU9nbTczNzBabngyZEcveTU3SHI0UFpZOThrSERnZ0NBS0E3dExXM1ZjUlhBbDM5SXdBQXV0a3JHNWZGNmJPbmt6MytpVFBINDlkYlhuUWdFQUFBM2VuNDZXTkpGK0NYTnp5Zk5FQkFBQURaU2pXQ2IydHY4OVUvQkFCQUtxbHV3bnR2NStyWWQrUVRCd0FCQUpEVEZNRE5md2dBZ01TNis0ZDQ5aHphR1d0MnYydkhJd0FBVXVydW4rS3RYN3MwMnFQZGprY0FBS1RXWFgrTXA2bjVSS3phM0dDSFUvRnE3UUl1NUJjLzgrZEx6MmZ4ZjkwWCs0OStha2RVaVdPbmpzVHMvNWhtUjRBSkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUFRQUFDQUFBQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBMEZWS2R6MDVvZDF1QUFBVEFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFCQUFBQUFBZ0FBS0t4YXU0Q1VuaHplYmllUXJTZjJsK3dFQkFBV2ZNajk5U0FJRUFCWStDSGoxNGtRb0R1NEJ3Q0xQM2pOWUFJQTNzVEFOQUFUQUxENGc5Y1NBZ0M4WVlIWEZBSUF2RkdCMXhZQ0FHOVEzcURBYXd3QkFBQUlBRnlaQUY1ckNBQzhJUUZlY3dnQUFFQUE0RW9FOE5wREFBQUFBZ0FBRUFBQWdBQ2cyL2dNRXJ3R0VRQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQW9ESzhjVCtrcDBBWG9NSUFBQkFBQUFBQWdBQUVBQVVoTThnd1dzUEFRQUFDQUJjaVFCZWN3Z0F2Q0VCWG1zSUFBQkFBT0RLQlBBYVF3RGdEUXJ3MmtJQTRJMEt2S1pBQU9BTkM3eVdvR05xN1FLNitvM3J5ZUh0ZGdaWStERUJ3QnNaNERXRENRQ21BWUNGSHdGQVhtOXdnZ0N2QnhBQWVBTUVvSnU0QndBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQVVnYkE2aWUyK2lrMkFNakk2aWUybGt3QUFDREhDWUJkQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBZ0dvS0FMOEZBQUI1K011YWJ3SUFBTGxPQUFBQUFRQUFDQUFBb0xBQjRFWkFBQ2kycjYvMUpnQUFrUE1FQUFBUUFBQkFMZ0hnUGdBQUtLWnZydkVtQUFDUSt3UUFBQkFBQUVBdUFlQStBQUFvbG5PdDdTWUFBR0FDQUFCa0d3QStCZ0NBWWpqZm1tNENBQUFtQUFCQTFnSGdZd0FBcUc0WFdzdE5BQURBQkFBQXlENEFmQXdBQU5YcDI5WndFd0FBTUFFd0JRQ0FvbC85bXdBQWdBa0FBQ0FBdnNiSEFBQlFIUzUyelRZQkFBQVRBRk1BQUNqNjFiOEpBQUNZQUpnQ0FFQU9WLzhtQUFCZ0FtQUtBQUE1WFAyYkFBQ0FDWUFwQUFEa2NQVnZBZ0FBSmdDbUFBQ1F3OVYvaHljQUlnQUFxbS94NzNBQUFBRFZxY01CWUFvQUFOVjE5VzhDQUFBbUFLWUFBSkREMVgrblRnQkVBQUJVeCtMZnFRRUFBRlNQVGcwQVV3QUFxUHlyL3k2WkFJZ0FBS2o4dGJWY0xVOFVBQ3orRlI0QUFFQmw2N0lBTUFVQWdNcGRTOHZWK3NRQndPSmZvUUVnQWdDZ010ZE85d0FBUUlhNkpRQk1BUUNnc3RiTWN0RTJDQUFzL2hVVUFDSUFBQ3BualN3WGZRTUJ3T0pmQVFFZ0FnQWcvWnBZem0yREFTRDN4VDlwQUlnQUFDeis2WlJ6M3dFQWtPUGFWN1lqQUNDL05hOXNod0JBZm10ZDJZNEJnUHpXdUxJZEJBRDVyVzFsT3dvQThsdlR5bllZQU9TM2xwWHRPQURJYncwcjI0RUFrTi9hVlZXTDYxMVBUbWgzV2dGZzRjOWdBbUFhQUlBMUt2TUFFQUVBV0pzNlIxVXZwajRTQU1EQ244a0V3RFFBQUd0UTVnRWdBZ0N3OWx5ZVFpMmVQaElBd01LZnlRVEFOQUFBYTB6bUV3RFRBQUFzL0prSGdCQUF3TUovZm1VSEVBRHlXenV5V2h4TkF3QncwWmhoQUFnQkFISmYrTE1PQUNFQVFLNEx2d0FRQWdBVy9vd0pBQ0VBWU9FWEFJZ0JBSXUrQUVBSUFGajRCWUFZRUFNQUZuMEJJQVlBc09nTEFERUFnRVZmQUFnQ0FDejRBa0FRQUdEQkZ3Q2lRQlFBV093RkFBSUJzTURUbmY0UFBOd0ZnSXlIWlJVQUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQVlBQUFEMGVOVDZBQUFWajBsRVFWUjQydTNkV1pDVjVabkE4ZWVjYm5ZUWtVV0NJaUt5aXF6UnhJa0xiZ1JGZ1FZMUJDZTVTYzNkM0k1VlUzTTdOMlBWMU54T1RWV21hakxCTFdJM2lvSW1HbEVUbHdTYVhRZ0lpSWlneU40c1RTOXpFWk55RENEUXkzdk85LzUrZDFtS2M3N2xuUGYvUGVjN3AwdEJSYnJyeVFudDlnSlFCS3VmMkZxeUZ5cVBnMktCQnhBSUFnQ0xQWUFvRUFCWThBRUVnUURBZ2c4Z0NBU0FSUjhBTVNBQUxQb0FpQUVCWU5FSFFBd0lBQXMvQUVKQUFGajBBUkFEQXNEQ0Q0QVFFQUFXZmdDRWdBQ3c4QU1nQkFTQWhSOEFJU0FBTFB3QUNJRkxWYmI0QTBCK2EwZkp3UU9BL0tZQmhkc29DejhBUXVEYkZlb2pBSXMvQU5hWWpDWUFGbjRBVEFNeW13QlkvQUd3OW1RV0FCWi9BS3hCbDZka3B3TkF4MVRqUndKVk53R3crQU5nYmNvc0FDeitBRmlqT2tmSlRnV0F6bFVOSHdsVS9BVEE0ZytBYVVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQm1BV0R4QjBBRVpCWUFGbjhBUkVCbUFXRHhCMEFFWkJZQUZuOEFSRUJtQVdEeEIwQUVaQllBRm44QVJFQzZ0YkNjMndZRGdBaElFQUFXZndCSXZ6YVdpNzZCQUNBQ0VnYUF4UjhBS21ldExCZHRnd0JBQkZUUUJBQUFxQnhkSGdDdS9nR2c4dGJPY3JWdkFBQ0lnQW9LQUlzL0FGVHVXdW9lQUFESVVKY0VnS3QvQUtqc05iVmNMVThVQUVSQWhRYUF4UjhBcWlNQzNBTUFBQm5xdEFCdzlROEExVE1GS0ZmYUV3SUF1bjdOOVJFQUFHU293d0hnNmg4QXFtOEtZQUlBQUNZQXJ2NEJJSWNwUURuVkF3TUE2U0xBUndBQWtLSExDZ0JYL3dCUTNWTUFFd0FBTUFGdzlROEFPVXdCVEFBQXdBVEExVDhBNURBRk1BRUFBQk1BVjc4QWtNTVV3QVFBQUV3QVhQMERRQTVUQUJNQUFEQUJBQUFFUUJqL0EwQzF1WmkxMndRQUFFd0FYUDBEUUE1VEFCTUFBREFCQUFDeURnRGpmd0NvYmhkYXkwMEFBTUFFQUFESU5nQ00vd0dnR002M3Bwc0FBSUFKQUFDUVpRQVkvd05Bc1p4cmJUY0JBQUFUQUFCQUFBQUF4UThBbi84RFFERjljNDAzQVFDQTNDY0FBSUFBQUFDS0hnQSsvd2VBWXZ2NldtOENBQUE1VHdBQUFBRUFBQWdBQUtCd0FlQUdRQURJdzEvV2ZCTUFBTWgxQWdBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFDcVFNbHZBQUNBQ1FBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFMcGVyVjJRenN4UnQ4Vy9QL2JmZGtRVitlanpyZkd6LzZsekhuV2hmMXYxTDdGeTR3dE90bk40Wk9aUDR4L3YrZWZDYk0rai8zbDNmSEY4dndOckFnQVFzWERHMzlzSjUxQ0tVaXlZdnNTT1FBQUF4VFIyMk1TWWZNME1PK0liYmgxOVIxdzdhSlFkZ1FBQWlqd0ZlTnhPK09ZK21XbWZJQUNBZ3J0ejNPd1kzRytvSGZHVmF3ZU5pbHRIMzJGSElBQ0FZcXN0MThhOGFZdnRpSy9VelhnOFNsR3lJeEFBUVBFOVBQV3hxQzM3b2xLZm5uMWp6dVE2SndRQ0FNakRWZjJHeEt6eGM3TGZEM051V2hEOWV2WjNRaUFBZ0h6ay9wWEFVcFNpemcyUkNBQWdONU5HVEkxeFY5K1U3ZlovOS9xL2krdXV1c0dKZ0FBQVRBRnNPd2dBSUFQM1Rud3dCdllabE4xMmo3aHlaSHp2aGp1ZEFBZ0FJRTg5YW5yR1ExTWZ6VzY3NjZZL0h1V1N0MmdFQUpDeCtkTitIT1ZTVFRiYjI3dEhuM2pnNW9VT1BBSUF5TnV3QWNQajlySDNaTE85czIrYUgvMTdEWERnRVFBQU9kMFF0M0M2ci80aEFBQWlJbUxheUZ0ajlKQ3hoZC9PR2FPK0g5Y1B1ZEVCUndBQS9FVU9QNHF6eUZmL0VBQUEvOS9zU2ZNSy9kbjQ4SUhYeEcxajduYWdFUUFBWDFmMHUrTVhUUHV4ci80aEFBRE9wVzc2a2tJdWtyMXFlOGVEVXg1eGdCRUFBT2N5NHNycjR0YlJkeFJ1dSs2ZjlIQmMwWHVnQTR3QUFEaWZoUVc4R2RCZi9VTUFBSHlMVzBiZkhpTUhYVitZN1prNjhwWVlNM1M4QTRzQUFMaVFVcFJpd1l3bGhkbWVSVE4rNHFBaUFBQXV4cHpKZGRHblo5K3EzNDdjZnVZWUFRRFFJZjE2OW84ZjNqUy82cmRqd2ZRbFdmMmhJd1FBUUNjc250Vjk0MXpQMmw0eDExZi9FQUFBbCtiNndXTml4cWp2ViszenYyL2lRekd3enlBSEVnRUFjS21xK2JmemZmV1BsR3J0QWk3a3B6K2ZHM3NPN2JRanFGaTNqWmtWVjE4eElnNGMyMWRWei92bWEyZkcyR0VUSFVCTUFBQXU2MDJzVkJNTHBsZmZWd0lYdXZwSEFBQjB6TndwajBTdjJ0NVY4M3lIOUw4NjdodzcyNEZEQUFCMHhCVzlCOGE5RStkV3pmT2RQMzF4MUpSOTlROEJBTkJoQzZ2a1pzQWVOVDNqb1NtUE9tQUlBSURPY09Pd0NUSDVtaGtWL3p6dm1mQkFET283MkFGREFBRGtOQVZZV01WZlcwUUFBRlNrTzhmZEgwUDZENnZZNTNmVGlHa3hmdmhrQndvQkFOQ1phc3UxOGZEVUg3bjZCd0VBNUdiZTFCOUZqNW9lRmZlOEJ2Y2JHbmVOLzZFRGhBQUE2QXFEK2cyT1dlUG5WRjZZVEZzY3RXVS92b29BQU9neWRSWDJWd0o3MVBTSWg2Yys1c0FnQUlBOHBQcDkva2tqcGxiVXpYYXp4cytKcS9vTlNmTFkrNDkrNmtSRUFBRGRxNkh4S1ZPQVNIdnpYOE82cDUySUNBQ2dlNzI2ZVhrMG5UbWU1TEh2bmZoZ1hObjNxdVQ3WU1Md20yUGlkNllrZWV4RFRRZGo5YlpYbllnSUFLQjduVHA3TWxadXFrL3kySlh5azd1TFpxYTcrbjl4M1RQUjB0YmlSRVFBQU4ydnZuRnB0RWQ3a3NlZU4yMXhsRXZwL3VqT29MNkRZOWI0QjVJOGRrdGJTN3k0L2xrbklBSUFTT1BUdzN2aWcxMXZKM25zWVFPR3grMWo3MDIyN1E5UGZTelpieEs4dVcxVkhHbzY2QVJFQUFEcExGdnp5MlNQdlNqUkRYaTE1ZHFZTjIxeHN1MStZZTB2blhnSUFDQ3RQK3g2Sno0NXZEdkpZMDhkZVV2Y01IUmN0ei91bmVObUovdTdCTnYyYjRvdCs5WTc4UkFBUUZydDBSNE5hL1A2U21ES3IvNjUra2NBQUJWajFhYjZPTlY4TXNsajN6OXBYdlR2TmFEYkhtL2MxWk5pOGpYVGsyenJrWk9ING8ydEs1MXdDQUNnTWpRMW40aFZteHVTUEhidkhyM2p3WnNYZGVQVi8wK1M3ZWVYTmp3WFoxdWJuWEFJQUtCeTFLOU45NVhBQmRPWFJMblU5Vzk1QS9zTWluc25QcGhrRzF2YldtTjU0ek5PTkFRQVVGbjJITm9aYTNhL20rU3hSMXc1TW00ZGZVZVhQODZmdi9yWE04azJ2clg5dFRoNDRvQVREUUVBVko2VU42aDE5VmNDYThvMU1UL3BWLytXT3NFUUFFQmxlbS9uNnRoMzVKTWtqLzNkMFQrSWtZT3U3N0ovLzQ2eDk4ZlFBY09UYk51T3o3Zkd4cjFybkdBSUFLQXl0YlczeGZKRWY2R3VGS1ZZTUdOSmwvMzd2dnFIQUFDNGdKYzNQQituejU1Szh0aHpKdGRGbjU1OU8vM2ZIVE5zUWt5NWRtYVNiVHAyNmtpOC91SExUaXdFQUZEWlRwdzVIcTl0ZVRISlkvZnIyVC9tM0xTZ1VGZi9Lelk4SDJkYVRqdXh1Q1MxZGdFWDhvdWY1WDFWOFlkZDc4US9QZjhQVG9RdVVMOTJhY3liK3FNa2o3MWcrcEtvYit5OFh5YThvdmZBdUcvaTNDVGIwdGJlbXV3akZVd0FBQzdacm9QYm8zSFArMGtlZTlUZ01URnoxRzJkOXU4OU5QWFI2RlhiTzhtMi9HN0hiK1BBc1gxT0tBUUFVRDFTM3JpMmNFYm4vSDJBY3FrbTVrLzdjWmI3RUFFQTBJR3IxOCtTUFBadFkrNk80UU92NmZDLzg0TWI3NDZycnhpUlpCdDJIOXlSYklxQ0FBQzRiSC8rL0RyTlh3a3NsOHF4b0JPdTNIMzFEd0VBY0JsUzNzSCs0SlJIT3ZUWi9lZ2hZMlA2ZGQ5TDh0eFRmcE1DQVFEUVlTbS93OTdSdS9kVFh2Mi9zbkZac3Q5U1FBQUFkSXFVbyt5NnkxekUrL2NhRVBkUG1wZmtPYmUxdDBWRDQxTk9IQVFBVU4xMmZMNDFOaVQ2SGZzYmgwMklteS9qRi96bVRua2tldmRJODlXLzkzZStsZXp2S1NBQUFBb3pCYmpVcndTV1MrVllNSDFKbHZzS0FRRFFxZDdlL3V0a2Y4dit6ckd6WTBqL1lSZjkvNzl0ekt6NHpzQnJrenpYVHc3dGlqL3UvcjBUQmdFQUZFTnJXMnNzYjN3bXlXUFhsR3RpM3JURmx6QXhTUGpWdjhhbDBSN3RUaGdFQUZBY0wyMTRMczYyTmlkNTdJZW5QQlk5YW5wODYvK3ZzMzlHK0ZJME5aK0lWemMxT0ZFUUFFQ3hIRGw1S043WXVqTEpZdy9xTnpobWpaOXpFVmYvanlmYlA2czIxY2ZKNWlZbkNnSUFLSjYwTndOZWVMVGZyOWVBbUQxcGZwTG4xaDd0MGJEV1YvOFFBRUJCYmR1L0tiYnNXNS9rc1NkK1owcU1Iejc1dlAvN0E1UHJvay9QdmttZTJ4OTJ2Uk9mSE43dEJFRUFBS1lBM1RrRktFVXA2cVkvbnVVK1FRQUFkSXMzdDYyS0w1dStTUExZOTB4NElLN3NlOVhmL1BmZnUrSE91R2JRZFVtZTA3NGplK0w5blc4N01SQUFRTEcxdExYRVMrdWVUZkxZUFdwNnhrTlRIdjJiLzM1UjByLzY1NnQvQ0FBZ0V5K3VmelphMmxxU1BQYjhhWXVqcGx6ejEvODhjdEQxOGQzUlAwanlYRTZmUFJVck45VTdJUkFBUUI0T05SMk1ON2V0U3ZMWVF3Y01qOXZIM3ZmWC8xdzM0L0VvUlNuSmMzbDFjME0wblRudWhFQUFBUGxJZWpQZ1Z6Zjg5ZTNaTCtaTXJrdjJQT3JYTG5VaUlBQ0F2R3padHo2MjdkK1U1TEduanJ3bGJoZzZMdVpNcm91K1Bmc2xlUTVyUDM0dmRuLzVrUk1CQVFDWUFuU25SVE4rRW5VSi8rcmZNbDk5UXdBQXVYcGo2OG80Y3ZKUWtzZCs0T2FGTWZLcTBVa2VlLy9SVCtQZGozN3JCRUFBQUhrNjI5b2NMMjE0THMwYlpDbmRXMlREdXFlanJiM05DWUFBQVBLMXZQR1phRzFyeldaN3o3U2NqbGMyUE8vQUl3Q0F2QjA4Y1NEZTN2N3JiTGIzTjF0V3hMSFRSeDE0QkFCQVRqZkUrZDEvQkFEQVZ6YnVYUk03UHQ5YStPMWN2L2VQOGRFWDJ4eHd1bHl0WGNDRi9QVG5jMlBQb1oxMkJCVnpaZnpFbkg4dDlEWXVXL08vRGpRbUFBQmY5NXNQVjhTeFUwY0t1MzFmSE44ZnY5dnh1nT05BQURBdVJ3NDlsbjhia2Z4ZmlIdjlROWZqcU9uRGp2QUNBQ0E4eW5pMStSZThGZi9FQUFBRjlhNDUvM1lkWEI3WWJabjA2ZU44YWNEbXgxWUJBREF0Nmt2MEJXekgvNUJBQUJjcE5lMkxJL2pwNDlWL1haODJmUkZ2UFduMXh4UUJBREF4VGg5OW5TOHNuRloxVy9IaSt1ZWlaYTJGZ2NVQVFCd3NSb2FuNnJxUDVsN3R2VnN2TFQrT1FjU0FRQndLVDQ3dWpmZTI3bTZhcC8vbTl0V3hhR21ndzRrQWdEZ1VsWHpEWFJ1L2tNQUFGeW1QKzcrZlZYK3dhcXQremZHaDU5dGNBQVJBQUNYcXhxL0V1anFId0VBMEVHck5qZEVVL09KcW5tK2gwOStHYi9kdXNxQlF3QUFkTVNwNXBPeGFsTjkxVHpmRmV1Zmk3T3R6UTRjQWdDZ28rclhMbzMyYUsvNDU5bmExaHJMMXozcmdDRUFBRHJEM3NNZnh3ZTczcTc0NS9uVzl0Zmk0SWtERGhnQ0FLQ3p2TENtOG04R1hMYkd6WDhJQUlCTzljR3V0MlB2NFk4cjl2bHQvL3pEMlBUcFdnY0tBUURRbWRxalBSb2FuNnJZNStlcmZ3Z0FnQzZ5Y3VNTGNhcjVaTVU5cjJPbmpzVHJINzdzQUNFQUFMcENVL09KZUhYejhvcDdYaXMyL0NxYVc4NDRRQWdBZ0s1UzMxaFpOd08ydGJmRzhuVlBPekFJQUlDdTlQR1hIOFdhajkrdG1PZnp6dlkzNHNDeHp4d1lCQUJBVjZ1a0crN2MvSWNBQU9nbTczNzBabngyZEcveTU3SHI0UFpZOThrSERnZ0NBS0E3dExXM1ZjUlhBbDM5SXdBQXV0a3JHNWZGNmJPbmt6MytpVFBINDlkYlhuUWdFQUFBM2VuNDZXTkpGK0NYTnp5Zk5FQkFBQURaU2pXQ2IydHY4OVUvQkFCQUtxbHV3bnR2NStyWWQrUVRCd0FCQUpEVEZNRE5md2dBZ01TNis0ZDQ5aHphR1d0MnYydkhJd0FBVXVydW4rS3RYN3MwMnFQZGprY0FBS1RXWFgrTXA2bjVSS3phM0dDSFUvRnE3UUl1NUJjLzgrZEx6MmZ4ZjkwWCs0OStha2RVaVdPbmpzVHMvNWhtUjRBSkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUFRQUFDQUFBQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBMEZWS2R6MDVvZDF1QUFBVEFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFCQUFBQUFBZ0FBS0t4YXU0Q1VuaHplYmllUXJTZjJsK3dFQkFBV2ZNajk5U0FJRUFCWStDSGoxNGtRb0R1NEJ3Q0xQM2pOWUFJQTNzVEFOQUFUQUxENGc5Y1NBZ0M4WVlIWEZBSUF2RkdCMXhZQ0FHOVEzcURBYXd3QkFBQUlBRnlaQUY1ckNBQzhJUUZlY3dnQUFFQUE0RW9FOE5wREFBQUFBZ0FBRUFBQWdBQ2cyL2dNRXJ3R0VRQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQW9ESzhjVCtrcDBBWG9NSUFBQkFBQUFBQWdBQUVBQVVoTThnd1dzUEFRQUFDQUJjaVFCZWN3Z0F2Q0VCWG1zSUFBQkFBT0RLQlBBYVF3RGdEUXJ3MmtJQTRJMEt2S1pBQU9BTkM3eVdvR05xN1FLNitvM3J5ZUh0ZGdaWStERUJ3QnNaNERXRENRQ21BWUNGSHdGQVhtOXdnZ0N2QnhBQWVBTUVvSnU0QndBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQVVnYkE2aWUyK2lrMkFNakk2aWUybGt3QUFDREhDWUJkQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBZ0dvS0FMOEZBQUI1K011YWJ3SUFBTGxPQUFBQUFRQUFDQUFBb0xBQjRFWkFBQ2kycjYvMUpnQUFrUE1FQUFBUUFBQkFMZ0hnUGdBQUtLWnZydkVtQUFDUSt3UUFBQkFBQUVBdUFlQStBQUFvbG5PdDdTWUFBR0FDQUFCa0d3QStCZ0NBWWpqZm1tNENBQUFtQUFCQTFnSGdZd0FBcUc0WFdzdE5BQURBQkFBQXlENEFmQXdBQU5YcDI5WndFd0FBTUFFd0JRQ0FvbC85bXdBQWdBa0FBQ0FBdnNiSEFBQlFIUzUyelRZQkFBQVRBRk1BQUNqNjFiOEpBQUNZQUpnQ0FFQU9WLzhtQUFCZ0FtQUtBQUE1WFAyYkFBQ0FDWUFwQUFEa2NQVnZBZ0FBSmdDbUFBQ1F3OVYvaHljQUlnQUFxbS94NzNBQUFBRFZxY01CWUFvQUFOVjE5VzhDQUFBbUFLWUFBSkREMVgrblRnQkVBQUJVeCtMZnFRRUFBRlNQVGcwQVV3QUFxUHlyL3k2WkFJZ0FBS2o4dGJWY0xVOFVBQ3orRlI0QUFFQmw2N0lBTUFVQWdNcGRTOHZWK3NRQndPSmZvUUVnQWdDZ010ZE85d0FBUUlhNkpRQk1BUUNnc3RiTWN0RTJDQUFzL2hVVUFDSUFBQ3BualN3WGZRTUJ3T0pmQVFFZ0FnQWcvWnBZem0yREFTRDN4VDlwQUlnQUFDeis2WlJ6M3dFQWtPUGFWN1lqQUNDL05hOXNod0JBZm10ZDJZNEJnUHpXdUxJZEJBRDVyVzFsT3dvQThsdlR5bllZQU9TM2xwWHRPQURJYncwcjI0RUFrTi9hVlZXTDYxMVBUbWgzV2dGZzRjOWdBbUFhQUlBMUt2TUFFQUVBV0pzNlIxVXZwajRTQU1EQ244a0V3RFFBQUd0UTVnRWdBZ0N3OWx5ZVFpMmVQaElBd01LZnlRVEFOQUFBYTB6bUV3RFRBQUFzL0prSGdCQUF3TUovZm1VSEVBRHlXenV5V2h4TkF3QncwWmhoQUFnQkFISmYrTE1PQUNFQVFLNEx2d0FRQWdBVy9vd0pBQ0VBWU9FWEFJZ0JBSXUrQUVBSUFGajRCWUFZRUFNQUZuMEJJQVlBc09nTEFERUFnRVZmQUFnQ0FDejRBa0FRQUdEQkZ3Q2lRQlFBV093RkFBSUJzTURUbmY0UFBOd0ZnSXlIWlJVQUFBQUFTVVZPUks1Q1lJST0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogIm1hc2thYmxlIn1dfQ==">
+<!-- ===== نهاية إعدادات الموبايل ===== -->
 <style>
   :root{
     --green:#5cab3e; --green-d:#3f8a28; --green-l:#eaf6e4;
@@ -19,19 +29,17 @@
   .hidden{display:none!important}
   .center-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;
     background:linear-gradient(135deg,#3f8a28 0%,#5cab3e 55%,#7cc15e 100%);padding:20px}
-  .login-card{background:var(--card);border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.25);
-    width:100%;max-width:430px;padding:36px 32px;text-align:center}
+  .login-card{background:var(--card);border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.25);width:100%;max-width:460px;padding:36px 32px;text-align:center}
   .brand{font-size:26px;font-weight:800;color:var(--green-d);letter-spacing:.3px}
   .brand .gold{color:var(--gold)}
   .brand-sub{color:var(--muted);font-size:13px;margin-top:4px;margin-bottom:24px}
   .login-card h2{font-size:18px;margin-bottom:18px}
   .field{text-align:right;margin-bottom:16px}
   .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:600}
-  .field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);
-    border-radius:11px;background:#fbfdfa;outline:none;transition:.15s}
+  .field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:11px;background:#fbfdfa;outline:none;transition:.15s}
+  .field textarea{font-family:monospace;font-size:12px;direction:ltr;text-align:left}
   .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 3px var(--green-l)}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:11px;
-    font-size:15px;font-weight:700;background:var(--green);color:#fff;transition:.15s;width:100%}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:11px;font-size:15px;font-weight:700;background:var(--green);color:#fff;transition:.15s;width:100%}
   .btn:hover{background:var(--green-d)} .btn:active{transform:translateY(1px)}
   .btn-gold{background:var(--gold)} .btn-gold:hover{background:var(--gold-d)}
   .btn-ghost{background:#eef2ec;color:var(--ink)} .btn-ghost:hover{background:#e2e8e0}
@@ -39,7 +47,6 @@
   .btn-sm{padding:7px 13px;font-size:13px;width:auto}
   .err{color:var(--danger);font-size:13px;margin-top:10px;min-height:18px}
   .link{background:none;color:var(--green-d);font-size:13px;text-decoration:underline;width:auto;padding:6px}
-
   #appScreen{display:flex;min-height:100vh}
   .sidebar{width:240px;background:#1f2d24;color:#cfe0c8;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;flex-shrink:0}
   .side-brand{padding:22px 20px;border-bottom:1px solid #2e3f33}
@@ -57,7 +64,7 @@
   .content{padding:26px 28px;max-width:1200px;width:100%;margin:0 auto;flex:1}
   .sync-chip{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
   .dot{width:8px;height:8px;border-radius:50%;background:#2e7d32;display:inline-block}
-
+  .dot.off{background:var(--danger)}
   .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:24px}
   .stat{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border-right:4px solid var(--green)}
   .stat.gold{border-right-color:var(--gold)} .stat.blue{border-right-color:#4a90d9}
@@ -93,7 +100,7 @@
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.25);opacity:0;transition:.3s;z-index:100;font-weight:600;font-size:14px}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)} .toast.ok{background:#2e7d32}.toast.bad{background:var(--danger)}
   .modal-bg{position:fixed;inset:0;background:rgba(20,30,24,.55);display:flex;align-items:center;justify-content:center;z-index:60;padding:18px}
-  .modal{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:26px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+  .modal{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:26px;box-shadow:0 20px 50px rgba(0,0,0,.3);max-height:92vh;overflow-y:auto}
   .modal h3{margin-bottom:18px;color:var(--green-d)}
   .modal-actions{display:flex;gap:10px;margin-top:8px} .modal-actions .btn{width:auto;flex:1}
   .hint{font-size:12px;color:var(--muted);margin-top:4px}
@@ -116,44 +123,33 @@
     body,#appScreen,.main,.content{background:#fff;margin:0;padding:0;display:block}
     .panel{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid}.content{max-width:100%}}
 </style>
-
-<!-- ===== PWA (تطبيق قابل للتثبيت على الجوال) ===== -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3f8a28">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="العقول الراقية">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 </head>
 <body>
 
-<!-- ===== SETUP (connect to Google Sheet) ===== -->
+<!-- ===== SETUP (Google Sheets Web App) ===== -->
 <div id="setupScreen" class="center-screen hidden">
   <div class="login-card">
     <div class="brand">Elegant<span class="gold">Minds</span></div>
-    <div class="brand-sub">ربط التطبيق بقاعدة بيانات Google Sheets</div>
+    <div class="brand-sub">ربط التطبيق بجدول Google Sheets</div>
     <h2>إعداد الاتصال</h2>
     <div class="field">
-      <label>رابط الخادم (Web App URL)</label>
-      <input id="apiUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off">
+      <label>الصق رابط Web App (ينتهي بـ /exec)</label>
+      <textarea id="cfgInput" rows="4" placeholder="https://script.google.com/macros/s/AKfycb.../exec"></textarea>
     </div>
-    <button class="btn" onclick="saveApiUrl()">اتصال وحفظ</button>
+    <button class="btn" onclick="saveConfig()">اتصال وحفظ</button>
     <div class="err" id="setupErr"></div>
     <div class="steps">
-      <b>كيف أحصل على الرابط؟</b><br>
-      ١. أنشئ ملف Google Sheets جديد.<br>
-      ٢. من القائمة: <b>الإضافات ← Apps Script</b>.<br>
-      ٣. الصق محتوى ملف <b>Code.gs</b> المرفق، واحفظ.<br>
-      ٤. <b>Deploy ← New deployment ← Web app</b>.<br>
-      ٥. Execute as: <b>Me</b> ، Who has access: <b>Anyone</b>.<br>
-      ٦. انسخ <b>Web app URL</b> والصقه هنا.
+      <b>من وين أجيب الرابط؟</b><br>
+      ١. افتح ملف Google Sheets الخاص بالنظام.<br>
+      ٢. <b>Extensions ← Apps Script</b> والصق كود «Code.gs».<br>
+      ٣. <b>Deploy ← New deployment ← Web app</b><br>
+      &nbsp;&nbsp;&nbsp;Execute as: <b>Me</b> — Who has access: <b>Anyone</b>.<br>
+      ٤. انسخ <b>Web app URL</b> والصقه فوق.
     </div>
   </div>
 </div>
 
-<!-- ===== LOGIN ===== -->
+<!-- ===== LOGIN ===== --><!-- ===== LOGIN ===== -->
 <div id="loginScreen" class="center-screen hidden">
   <div class="login-card">
     <div class="brand">Elegant<span class="gold">Minds</span></div>
@@ -186,8 +182,7 @@
         <h1 id="pageTitle">لوحة التحكم</h1>
       </div>
       <div style="display:flex;align-items:center;gap:16px">
-        <span class="sync-chip" id="syncChip"><span class="dot"></span> متصل</span>
-        <button class="btn btn-ghost btn-sm no-print" onclick="manualRefresh()">↻ تحديث</button>
+        <span class="sync-chip" id="syncChip"><span class="dot" id="syncDot"></span> <span id="syncTxt">مزامنة لحظية</span></span>
       </div>
     </div>
     <div class="content" id="view"></div>
@@ -200,13 +195,32 @@
 
 <script>
 /* =================================================================
-   العقول الراقية — نظام مبيعات (نسخة سحابية عبر Google Sheets)
+   العقول الراقية — نظام مبيعات (Google Sheets — عبر Apps Script Web App)
    ================================================================= */
-const URL_KEY='elegantminds_api_url';
+const CFG_KEY='elegantminds_gs_url';
 const SESSION_KEY='elegantminds_session';
-let API_URL=localStorage.getItem(URL_KEY)||'';
-let DB={employees:[],products:[],sales:[]};
+
+const SEED_PRODUCTS=[
+  {id:'p_jftab',code:'JF-TAB',name:'Joint Flex Tab',cat:'مفاصل',price:28.87,cost:0},
+  {id:'p1001',code:'1001',name:'Forget Your Age — كريم مضاد للتجاعيد 50ml',cat:'Face Care',price:34.50,cost:27.60},
+  {id:'p1002',code:'1002',name:'Hyaluron Boost Instant Youth Serum 30ml',cat:'Face Care',price:32.00,cost:25.60},
+  {id:'p1003',code:'1003',name:'Retinol Boost Youth Renewal Serum 30ml',cat:'Face Care',price:32.00,cost:25.60},
+  {id:'p1004',code:'1004',name:'Forget Your Age Eye Cream 15ml',cat:'Eye Care',price:25.00,cost:20.00},
+  {id:'p1005',code:'1005',name:'Eye Bags Away Eye Cream 15ml',cat:'Eye Care',price:19.95,cost:15.96},
+  {id:'p1006',code:'1006',name:'Circle Cure Anti-Dark 15ml',cat:'Eye Care',price:23.95,cost:19.16},
+  {id:'p1007',code:'1007',name:'5-in-1 Cleanser 90ml',cat:'Cleanser',price:11.95,cost:9.56,halfComm:true},
+  {id:'p1008',code:'1008',name:'BIOBRIGHT Skin Lightening Serum 30ml',cat:'Whitening',price:25.95,cost:20.76},
+  {id:'p1009',code:'1009',name:'First Aid Face Cream 40ml',cat:'Sensitive Skin',price:19.95,cost:15.96},
+  {id:'p1010',code:'1010',name:'Ingrown Gone — مزيل الشعر تحت الجلد 90ml',cat:'Ingrown Hair',price:19.95,cost:15.96},
+  {id:'p1011',code:'1011',name:'High Five — كريم اليدين 50ml',cat:'Hand Care',price:8.00,cost:6.40,halfComm:true},
+  {id:'p1012',code:'1012',name:'Aqua Detox 24H Moisturizer 50ml',cat:'Moisturizing',price:19.95,cost:15.96},
+  {id:'p1013',code:'1013',name:'BIOTOX Face Serum 30ml',cat:'Anti-Aging',price:43.95,cost:35.16}
+];
+
+let DB={employees:[],products:[],sales:[],settings:{},attendance:[]};
 let user=null, currentPage=null;
+let bootDone=false, _seeded=false;
+const ready={emp:false,prod:false,sales:false};
 
 /* ---------- utils ---------- */
 function uid(p){return p+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4);}
@@ -219,49 +233,83 @@ function prod(id){return DB.products.find(p=>p.id===id);}
 function toast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(type||'');setTimeout(()=>t.className='toast',2400);}
 function showLoading(m){document.getElementById('overlayMsg').textContent=m||'';document.getElementById('overlay').classList.remove('hidden');}
 function hideLoading(){document.getElementById('overlay').classList.add('hidden');}
+function setSync(on){const d=document.getElementById('syncDot'),t=document.getElementById('syncTxt');if(!d)return;d.className='dot'+(on?'':' off');t.textContent=on?'متصل — Google Sheets':'غير متصل';}
 
-/* ---------- JSONP API ---------- */
-function api(action,params){
-  return new Promise((resolve,reject)=>{
-    if(!API_URL){reject(new Error('لا يوجد رابط خادم'));return;}
-    const cb='jp_'+Math.random().toString(36).slice(2);
-    const s=document.createElement('script');
-    let done=false;
-    const cleanup=()=>{try{delete window[cb];}catch(e){window[cb]=undefined;}if(s.parentNode)s.parentNode.removeChild(s);};
-    window[cb]=(data)=>{done=true;cleanup();resolve(data);};
-    s.onerror=()=>{if(done)return;cleanup();reject(new Error('تعذّر الاتصال بالخادم — تحقق من الرابط والإنترنت'));};
-    const q=new URLSearchParams(Object.assign({action,callback:cb},params||{}));
-    s.src=API_URL+(API_URL.indexOf('?')>-1?'&':'?')+q.toString();
-    document.body.appendChild(s);
-    setTimeout(()=>{if(!done){cleanup();reject(new Error('انتهت مهلة الاتصال بالخادم'));}},20000);
-  });
+/* ---------- GOOGLE SHEETS API ---------- */
+let API_URL='';
+function parseConfig(text){
+  const m=String(text).match(/https:\/\/script\.google\.com\/macros\/s\/[^\s"']+\/exec/);
+  if(!m)throw new Error('الصق رابط Web App الصحيح (ينتهي بـ /exec)');
+  return m[0];
 }
-async function reloadData(){
-  const r=await api('load');
-  if(!r||!r.ok)throw new Error(r&&r.error?r.error:'فشل تحميل البيانات');
-  DB=r.data;DB.employees=DB.employees||[];DB.products=DB.products||[];DB.sales=DB.sales||[];
+async function api(action,params){
+  if(!API_URL)throw new Error('لا يوجد رابط سيرفر');
+  const body=new URLSearchParams(Object.assign({action:action},params||{}));
+  const res=await fetch(API_URL,{method:'POST',body:body});
+  const out=await res.json();
+  if(!out.ok)throw new Error(out.error||'خطأ من السيرفر');
+  return out;
+}
+async function loadData(silent){
+  try{
+    const out=await api('load',{});
+    const d=out.data||{};
+    DB.employees=d.employees||[];
+    DB.products=d.products||[];
+    DB.sales=d.sales||[];
+    DB.attendance=d.attendance||[];
+    DB.settings=(d.settings&&d.settings.full)?d.settings:{full:1,half:0.5};
+    if(user){const u=DB.employees.find(x=>x.id===user.id);if(u)user=u;}
+    setSync(true);
+    if(!bootDone){bootDone=true;afterInitialLoad();}
+    else liveRefresh();
+  }catch(e){
+    setSync(false);console.error(e);
+    if(!silent)toast('انقطع الاتصال بقاعدة البيانات','bad');
+    if(!bootDone){hideLoading();document.getElementById('setupScreen').classList.remove('hidden');}
+  }
+}
+async function reloadData(){await loadData(true);}
+let _pollTimer=null;
+function startPolling(){if(_pollTimer)clearInterval(_pollTimer);_pollTimer=setInterval(()=>{if(bootDone)loadData(true);},60000);}
+async function afterInitialLoad(){
+  hideLoading();
+  refreshLoginUsers();
+  startPolling();
+  const sid=localStorage.getItem(SESSION_KEY);
+  const e=sid?DB.employees.find(x=>x.id===sid):null;
+  if(e){user=e;enterApp();}
+  else{document.getElementById('setupScreen').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');}
+}
+function liveRefresh(){
+  refreshLoginUsers();
+  if(user&&currentPage&&currentPage!=='newsale')go(currentPage);
 }
 
 /* ---------- SETUP ---------- */
-function openSetup(){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('apiUrlInput').value=API_URL;document.getElementById('setupScreen').classList.remove('hidden');}
-async function saveApiUrl(){
-  const u=document.getElementById('apiUrlInput').value.trim();
-  if(!/^https:\/\/script\.google\.com\/.*\/exec/.test(u)){document.getElementById('setupErr').textContent='الرابط يجب أن ينتهي بـ /exec من Google Apps Script';return;}
-  API_URL=u;showLoading('جاري الاتصال...');
+function openSetup(){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('cfgInput').value=localStorage.getItem(CFG_KEY)||'';document.getElementById('setupScreen').classList.remove('hidden');}
+async function saveConfig(){
+  const raw=document.getElementById('cfgInput').value.trim();
+  let url;
+  try{url=parseConfig(raw);}catch(e){document.getElementById('setupErr').textContent=e.message;return;}
+  showLoading('جاري الاتصال بقاعدة البيانات...');
+  API_URL=url;
   try{
-    await reloadData();
-    localStorage.setItem(URL_KEY,u);
+    await api('load',{});
+    localStorage.setItem(CFG_KEY,url);
     document.getElementById('setupErr').textContent='';
     document.getElementById('setupScreen').classList.add('hidden');
-    boot();
-    toast('تم الاتصال بنجاح ✓','ok');
-  }catch(e){document.getElementById('setupErr').textContent=e.message;}
-  finally{hideLoading();}
+    bootDone=false;
+    await loadData();
+  }catch(e){hideLoading();document.getElementById('setupErr').textContent='فشل الاتصال: '+e.message;document.getElementById('setupScreen').classList.remove('hidden');}
 }
 
-/* ---------- LOGIN ---------- */
+/* ---------- LOGIN ---------- *//* ---------- LOGIN ---------- */
 function refreshLoginUsers(){
-  document.getElementById('loginUser').innerHTML=DB.employees.map(e=>`<option value="${e.id}">${esc(e.name)} ${e.role==='manager'?'(مدير)':''}</option>`).join('');
+  const sel=document.getElementById('loginUser');if(!sel)return;
+  const cur=sel.value;
+  sel.innerHTML=DB.employees.map(e=>`<option value="${e.id}">${esc(e.name)} ${e.role==='manager'?'(مدير)':''}</option>`).join('');
+  if(cur)sel.value=cur;
 }
 function doLogin(){
   const id=document.getElementById('loginUser').value;
@@ -280,7 +328,7 @@ function logout(){user=null;localStorage.removeItem(SESSION_KEY);
 
 /* ---------- NAV ---------- */
 const MENUS={
-  manager:[{k:'dash',label:'لوحة التحكم',ico:'📊'},{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'sales',label:'كل المبيعات',ico:'📁'},{k:'reports',label:'التقارير الشهرية',ico:'📈'},{k:'staff',label:'الخبيرات والموظفين',ico:'👥'},{k:'products',label:'المنتجات والأسعار',ico:'💊'}],
+  manager:[{k:'dash',label:'لوحة التحكم',ico:'📊'},{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'sales',label:'كل المبيعات',ico:'📁'},{k:'reports',label:'التقارير الشهرية',ico:'📈'},{k:'commission',label:'العمولات',ico:'🏆'},{k:'staff',label:'الخبيرات والموظفين',ico:'👥'},{k:'products',label:'المنتجات والأسعار',ico:'💊'}],
   expert:[{k:'newsale',label:'تسجيل عملية بيع',ico:'🧾'},{k:'mysales',label:'مبيعاتي',ico:'📁'},{k:'mydash',label:'ملخصي',ico:'📊'}]
 };
 function enterApp(){
@@ -296,7 +344,7 @@ function buildNav(){document.getElementById('navMenu').innerHTML=MENUS[user.role
 function go(k){
   currentPage=k;
   document.querySelectorAll('#navMenu button').forEach(b=>b.classList.toggle('active',b.dataset.k===k));
-  const titles={dash:'لوحة التحكم',newsale:'تسجيل عملية بيع',sales:'كل المبيعات',reports:'التقارير الشهرية',staff:'الخبيرات والموظفين',products:'المنتجات والأسعار',mysales:'مبيعاتي',mydash:'ملخصي'};
+  const titles={dash:'لوحة التحكم',newsale:'تسجيل عملية بيع',sales:'كل المبيعات',reports:'التقارير الشهرية',commission:'تقرير العمولات',staff:'الخبيرات والموظفين',products:'المنتجات والأسعار',mysales:'مبيعاتي',mydash:'ملخصي'};
   document.getElementById('pageTitle').textContent=titles[k]||'';
   toggleMenu(false);
   const v=document.getElementById('view');
@@ -306,26 +354,67 @@ function go(k){
   else if(k==='sales')renderSales(false);
   else if(k==='mysales')renderSales(true);
   else if(k==='reports')renderReports();
+  else if(k==='commission')renderCommission();
   else if(k==='staff')renderStaff();
   else if(k==='products')renderProducts();
 }
 function toggleMenu(open){document.getElementById('sidebar').classList.toggle('open',open);document.getElementById('backdrop').classList.toggle('hidden',!open);}
-async function manualRefresh(){showLoading('تحديث البيانات...');try{await reloadData();go(currentPage);toast('تم التحديث ✓','ok');}catch(e){toast(e.message,'bad');}finally{hideLoading();}}
 
 /* ---------- data helpers ---------- */
 function salesFor(mine){let s=DB.sales.slice();if(mine||user.role==='expert')s=s.filter(x=>x.employeeId===user.id);return s.sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id));}
-function saleTotal(s){return s.items.reduce((t,i)=>t+i.qty*i.price,0);}
-function saleQty(s){return s.items.reduce((t,i)=>t+Number(i.qty),0);}
+function itemNet(i){return (Number(i.qty)||0)*(Number(i.price)||0)*(1-(Number(i.disc)||0)/100);}
+function itemCostFull(i){const p=prod(i.productId);return (p?(Number(p.cost)||0):0)*(Number(i.qty)||0);}
+function saleTotal(s){return (s.items||[]).reduce((t,i)=>t+itemNet(i),0);}
+function saleQty(s){return (s.items||[]).reduce((t,i)=>t+Number(i.qty),0);}
+/* ---- commission helpers ---- */
+function prodHalf(id){const p=prod(id);return !!(p&&p.halfComm);}
+function saleCostFull(s){return (s.items||[]).reduce((t,i)=>{const p=prod(i.productId);return t+(p?(Number(p.cost)||0):0)*(Number(i.qty)||0);},0);}
+function salePieces(s){let full=0,half=0;(s.items||[]).forEach(i=>{const q=Number(i.qty)||0;if(prodHalf(i.productId))half+=q;else full+=q;});return{full,half};}
+function commRates(){const s=DB.settings||{};return{full:(s.full!=null?Number(s.full):1),half:(s.half!=null?Number(s.half):0.5)};}
+function attendanceDays(empId,mon){const seen={};(DB.attendance||[]).forEach(a=>{if(a.employeeId===empId&&String(a.date).slice(0,7)===mon)seen[a.date]=1;});return Object.keys(seen).length;}
+function didCheckInToday(empId){const t=todayStr();return (DB.attendance||[]).some(a=>a.employeeId===empId&&a.date===t);}
+function todayPharmacy(empId){const t=todayStr();const a=(DB.attendance||[]).find(x=>x.employeeId===empId&&x.date===t);return a?(a.pharmacy||''):'';}
+function pharmacyForDate(empId,date){const a=(DB.attendance||[]).find(x=>x.employeeId===empId&&x.date===date);return a?(a.pharmacy||''):'';}
+function syncSalePharm(){const el=document.getElementById('s_pharm'),d=document.getElementById('s_date');if(el&&d&&user&&user.role==='expert')el.value=pharmacyForDate(user.id,d.value);}
+async function checkIn(){
+  if(!user)return;
+  const inp=document.getElementById('ci_pharm');
+  const pharm=inp?inp.value.trim():'';
+  if(!pharm){toast('اكتب اسم الصيدلية أولاً','bad');if(inp)inp.focus();return;}
+  const t=todayStr();
+  showLoading('جاري تسجيل الدوام...');
+  try{
+    await api('saveCheckin',{payload:JSON.stringify({id:user.id+'_'+t,employeeId:user.id,date:t,pharmacy:pharm,at:Date.now()})});await reloadData();
+    toast('تم تسجيل دوام اليوم ✓','ok');
+  }catch(e){toast('فشل التسجيل — تحقق من الاتصال','bad');console.error(e);}
+  finally{hideLoading();}
+}
+function checkinCardHTML(){
+  if(!user||user.role!=='expert')return '';
+  const mon=monthStr(),days=attendanceDays(user.id,mon),done=didCheckInToday(user.id);
+  const plist=[...new Set((DB.sales||[]).map(s=>s.pharmacy).filter(Boolean))];
+  const dl=`<datalist id="ciPharmList">${plist.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`;
+  return `<div class="panel" style="border-right:4px solid var(--gold)">
+    <div class="panel-head"><h3>🕒 دوام اليوم</h3><span class="tag">${days} يوم هذا الشهر</span></div>
+    ${done?`<div style="color:var(--green-d);font-weight:700;margin-bottom:10px">✓ سجّلتِ دوام اليوم (${todayStr()})${todayPharmacy(user.id)?` — صيدلية ${esc(todayPharmacy(user.id))}`:''}</div>`:``}
+    <div class="row" style="align-items:flex-end">
+      <div class="field" style="margin-bottom:0"><label>اسم الصيدلية التي تداومين فيها اليوم</label><input id="ci_pharm" list="ciPharmList" value="${esc(todayPharmacy(user.id))}" placeholder="اكتب اسم الصيدلية" autocomplete="off">${dl}</div>
+      <button class="btn btn-gold" style="max-width:200px" onclick="checkIn()">🕒 ${done?'تحديث دوام اليوم':'سجّلت دوام اليوم'}</button>
+    </div>
+    <div class="hint" style="margin-top:8px">كل يوم تضغطين فيه هذا الزر يُحتسب ضمن أيام الدوام لهدف العمولة.</div>
+  </div>`;
+}
+function empTargetVal(e,mon){if(!e)return 0;if(e.commType==='fixed')return Number(e.commTarget)||0;if(e.commType==='daily'){const d=attendanceDays(e.id,mon);return (Number(e.commTarget)||0)*(Number(d)||0);}return 0;}
 
 /* ---------- DASHBOARD ---------- */
 function renderDash(mine){
   const mon=monthStr(),tod=todayStr();
   let s=DB.sales.slice();if(mine)s=s.filter(x=>x.employeeId===user.id);
-  const monS=s.filter(x=>x.date.slice(0,7)===mon),todS=s.filter(x=>x.date===tod);
+  const monS=s.filter(x=>String(x.date).slice(0,7)===mon),todS=s.filter(x=>x.date===tod);
   const monTotal=monS.reduce((t,x)=>t+saleTotal(x),0),todTotal=todS.reduce((t,x)=>t+saleTotal(x),0);
   const monQty=monS.reduce((t,x)=>t+saleQty(x),0);
   const pharmacies=new Set(monS.map(x=>String(x.pharmacy).trim())).size;
-  let html=`<div class="stat-grid">
+  let html=`${mine&&user.role==='expert'?checkinCardHTML():''}<div class="stat-grid">
     <div class="stat"><div class="lbl">مبيعات اليوم</div><div class="val">${fmt(todTotal)} <small>د.أ</small></div></div>
     <div class="stat gold"><div class="lbl">مبيعات هذا الشهر</div><div class="val">${fmt(monTotal)} <small>د.أ</small></div></div>
     <div class="stat blue"><div class="lbl">عدد العمليات (الشهر)</div><div class="val">${monS.length}</div></div>
@@ -337,7 +426,7 @@ function renderDash(mine){
     html+=`<div class="panel"><h3>📊 مبيعات الخبيرات هذا الشهر</h3>`+
       (rows.length?`<div class="bars">`+rows.map(([id,v])=>`<div class="bar-row"><div>${esc(empName(id))}</div><div class="bar-track"><div class="bar-fill" style="width:${v/max*100}%"></div></div><div class="bar-val">${fmt(v)}</div></div>`).join('')+`</div>`:`<div class="empty">لا توجد مبيعات هذا الشهر بعد</div>`)+`</div>`;
   }
-  const byP={};monS.forEach(x=>x.items.forEach(i=>{byP[i.productId]=(byP[i.productId]||0)+i.qty*i.price;}));
+  const byP={};monS.forEach(x=>(x.items||[]).forEach(i=>{byP[i.productId]=(byP[i.productId]||0)+itemNet(i);}));
   const prows=Object.entries(byP).sort((a,b)=>b[1]-a[1]).slice(0,8);const pmax=Math.max(1,...prows.map(r=>r[1]));
   html+=`<div class="panel"><h3>💊 أكثر المنتجات مبيعاً هذا الشهر</h3>`+
     (prows.length?`<div class="bars">`+prows.map(([id,v])=>{const p=prod(id);return `<div class="bar-row"><div title="${esc(p?p.name:'')}">${esc(p?(p.code+' · '+String(p.name).split('—')[0].slice(0,16)):'—')}</div><div class="bar-track"><div class="bar-fill gold" style="width:${v/pmax*100}%"></div></div><div class="bar-val">${fmt(v)}</div></div>`;}).join('')+`</div>`:`<div class="empty">لا توجد مبيعات هذا الشهر بعد</div>`)+`</div>`;
@@ -347,21 +436,23 @@ function renderDash(mine){
 /* ---------- NEW SALE ---------- */
 let saleItems=[];
 function renderNewSale(){
-  saleItems=[{productId:'',qty:1,price:0}];
+  saleItems=[{productId:'',qty:1,price:0,disc:0}];
   const isMgr=user.role==='manager';
   const pharmacyList=[...new Set(DB.sales.map(s=>s.pharmacy).filter(Boolean))];
   document.getElementById('view').innerHTML=`
+    ${user.role==='expert'?checkinCardHTML():''}
     <div class="panel"><h3>🧾 تسجيل عملية بيع جديدة</h3>
       <div class="row" style="margin-bottom:16px">
-        <div class="field"><label>التاريخ</label><input type="date" id="s_date" value="${todayStr()}"></div>
+        <div class="field"><label>التاريخ</label><input type="date" id="s_date" value="${todayStr()}" ${isMgr?'':'onchange="syncSalePharm()"'}></div>
         <div class="field"><label>الخبيرة</label>
           ${isMgr?`<select id="s_emp">${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')||`<option value="">— أضِف خبيرة من صفحة الخبيرات —</option>`}</select>`:`<input value="${esc(user.name)}" disabled style="background:#f0f4ee">`}</div>
-        <div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>
+        ${isMgr?`<div class="field"><label>اسم الصيدلية</label><input id="s_pharm" list="pharmList" placeholder="اكتب اسم الصيدلية" autocomplete="off"><datalist id="pharmList">${pharmacyList.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></div>`:`<div class="field"><label>الصيدلية (من تسجيل الدوام)</label><input id="s_pharm" value="${esc(todayPharmacy(user.id))}" readonly style="background:#f0f4ee" placeholder="سجّلي دوامك أولاً"></div>`}
       </div>
-      <table class="items-table"><thead><tr><th style="width:46%">المنتج</th><th class="num" style="width:14%">الكمية</th><th class="num" style="width:18%">سعر الوحدة</th><th class="num" style="width:16%">الإجمالي</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table>
+      <div style="overflow-x:auto"><table class="items-table"><thead><tr><th style="width:26%">المنتج</th><th class="num" style="width:10%">الكمية</th><th class="num" style="width:13%">سعر الوحدة</th><th class="num" style="width:10%">خصم %</th><th class="num" style="width:14%">الإجمالي</th><th class="num" style="width:19%">المحقق للهدف (كوست)</th><th style="width:6%"></th></tr></thead><tbody id="itemsBody"></tbody></table></div>
       <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="addItem()">＋ إضافة صنف</button>
-      <div class="field" style="margin-top:16px"><label>ملاحظات (اختياري)</label><textarea id="s_notes" rows="2" placeholder="أي ملاحظة..."></textarea></div>
+      <div class="field" style="margin-top:16px"><label>ملاحظات (اختياري)</label><textarea id="s_notes" rows="2" placeholder="أي ملاحظة..." style="font-family:inherit;direction:rtl;text-align:right"></textarea></div>
       <div class="grand">الإجمالي الكلي: <span class="amt" id="grandTotal">0.00</span> د.أ</div>
+      <div class="grand" style="font-size:15px">المحقق للهدف (كوست): <span class="amt" id="grandCost" style="font-size:18px;color:var(--gold-d)">0.00</span> د.أ</div>
       <div style="display:flex;gap:12px;margin-top:18px"><button class="btn" style="max-width:220px" onclick="saveSale()">💾 حفظ العملية</button><button class="btn btn-ghost" style="max-width:140px" onclick="renderNewSale()">إلغاء</button></div>
     </div>`;
   drawItems();
@@ -372,29 +463,38 @@ function drawItems(){
     <td><select onchange="itemProd(${idx},this.value)">${prodOptions(it.productId)}</select></td>
     <td><input type="number" min="1" step="1" value="${it.qty}" oninput="itemQty(${idx},this.value)"></td>
     <td><input type="number" min="0" step="0.01" value="${it.price}" oninput="itemPrice(${idx},this.value)"></td>
-    <td class="lt">${fmt(it.qty*it.price)}</td>
+    <td><input type="number" min="0" max="100" step="1" value="${it.disc||0}" oninput="itemDisc(${idx},this.value)"></td>
+    <td class="lt" id="net_${idx}">${fmt(itemNet(it))}</td>
+    <td class="lt" id="costtar_${idx}" style="color:var(--gold-d)">${fmt(itemCostFull(it))}</td>
     <td>${saleItems.length>1?`<button class="icon-btn" onclick="delItem(${idx})">×</button>`:''}</td></tr>`).join('');
-  document.getElementById('grandTotal').textContent=fmt(saleItems.reduce((t,i)=>t+i.qty*i.price,0));
+  recalcTotals();
 }
-function addItem(){saleItems.push({productId:'',qty:1,price:0});drawItems();}
+function recalcTotals(){
+  saleItems.forEach((it,idx)=>{const c=document.getElementById('net_'+idx);if(c)c.textContent=fmt(itemNet(it));const cc=document.getElementById('costtar_'+idx);if(cc)cc.textContent=fmt(itemCostFull(it));});
+  const g=document.getElementById('grandTotal');if(g)g.textContent=fmt(saleItems.reduce((t,i)=>t+itemNet(i),0));
+  const gc=document.getElementById('grandCost');if(gc)gc.textContent=fmt(saleItems.reduce((t,i)=>t+itemCostFull(i),0));
+}
+function addItem(){saleItems.push({productId:'',qty:1,price:0,disc:0});drawItems();}
 function delItem(i){saleItems.splice(i,1);drawItems();}
 function itemProd(i,v){saleItems[i].productId=v;const p=prod(v);if(p)saleItems[i].price=p.price;drawItems();}
-function itemQty(i,v){saleItems[i].qty=Math.max(0,Number(v)||0);drawItems();}
-function itemPrice(i,v){saleItems[i].price=Math.max(0,Number(v)||0);drawItems();}
+function itemQty(i,v){saleItems[i].qty=Math.max(0,Number(v)||0);recalcTotals();}
+function itemPrice(i,v){saleItems[i].price=Math.max(0,Number(v)||0);recalcTotals();}
+function itemDisc(i,v){saleItems[i].disc=Math.min(100,Math.max(0,Number(v)||0));recalcTotals();}
 async function saveSale(){
   const date=document.getElementById('s_date').value;
-  const pharm=document.getElementById('s_pharm').value.trim();
+  const pharm=user.role==='manager'?(document.getElementById('s_pharm')?document.getElementById('s_pharm').value.trim():''):pharmacyForDate(user.id,date);
   const notes=document.getElementById('s_notes').value.trim();
   const empId=user.role==='manager'?(document.getElementById('s_emp')?document.getElementById('s_emp').value:''):user.id;
   if(!date){toast('اختر التاريخ','bad');return;}
   if(!empId){toast('لا يوجد خبيرة محددة','bad');return;}
-  if(!pharm){toast('اكتب اسم الصيدلية','bad');return;}
-  const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price)};});
+  if(!pharm){toast(user.role==='manager'?'اكتب اسم الصيدلية':'سجّلي دوامك في الصيدلية لهذا اليوم أولاً','bad');return;}
+  const items=saleItems.filter(i=>i.productId&&i.qty>0).map(i=>{const p=prod(i.productId);return{productId:i.productId,productCode:p?p.code:'',productName:p?p.name:'',qty:Number(i.qty),price:Number(i.price),disc:Number(i.disc)||0};});
   if(!items.length){toast('أضِف منتج واحد على الأقل','bad');return;}
-  const sale={id:uid('s_'),employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,createdAt:Date.now()};
+  const id=uid('s_');
+  const sale={employeeId:empId,employeeName:empName(empId),date,pharmacy:pharm,notes,items,total:items.reduce((t,i)=>t+i.qty*i.price*(1-(i.disc||0)/100),0),createdAt:Date.now()};
   showLoading('جاري حفظ العملية...');
-  try{const r=await api('addSale',{payload:JSON.stringify(sale)});if(!r||!r.ok)throw new Error(r&&r.error?r.error:'فشل الحفظ');await reloadData();toast('تم حفظ العملية ✓','ok');renderNewSale();}
-  catch(e){toast(e.message,'bad');}finally{hideLoading();}
+  try{await api('addSale',{payload:JSON.stringify(Object.assign({id:id},sale))});await reloadData();toast('تم حفظ العملية ✓','ok');renderNewSale();}
+  catch(e){toast('فشل الحفظ — تحقق من الاتصال','bad');console.error(e);}finally{hideLoading();}
 }
 
 /* ---------- SALES LIST ---------- */
@@ -403,9 +503,9 @@ function renderSales(mine){
   const isMgr=user.role==='manager'&&!mine;
   document.getElementById('view').innerHTML=`<div class="panel">
     <div class="toolbar no-print">
-      <div class="field"><label>من تاريخ</label><input type="date" id="f_from"></div>
-      <div class="field"><label>إلى تاريخ</label><input type="date" id="f_to"></div>
-      ${isMgr?`<div class="field"><label>الخبيرة</label><select id="f_emp"><option value="">الكل</option>${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')}</select></div>`:''}
+      <div class="field"><label>من تاريخ</label><input type="date" id="f_from" value="${_f.from}"></div>
+      <div class="field"><label>إلى تاريخ</label><input type="date" id="f_to" value="${_f.to}"></div>
+      ${isMgr?`<div class="field"><label>الخبيرة</label><select id="f_emp"><option value="">الكل</option>${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}" ${_f.emp===e.id?'selected':''}>${esc(e.name)}</option>`).join('')}</select></div>`:''}
       <button class="btn btn-sm" onclick="applyF(${mine})">عرض</button>
       <button class="btn btn-ghost btn-sm" onclick="resetF(${mine})">إعادة تعيين</button>
       <button class="btn btn-gold btn-sm" onclick="exportSalesCSV(${mine})">⬇ تصدير CSV</button>
@@ -413,7 +513,7 @@ function renderSales(mine){
   drawSales(mine);
 }
 function applyF(mine){_f.from=document.getElementById('f_from').value;_f.to=document.getElementById('f_to').value;_f.emp=document.getElementById('f_emp')?document.getElementById('f_emp').value:'';drawSales(mine);}
-function resetF(mine){_f={from:'',to:'',emp:''};document.getElementById('f_from').value='';document.getElementById('f_to').value='';if(document.getElementById('f_emp'))document.getElementById('f_emp').value='';drawSales(mine);}
+function resetF(mine){_f={from:'',to:'',emp:''};renderSales(mine);}
 function filteredSales(mine){let s=salesFor(mine);if(_f.from)s=s.filter(x=>x.date>=_f.from);if(_f.to)s=s.filter(x=>x.date<=_f.to);if(_f.emp)s=s.filter(x=>x.employeeId===_f.emp);return s;}
 function drawSales(mine){
   const s=filteredSales(mine);const total=s.reduce((t,x)=>t+saleTotal(x),0);const qty=s.reduce((t,x)=>t+saleQty(x),0);
@@ -425,15 +525,15 @@ function drawSales(mine){
   if(!s.length){document.getElementById('salesTable').innerHTML=`<div class="empty">لا توجد عمليات مطابقة</div>`;return;}
   document.getElementById('salesTable').innerHTML=`<table><thead><tr><th>التاريخ</th>${isMgr&&!mine?'<th>الخبيرة</th>':''}<th>الصيدلية</th><th>الأصناف</th><th class="num">القطع</th><th class="num">الإجمالي (د.أ)</th><th class="no-print"></th></tr></thead><tbody>${s.map(x=>`<tr>
     <td>${x.date}</td>${isMgr&&!mine?`<td>${esc(empName(x.employeeId))}</td>`:''}<td>${esc(x.pharmacy)}</td>
-    <td style="font-size:13px;color:var(--muted)">${x.items.map(i=>{const p=prod(i.productId);return esc((p?p.code:'?')+'×'+i.qty);}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
+    <td style="font-size:13px;color:var(--muted)">${(x.items||[]).map(i=>{const p=prod(i.productId);return esc((p?p.code:(i.productCode||'?'))+'×'+i.qty)+((Number(i.disc)>0)?` (-${i.disc}%)`:'');}).join('، ')}${x.notes?`<div class="hint">📝 ${esc(x.notes)}</div>`:''}</td>
     <td class="num">${saleQty(x)}</td><td class="num"><b>${fmt(saleTotal(x))}</b></td>
     <td class="no-print">${(isMgr||x.employeeId===user.id)?`<button class="icon-btn" onclick="delSale('${x.id}')">×</button>`:''}</td></tr>`).join('')}</tbody></table>`;
 }
-function delSale(id){confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟',async()=>{showLoading('جاري الحذف...');try{const r=await api('deleteSale',{id});if(!r||!r.ok)throw new Error('فشل الحذف');await reloadData();toast('تم الحذف','ok');go(currentPage);}catch(e){toast(e.message,'bad');}finally{hideLoading();}});}
+function delSale(id){confirmModal('حذف العملية','هل تريد حذف هذه العملية نهائياً؟',async()=>{showLoading('جاري الحذف...');try{await api('deleteSale',{id:id});await reloadData();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
 function exportSalesCSV(mine){
   const s=filteredSales(mine);if(!s.length){toast('لا توجد بيانات','bad');return;}
-  let rows=[['التاريخ','الخبيرة','الصيدلية','كود المنتج','المنتج','الكمية','سعر الوحدة','الإجمالي']];
-  s.forEach(x=>x.items.forEach(i=>{const p=prod(i.productId);rows.push([x.date,empName(x.employeeId),x.pharmacy,p?p.code:'',p?p.name:'',i.qty,i.price,(i.qty*i.price).toFixed(2)]);}));
+  let rows=[['التاريخ','الخبيرة','الصيدلية','كود المنتج','المنتج','الكمية','سعر الوحدة','خصم %','الإجمالي']];
+  s.forEach(x=>(x.items||[]).forEach(i=>{const p=prod(i.productId);rows.push([x.date,empName(x.employeeId),x.pharmacy,p?p.code:(i.productCode||''),p?p.name:(i.productName||''),i.qty,i.price,(Number(i.disc)||0),(i.qty*i.price*(1-(Number(i.disc)||0)/100)).toFixed(2)]);}));
   downloadCSV(rows,'مبيعات_'+todayStr()+'.csv');
 }
 
@@ -448,12 +548,12 @@ function renderReports(){
 }
 function drawReport(){
   const mon=document.getElementById('r_month').value||monthStr();
-  const s=DB.sales.filter(x=>x.date.slice(0,7)===mon);
+  const s=DB.sales.filter(x=>String(x.date).slice(0,7)===mon);
   const total=s.reduce((t,x)=>t+saleTotal(x),0),qty=s.reduce((t,x)=>t+saleQty(x),0);
   const area=document.getElementById('reportArea');
   if(!s.length){area.innerHTML=`<div class="panel"><div class="empty">لا توجد مبيعات في شهر ${mon}</div></div>`;return;}
   const byE={};s.forEach(x=>{if(!byE[x.employeeId])byE[x.employeeId]={t:0,q:0,n:0};byE[x.employeeId].t+=saleTotal(x);byE[x.employeeId].q+=saleQty(x);byE[x.employeeId].n++;});
-  const byP={};s.forEach(x=>x.items.forEach(i=>{if(!byP[i.productId])byP[i.productId]={q:0,t:0};byP[i.productId].q+=i.qty;byP[i.productId].t+=i.qty*i.price;}));
+  const byP={};s.forEach(x=>(x.items||[]).forEach(i=>{if(!byP[i.productId])byP[i.productId]={q:0,t:0};byP[i.productId].q+=i.qty;byP[i.productId].t+=itemNet(i);}));
   const byPh={};s.forEach(x=>{const k=String(x.pharmacy).trim();if(!byPh[k])byPh[k]={t:0,n:0};byPh[k].t+=saleTotal(x);byPh[k].n++;});
   area.innerHTML=`<div class="panel"><h3 style="justify-content:center;font-size:18px">تقرير مبيعات شهر ${mon} — مستودع العقول الراقية</h3>
     <div class="stat-grid"><div class="stat"><div class="lbl">إجمالي المبيعات</div><div class="val">${fmt(total)} <small>د.أ</small></div></div><div class="stat blue"><div class="lbl">عدد العمليات</div><div class="val">${s.length}</div></div><div class="stat gold"><div class="lbl">القطع المباعة</div><div class="val">${qty}</div></div></div></div>
@@ -463,57 +563,165 @@ function drawReport(){
 }
 function exportReportCSV(){
   const mon=document.getElementById('r_month').value||monthStr();
-  const s=DB.sales.filter(x=>x.date.slice(0,7)===mon);if(!s.length){toast('لا توجد بيانات','bad');return;}
-  const byP={};s.forEach(x=>x.items.forEach(i=>{if(!byP[i.productId])byP[i.productId]={q:0,t:0};byP[i.productId].q+=i.qty;byP[i.productId].t+=i.qty*i.price;}));
+  const s=DB.sales.filter(x=>String(x.date).slice(0,7)===mon);if(!s.length){toast('لا توجد بيانات','bad');return;}
+  const byP={};s.forEach(x=>(x.items||[]).forEach(i=>{if(!byP[i.productId])byP[i.productId]={q:0,t:0};byP[i.productId].q+=i.qty;byP[i.productId].t+=itemNet(i);}));
   let rows=[['تقرير شهر',mon],[],['الكود','المنتج','الكمية','المبيعات']];
   Object.entries(byP).sort((a,b)=>b[1].t-a[1].t).forEach(([id,d])=>{const p=prod(id);rows.push([p?p.code:'',p?p.name:'',d.q,d.t.toFixed(2)]);});
   downloadCSV(rows,'تقرير_'+mon+'.csv');
 }
 
+/* ---------- COMMISSION REPORT ---------- */
+function renderCommission(){
+  const r=commRates();
+  document.getElementById('view').innerHTML=`
+    <div class="panel no-print"><div class="panel-head" style="margin-bottom:0"><h3 style="margin:0">🏆 تقرير العمولات</h3></div>
+      <div class="toolbar" style="margin:14px 0 0">
+        <div class="field"><label>الشهر</label><input type="month" id="c_month" value="${monthStr()}"></div>
+        <div class="field"><label>عمولة القطعة الكاملة (د.أ)</label><input type="number" step="0.01" min="0" id="c_full" value="${r.full}"></div>
+        <div class="field"><label>عمولة نصف القطعة (د.أ)</label><input type="number" step="0.01" min="0" id="c_half" value="${r.half}"></div>
+        <button class="btn btn-sm" onclick="saveCommRates()">حفظ المعدلات</button>
+        <button class="btn btn-sm" onclick="drawCommission()">عرض</button>
+        <button class="btn btn-gold btn-sm" onclick="window.print()">🖨 طباعة / PDF</button>
+        <button class="btn btn-ghost btn-sm" onclick="exportCommCSV()">⬇ تصدير CSV</button>
+      </div>
+      <div class="hint" style="margin-top:8px">العمولة تُصرف على كل القطع فقط إذا بلغ كوست مبيعات المندوبة هدفها الشهري (نظام «الكل أو لا شيء»). القطع نصف العمولة تُحتسب ضمن الهدف بكوستها الكامل. للمندوبات «حسب أيام الدوام» أدخِل عدد الأيام ثم اضغط حفظ.</div>
+    </div>
+    <div id="commArea"></div>`;
+  drawCommission();
+}
+async function saveCommRates(){
+  const full=Number(document.getElementById('c_full').value)||0;
+  const half=Number(document.getElementById('c_half').value)||0;
+  showLoading('حفظ المعدلات...');
+  try{await api('saveSettings',{payload:JSON.stringify({full:full,half:half})});await reloadData();toast('تم حفظ المعدلات','ok');}
+  catch(e){toast('فشل الحفظ','bad');console.error(e);}finally{hideLoading();}
+}
+async function saveWorkDays(empId){
+  const mon=document.getElementById('c_month').value||monthStr();
+  const val=Number(document.getElementById('wd_'+empId).value)||0;
+  const e=DB.employees.find(x=>x.id===empId);const wd=Object.assign({},(e&&e.workDays)||{});wd[mon]=val;
+  showLoading('حفظ أيام الدوام...');
+  try{const _cur=DB.employees.find(e=>e.id===empId)||{id:empId};await api('saveEmployee',{payload:JSON.stringify(Object.assign({},_cur,{id:empId,workDays:wd}))});await reloadData();toast('تم الحفظ','ok');drawCommission();}
+  catch(err){toast('فشل الحفظ','bad');console.error(err);}finally{hideLoading();}
+}
+function commissionData(mon){
+  const rates=commRates();
+  const experts=DB.employees.filter(e=>e.role==='expert');
+  return experts.map(e=>{
+    const sales=DB.sales.filter(x=>x.employeeId===e.id&&String(x.date).slice(0,7)===mon);
+    let full=0,half=0,cost=0,revenue=0;
+    sales.forEach(s=>{const pc=salePieces(s);full+=pc.full;half+=pc.half;cost+=saleCostFull(s);revenue+=saleTotal(s);});
+    const target=empTargetVal(e,mon);
+    const earned=full*rates.full+half*rates.half;
+    const hasComm=(e.commType&&e.commType!=='none');
+    const met=hasComm&&target>0&&cost>=target;
+    const payout=met?earned:0;
+    return{e,full,half,cost,revenue,target,earned,met,payout,hasComm,pieces:full+half};
+  });
+}
+function drawCommission(){
+  const mon=document.getElementById('c_month').value||monthStr();
+  const rows=commissionData(mon);
+  const area=document.getElementById('commArea');
+  if(!rows.length){area.innerHTML=`<div class="panel"><div class="empty">لا يوجد خبيرات. أضِفهن من صفحة «الخبيرات والموظفين» وحدّد هدف العمولة لكل واحدة.</div></div>`;return;}
+  const totalPay=rows.reduce((t,r)=>t+r.payout,0);
+  const totalPieces=rows.reduce((t,r)=>t+r.pieces,0);
+  area.innerHTML=`<div class="panel"><h3 style="justify-content:center;font-size:18px">عمولات شهر ${mon} — مستودع العقول الراقية</h3>
+    <div class="stat-grid"><div class="stat"><div class="lbl">إجمالي العمولات المستحقة</div><div class="val">${fmt(totalPay)} <small>د.أ</small></div></div>
+      <div class="stat blue"><div class="lbl">إجمالي القطع</div><div class="val">${totalPieces}</div></div>
+      <div class="stat gold"><div class="lbl">الخبيرات المحقِّقات</div><div class="val">${rows.filter(r=>r.met).length} / ${rows.length}</div></div></div>
+    <div style="overflow-x:auto"><table><thead><tr><th>الخبيرة</th><th>نوع الهدف</th><th class="num">أيام الدوام</th><th class="num">الهدف (كوست)</th><th class="num">المحقق (كوست)</th><th class="num">الإنجاز</th><th class="num">قطع كاملة</th><th class="num">قطع نصف</th><th class="num">العمولة (د.أ)</th><th class="num">الحالة</th></tr></thead><tbody>
+    ${rows.map(r=>{
+      const pct=r.target>0?Math.round(r.cost/r.target*100):0;
+      const typeLbl=!r.hasComm?'—':(r.e.commType==='fixed'?'ثابت':'حسب الأيام');
+      const daysCell=r.e.commType==='daily'?`<b>${attendanceDays(r.e.id,mon)}</b> يوم`:'—';
+      const statusCell=!r.hasComm?'<span class="hint">بلا عمولة</span>':(r.met?'<span class="tag">محقّق ✓</span>':'<span class="badge-role" style="background:var(--danger-l);color:var(--danger)">لم يتحقق</span>');
+      return `<tr>
+        <td><b>${esc(r.e.name)}</b></td><td>${typeLbl}</td><td class="num">${daysCell}</td>
+        <td class="num">${r.hasComm?fmt(r.target):'—'}</td><td class="num">${fmt(r.cost)}</td>
+        <td class="num">${(r.hasComm&&r.target>0)?pct+'%':'—'}</td>
+        <td class="num">${r.full}</td><td class="num">${r.half}</td>
+        <td class="num"><b>${fmt(r.payout)}</b>${(!r.met&&r.earned>0&&r.hasComm)?`<div class="hint">محتملة ${fmt(r.earned)}</div>`:''}</td>
+        <td class="num">${statusCell}</td></tr>`;
+    }).join('')}
+    </tbody></table></div>
+    <div class="hint" style="margin-top:12px">«العمولة المحتملة» = ما ستحصل عليه المندوبة إذا بلغت هدفها. تُصرف فعلياً فقط عند تحقّق الهدف. الخصم على الأصناف لا يؤثّر على العمولة ولا على احتساب الكوست.</div></div>`;
+}
+function exportCommCSV(){
+  const mon=document.getElementById('c_month').value||monthStr();
+  const rows=commissionData(mon);if(!rows.length){toast('لا توجد بيانات','bad');return;}
+  let out=[['عمولات شهر',mon],[],['الخبيرة','نوع الهدف','أيام الدوام','الهدف (كوست)','المحقق (كوست)','نسبة الإنجاز %','قطع كاملة','قطع نصف','العمولة المستحقة','الحالة']];
+  rows.forEach(r=>{const type=!r.hasComm?'بلا عمولة':(r.e.commType==='fixed'?'ثابت':'حسب الأيام');const days=r.e.commType==='daily'?attendanceDays(r.e.id,mon):'';const pct=(r.hasComm&&r.target>0)?Math.round(r.cost/r.target*100):'';out.push([r.e.name,type,days,r.target.toFixed(2),r.cost.toFixed(2),pct,r.full,r.half,r.payout.toFixed(2),r.hasComm?(r.met?'محقق':'لم يتحقق'):'بلا عمولة']);});
+  downloadCSV(out,'عمولات_'+mon+'.csv');
+}
+
 /* ---------- STAFF ---------- */
+function commTargetLabel(e){if(!e||!e.commType||e.commType==='none')return '—';if(e.commType==='fixed')return 'ثابت · '+fmt(e.commTarget||0)+' كوست/شهر';if(e.commType==='daily')return 'يومي · '+fmt(e.commTarget||0)+' كوست/يوم';return '—';}
 function renderStaff(){
   document.getElementById('view').innerHTML=`<div class="panel"><div class="panel-head"><h3>👥 الخبيرات والموظفين</h3><button class="btn btn-sm" onclick="staffModal()">＋ إضافة خبيرة / موظف</button></div>
-    <table><thead><tr><th>الاسم</th><th>الصفة</th><th>الرقم السري</th><th></th></tr></thead><tbody>${DB.employees.map(e=>`<tr>
+    <table><thead><tr><th>الاسم</th><th>الصفة</th><th>هدف العمولة</th><th>الرقم السري</th><th></th></tr></thead><tbody>${DB.employees.map(e=>`<tr>
       <td><b>${esc(e.name)}</b></td><td><span class="badge-role ${e.role==='manager'?'badge-mgr':'badge-exp'}">${e.role==='manager'?'مدير':'خبيرة'}</span></td>
+      <td style="font-size:13px;color:var(--muted)">${e.role==='expert'?esc(commTargetLabel(e)):'—'}</td>
       <td>${'•'.repeat(String(e.pin).length)}</td>
       <td class="pill-row"><button class="btn btn-ghost btn-sm" onclick="staffModal('${e.id}')">تعديل</button>${e.id!=='u_admin'?`<button class="btn btn-danger btn-sm" onclick="delStaff('${e.id}')">حذف</button>`:''}</td></tr>`).join('')}</tbody></table>
-    <div class="hint" style="margin-top:12px">كل خبيرة تدخل بالاسم + رقمها السري وتشوف صفحتها فقط. المدير يشوف الكل.</div></div>`;
+    <div class="hint" style="margin-top:12px">كل خبيرة تدخل بالاسم + رقمها السري وتشوف صفحتها فقط. المدير يشوف الكل. «هدف العمولة» يُستخدم في تقرير العمولات.</div></div>`;
+}
+function commTypeUI(){
+  const t=document.getElementById('m_ctype');if(!t)return;
+  const row=document.getElementById('m_ctrow');const lbl=document.getElementById('m_ctlabel');const hint=document.getElementById('m_cthint');
+  if(t.value==='none'){row.style.display='none';return;}
+  row.style.display='';
+  lbl.textContent=t.value==='daily'?'معدل الكوست اليومي (د.أ)':'الهدف الشهري (كوست د.أ)';
+  hint.textContent=t.value==='daily'?'يُضرب بعدد أيام الدوام التي تُدخل شهرياً في تقرير العمولات.':'كوست المبيعات المطلوب بلوغه شهرياً حتى تُصرف العمولة.';
 }
 function staffModal(id){
   const e=id?DB.employees.find(x=>x.id===id):null;const isAdmin=e&&e.id==='u_admin';
+  const ct=e&&e.commType?e.commType:'none';
+  const ctv=e&&e.commTarget!=null?e.commTarget:'';
   openModal(`${e?'تعديل':'إضافة'} موظف`,`
     <div class="field"><label>الاسم</label><input id="m_name" value="${e?esc(e.name):''}" placeholder="مثال: سارة أحمد"></div>
     <div class="field"><label>الصفة</label><select id="m_role" ${isAdmin?'disabled':''}><option value="expert" ${e&&e.role==='expert'?'selected':''}>خبيرة تجميل</option><option value="manager" ${e&&e.role==='manager'?'selected':''}>مدير</option></select></div>
-    <div class="field"><label>الرقم السري</label><input id="m_pin" inputmode="numeric" value="${e?esc(e.pin):''}" placeholder="مثال: 1122"><div class="hint">أرقام يسهل تذكرها، 4 خانات أو أكثر</div></div>`,
+    <div class="field"><label>الرقم السري</label><input id="m_pin" inputmode="numeric" value="${e?esc(e.pin):''}" placeholder="مثال: 1122"><div class="hint">أرقام يسهل تذكرها، 4 خانات أو أكثر</div></div>
+    <div style="border-top:1px dashed var(--line);margin:6px 0 14px;padding-top:12px">
+      <div class="field"><label>نوع هدف العمولة</label><select id="m_ctype" onchange="commTypeUI()">
+        <option value="none" ${ct==='none'?'selected':''}>بدون عمولة</option>
+        <option value="fixed" ${ct==='fixed'?'selected':''}>هدف ثابت شهري (كوست)</option>
+        <option value="daily" ${ct==='daily'?'selected':''}>حسب أيام الدوام (معدل يومي)</option></select></div>
+      <div class="field" id="m_ctrow"><label id="m_ctlabel">الهدف الشهري (كوست د.أ)</label><input id="m_ctarget" type="number" step="0.01" min="0" value="${ctv}"><div class="hint" id="m_cthint"></div></div>
+    </div>`,
   async()=>{
     const name=document.getElementById('m_name').value.trim();
     const role=isAdmin?'manager':document.getElementById('m_role').value;
     const pin=document.getElementById('m_pin').value.trim();
+    const commType=document.getElementById('m_ctype')?document.getElementById('m_ctype').value:'none';
+    const commTarget=Number(document.getElementById('m_ctarget')?document.getElementById('m_ctarget').value:0)||0;
     if(!name){toast('اكتب الاسم','bad');return false;}
     if(pin.length<3){toast('الرقم السري قصير','bad');return false;}
     if(DB.employees.some(x=>String(x.pin)===pin&&(!e||x.id!==e.id))){toast('هذا الرقم السري مستخدم','bad');return false;}
-    const obj={id:e?e.id:uid('u_'),name,role,pin};
+    const docId=e?e.id:uid('u_');
     showLoading('جاري الحفظ...');
-    try{const r=await api('saveEmployee',{payload:JSON.stringify(obj)});if(!r||!r.ok)throw new Error('فشل');await reloadData();toast('تم الحفظ','ok');renderStaff();}
-    catch(err){toast(err.message,'bad');}finally{hideLoading();}
+    try{const _cur=DB.employees.find(e=>e.id===docId)||{};await api('saveEmployee',{payload:JSON.stringify(Object.assign({},_cur,{id:docId,name:name,role:role,pin:pin,commType:commType,commTarget:commTarget}))});await reloadData();toast('تم الحفظ','ok');}
+    catch(err){toast('فشل الحفظ','bad');console.error(err);}finally{hideLoading();}
     return true;
   });
+  setTimeout(commTypeUI,0);
 }
 function delStaff(id){
   const cnt=DB.sales.filter(s=>s.employeeId===id).length;
   confirmModal('حذف موظف',`سيتم حذف الموظف.${cnt?` لديه ${cnt} عملية ستبقى محفوظة باسمه.`:''} متابعة؟`,async()=>{
-    showLoading('جاري الحذف...');try{const r=await api('deleteEmployee',{id});if(!r||!r.ok)throw new Error('فشل');await reloadData();toast('تم الحذف','ok');renderStaff();}catch(e){toast(e.message,'bad');}finally{hideLoading();}
+    showLoading('جاري الحذف...');try{await api('deleteEmployee',{id:id});await reloadData();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}
   });
 }
 
 /* ---------- PRODUCTS ---------- */
 function renderProducts(){
   document.getElementById('view').innerHTML=`<div class="panel"><div class="panel-head"><h3>💊 المنتجات والأسعار</h3><button class="btn btn-sm" onclick="prodModal()">＋ إضافة منتج</button></div>
-    <table><thead><tr><th>الكود</th><th>المنتج</th><th>التصنيف</th><th class="num">سعر البيع</th><th class="num">الكوست</th><th></th></tr></thead><tbody>${DB.products.map(p=>`<tr>
+    <table><thead><tr><th>الكود</th><th>المنتج</th><th>التصنيف</th><th class="num">سعر البيع</th><th class="num">الكوست</th><th class="num">نصف عمولة</th><th></th></tr></thead><tbody>${DB.products.map(p=>`<tr>
       <td><span class="tag">${esc(p.code)}</span></td><td>${esc(p.name)}</td><td style="color:var(--muted);font-size:13px">${esc(p.cat||'')}</td>
       <td class="num"><b>${fmt(p.price)}</b></td><td class="num" style="color:var(--muted)">${fmt(p.cost)}</td>
+      <td class="num">${p.halfComm?'<span class="tag" style="background:#f7eecb;color:var(--gold-d)">✓ نصف</span>':'—'}</td>
       <td class="pill-row"><button class="btn btn-ghost btn-sm" onclick="prodModal('${p.id}')">تعديل</button><button class="btn btn-danger btn-sm" onclick="delProd('${p.id}')">حذف</button></td></tr>`).join('')}</tbody></table>
-    <div class="hint" style="margin-top:12px">سعر البيع = P.P price (قابل للتعديل). الكوست = Cost with tax لحساب الربح.</div></div>`;
+    <div class="hint" style="margin-top:12px">سعر البيع = P.P price (قابل للتعديل). الكوست = Cost with tax لحساب الربح والعمولة. «نصف عمولة» = تُحتسب القطعة بنصف قيمة العمولة (مثل Cleanser و High Five).</div></div>`;
 }
 function prodModal(id){
   const p=id?prod(id):null;
@@ -521,19 +729,21 @@ function prodModal(id){
     <div class="field"><label>الكود</label><input id="p_code" value="${p?esc(p.code):''}" placeholder="مثال: 1014"></div>
     <div class="field"><label>اسم المنتج</label><input id="p_name" value="${p?esc(p.name):''}" placeholder="اسم المنتج"></div>
     <div class="field"><label>التصنيف</label><input id="p_cat" value="${p?esc(p.cat||''):''}" placeholder="مثال: Face Care"></div>
-    <div class="row"><div class="field"><label>سعر البيع (د.أ)</label><input id="p_price" type="number" step="0.01" min="0" value="${p?p.price:''}"></div><div class="field"><label>الكوست (د.أ)</label><input id="p_cost" type="number" step="0.01" min="0" value="${p?p.cost:''}"></div></div>`,
+    <div class="row"><div class="field"><label>سعر البيع (د.أ)</label><input id="p_price" type="number" step="0.01" min="0" value="${p?p.price:''}"></div><div class="field"><label>الكوست (د.أ)</label><input id="p_cost" type="number" step="0.01" min="0" value="${p?p.cost:''}"></div></div>
+    <div class="field"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600"><input id="p_half" type="checkbox" ${p&&p.halfComm?'checked':''} style="width:auto"> نصف عمولة (٠.٥ د للقطعة بدل ١ د)</label></div>`,
   async()=>{
     const code=document.getElementById('p_code').value.trim();const name=document.getElementById('p_name').value.trim();
     const cat=document.getElementById('p_cat').value.trim();const price=Number(document.getElementById('p_price').value)||0;const cost=Number(document.getElementById('p_cost').value)||0;
+    const halfComm=document.getElementById('p_half').checked;
     if(!name){toast('اكتب اسم المنتج','bad');return false;}
-    const obj={id:p?p.id:uid('p_'),code,name,cat,price,cost};
+    const docId=p?p.id:uid('p_');
     showLoading('جاري الحفظ...');
-    try{const r=await api('saveProduct',{payload:JSON.stringify(obj)});if(!r||!r.ok)throw new Error('فشل');await reloadData();toast('تم الحفظ','ok');renderProducts();}
-    catch(err){toast(err.message,'bad');}finally{hideLoading();}
+    try{await api('saveProduct',{payload:JSON.stringify({id:docId,code:code,name:name,cat:cat,price:price,cost:cost,halfComm:halfComm})});await reloadData();toast('تم الحفظ','ok');}
+    catch(err){toast('فشل الحفظ','bad');console.error(err);}finally{hideLoading();}
     return true;
   });
 }
-function delProd(id){confirmModal('حذف منتج','سيتم حذف المنتج. العمليات القديمة تبقى محفوظة. متابعة؟',async()=>{showLoading('جاري الحذف...');try{const r=await api('deleteProduct',{id});if(!r||!r.ok)throw new Error('فشل');await reloadData();toast('تم الحذف','ok');renderProducts();}catch(e){toast(e.message,'bad');}finally{hideLoading();}});}
+function delProd(id){confirmModal('حذف منتج','سيتم حذف المنتج. العمليات القديمة تبقى محفوظة. متابعة؟',async()=>{showLoading('جاري الحذف...');try{await api('deleteProduct',{id:id});await reloadData();toast('تم الحذف','ok');}catch(e){toast('فشل الحذف','bad');}finally{hideLoading();}});}
 
 /* ---------- MODALS ---------- */
 function openModal(title,body,onSave){
@@ -554,32 +764,17 @@ function downloadCSV(rows,name){
 }
 
 /* ---------- BOOT ---------- */
-async function boot(){
+/* رابط Web App الافتراضي — ضع رابطك هنا ليعمل التطبيق على أي جهاز بدون إعداد */
+const DEFAULT_API_URL="https://script.google.com/macros/s/AKfycbyNxs8wlW1qIGw90CawyniwyDpRo6dpurWGit3kE5YuIALD18vuhPhVlpskzSx2YkAR/exec";
+function boot(){
+  const saved=localStorage.getItem(CFG_KEY);
+  API_URL=saved||DEFAULT_API_URL;
   if(!API_URL){document.getElementById('setupScreen').classList.remove('hidden');return;}
-  showLoading('جاري تحميل البيانات...');
-  try{
-    await reloadData();
-    refreshLoginUsers();
-    const sid=localStorage.getItem(SESSION_KEY);
-    const e=sid?DB.employees.find(x=>x.id===sid):null;
-    if(e){user=e;enterApp();}else{document.getElementById('loginScreen').classList.remove('hidden');}
-  }catch(err){
-    document.getElementById('loginScreen').classList.remove('hidden');
-    toast('تعذّر الاتصال بالخادم — تحقق من الإعدادات','bad');
-  }finally{hideLoading();}
+  showLoading('جاري الاتصال بقاعدة البيانات...');
+  loadData();
+  setTimeout(()=>{if(!bootDone){hideLoading();toast('بطء بالاتصال — تحقق من الإنترنت','bad');}},15000);
 }
 boot();
-</script>
-
-<script>
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(e){console.warn('SW',e);});});}
-let _deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_deferredPrompt=e;
-  var b=document.createElement('button');b.id='installBtn';b.textContent='⤓ ثبّت التطبيق';
-  b.style.cssText='position:fixed;bottom:18px;right:18px;z-index:200;background:#c9a227;color:#fff;border:none;padding:12px 18px;border-radius:12px;font-weight:700;font-family:inherit;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer';
-  b.onclick=async function(){b.remove();if(_deferredPrompt){_deferredPrompt.prompt();await _deferredPrompt.userChoice;_deferredPrompt=null;}};
-  document.body.appendChild(b);});
-window.addEventListener('appinstalled',function(){var b=document.getElementById('installBtn');if(b)b.remove();});
 </script>
 </body>
 </html>
