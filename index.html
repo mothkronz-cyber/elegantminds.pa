@@ -487,7 +487,7 @@ function renderDash(mine){
   const monTotal=monS.reduce((t,x)=>t+saleTotal(x),0),todTotal=todS.reduce((t,x)=>t+saleTotal(x),0);
   const monQty=monS.reduce((t,x)=>t+saleQty(x),0);
   const pharmacies=new Set(monS.map(x=>String(x.pharmacy).trim())).size;
-  let html=`${mine&&user.role==='expert'?checkinCardHTML():''}<div class="stat-grid">
+  let html=`${mine&&user.role==='expert'?checkinCardHTML():''}${!mine&&user.role==='manager'?nowPanelHTML():''}<div class="stat-grid">
     <div class="stat" style="cursor:pointer" title="اضغط لعرض عمليات اليوم" onclick="gotoTodaySales(${mine})"><div class="lbl">مبيعات اليوم 🔎</div><div class="val">${fmt(todTotal)} <small>د.أ</small></div></div>
     <div class="stat gold"><div class="lbl">مبيعات هذا الشهر</div><div class="val">${fmt(monTotal)} <small>د.أ</small></div></div>
     <div class="stat blue"><div class="lbl">عدد العمليات (الشهر)</div><div class="val">${monS.length}</div></div>
@@ -819,28 +819,72 @@ function delStaff(id){
   });
 }
 
-/* ---------- ATTENDANCE & LOCATIONS (manager) ---------- */
-let _attD='';
+/* ---------- ATTENDANCE & LOCATIONS (manager) — مدى زمني ---------- */
+let _af={from:'',to:'',emp:''};
+function msTxt(ms){if(!ms||ms<=0)return '—';const m=Math.round(ms/60000);return Math.floor(m/60)+':'+String(m%60).padStart(2,'0');}
+function sessRows(from,to,emp){
+  let recs=(DB.attendance||[]).slice();
+  if(from)recs=recs.filter(a=>a.date>=from);
+  if(to)recs=recs.filter(a=>a.date<=to);
+  if(emp)recs=recs.filter(a=>a.employeeId===emp);
+  const rows=[];
+  recs.forEach(a=>{sessOf(a).forEach((sx,i)=>rows.push({date:a.date,emp:a.employeeId,n:i+1,ph:sx.pharmacy||a.pharmacy||'',st:sx.startAt,sl:sx.startLoc,en:sx.endAt,el:sx.endLoc}));});
+  rows.sort((x,y)=>x.date===y.date?((x.st||0)-(y.st||0)):String(y.date).localeCompare(String(x.date)));
+  return rows;
+}
+function nowPanelHTML(){
+  const experts=DB.employees.filter(e=>e.role==='expert');
+  if(!experts.length)return '';
+  const t=todayStr();
+  const items=experts.map(e=>{
+    const sess=sessOf((DB.attendance||[]).find(a=>a.employeeId===e.id&&a.date===t));
+    const act=(sess.length&&!sess[sess.length-1].endAt)?sess[sess.length-1]:null;
+    if(act)return `<tr><td><b>${esc(e.name)}</b></td><td><span class="tag">🟢 مداومة الآن</span></td><td>${esc(act.pharmacy||'—')}</td><td class="num">${fmtTime(act.startAt)}</td><td class="num">—</td><td class="num"><b>${msTxt(Date.now()-act.startAt)}</b></td></tr>`;
+    if(sess.length){const last=sess[sess.length-1];const tot=sess.reduce((x,sx)=>x+((sx.startAt&&sx.endAt)?(sx.endAt-sx.startAt):0),0);
+      return `<tr><td><b>${esc(e.name)}</b></td><td><span class="badge-role badge-mgr">أنهت دوامها</span></td><td>${esc(last.pharmacy||'—')}</td><td class="num">${fmtTime(sess[0].startAt)}</td><td class="num">${fmtTime(last.endAt)}</td><td class="num">${msTxt(tot)}</td></tr>`;}
+    return `<tr style="color:var(--muted)"><td>${esc(e.name)}</td><td><span class="badge-role" style="background:var(--danger-l);color:var(--danger)">لم تداوم اليوم</span></td><td>—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>`;
+  }).join('');
+  return `<div class="panel" style="border-right:4px solid var(--green)"><div class="panel-head"><h3>📡 من مداوم الآن؟</h3><span class="tag">${t}</span></div>
+    <div style="overflow-x:auto"><table><thead><tr><th>الخبيرة</th><th>الحالة</th><th>الصيدلية</th><th class="num">بدأت</th><th class="num">أنهت</th><th class="num">الساعات (س:د)</th></tr></thead><tbody>${items}</tbody></table></div></div>`;
+}
 function renderAttend(){
-  if(!_attD)_attD=todayStr();
-  document.getElementById('view').innerHTML=`<div class="panel"><div class="panel-head"><h3>🕒 الدوام والمواقع</h3></div>
-    <div class="row" style="margin-bottom:12px"><div class="field" style="margin-bottom:0;max-width:220px"><label>التاريخ</label><input type="date" id="att_d" value="${_attD}" onchange="_attD=this.value;renderAttend()"></div></div>
-    <div id="attBody"></div>
-    <div class="hint" style="margin-top:12px">📍 = فتح الموقع على خرائط Google. يُسجَّل الموقع تلقائياً عند بدء وإنهاء الدوام من جهاز المندوبة.</div></div>`;
+  if(!_af.from)_af.from=monthStr()+'-01';
+  if(!_af.to)_af.to=todayStr();
+  document.getElementById('view').innerHTML=`${nowPanelHTML()}<div class="panel">
+    <div class="toolbar no-print">
+      <div class="field"><label>من تاريخ</label><input type="date" id="a_from" value="${_af.from}"></div>
+      <div class="field"><label>إلى تاريخ</label><input type="date" id="a_to" value="${_af.to}"></div>
+      <div class="field"><label>الخبيرة</label><select id="a_emp"><option value="">الكل</option>${DB.employees.filter(e=>e.role==='expert').map(e=>`<option value="${e.id}" ${_af.emp===e.id?'selected':''}>${esc(e.name)}</option>`).join('')}</select></div>
+      <button class="btn btn-sm" onclick="applyAF()">عرض</button>
+      <button class="btn btn-gold btn-sm" onclick="window.print()">🖨 طباعة / PDF</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportAttCSV()">⬇ تصدير CSV</button>
+    </div><div id="attArea"></div></div>`;
   drawAttend();
 }
+function applyAF(){_af.from=document.getElementById('a_from').value;_af.to=document.getElementById('a_to').value;_af.emp=document.getElementById('a_emp').value;drawAttend();}
 function drawAttend(){
-  const d=_attD;
-  const recs=(DB.attendance||[]).filter(a=>a.date===d);
-  const rows=[];
-  recs.forEach(a=>{sessOf(a).forEach((s,i)=>rows.push({emp:a.employeeId,n:i+1,ph:s.pharmacy||a.pharmacy||'',st:s.startAt,sl:s.startLoc,en:s.endAt,el:s.endLoc}));});
-  rows.sort((x,y)=>(x.st||0)-(y.st||0));
-  let tot={};rows.forEach(r=>{if(r.st&&r.en)tot[r.emp]=(tot[r.emp]||0)+(r.en-r.st);});
-  document.getElementById('attBody').innerHTML=rows.length?`<div style="overflow-x:auto"><table><thead><tr><th>المندوبة</th><th class="num">#</th><th>الصيدلية</th><th>البدء</th><th>موقع</th><th>النهاية</th><th>موقع</th><th class="num">المدة</th></tr></thead><tbody>${rows.map(r=>{
-    const dur=r.st&&r.en?((r.en-r.st)/3600000).toFixed(1)+' ساعة':'—';
-    return `<tr><td><b>${esc(empName(r.emp))}</b></td><td class="num">${r.n}</td><td>${esc(r.ph||'—')}</td><td>${fmtTime(r.st)}</td><td>${mapLink(r.sl)}</td><td>${r.en?fmtTime(r.en):'<span class="tag">مفتوح الآن</span>'}</td><td>${mapLink(r.el)}</td><td class="num">${dur}</td></tr>`;}).join('')}</tbody></table></div>`+
-    (Object.keys(tot).length?`<div class="hint" style="margin-top:10px">إجمالي ساعات اليوم: ${Object.entries(tot).map(([id,ms])=>esc(empName(id))+': '+(ms/3600000).toFixed(1)+' س').join(' · ')}</div>`:'')
-  :`<div class="empty">لا يوجد تسجيل دوام في هذا اليوم</div>`;
+  const rows=sessRows(_af.from,_af.to,_af.emp);
+  const area=document.getElementById('attArea');
+  if(!rows.length){area.innerHTML=`<div class="empty">لا يوجد دوام مسجل في هذه الفترة</div>`;return;}
+  const byE={};rows.forEach(r=>{if(!byE[r.emp])byE[r.emp]={days:{},ms:0,open:0};byE[r.emp].days[r.date]=1;if(r.st&&r.en)byE[r.emp].ms+=(r.en-r.st);else byE[r.emp].open++;});
+  const sum=Object.entries(byE).sort((p,q)=>q[1].ms-p[1].ms);
+  const totMs=rows.reduce((t,r)=>t+((r.st&&r.en)?(r.en-r.st):0),0);
+  const totDays=new Set(rows.map(r=>r.emp+'|'+r.date)).size;
+  area.innerHTML=`<h3 style="justify-content:center;font-size:17px;margin:6px 0 14px;display:flex">🕒 سجل الدوام من ${_af.from} إلى ${_af.to}</h3>
+    <div class="stat-grid"><div class="stat"><div class="lbl">أيام الدوام</div><div class="val">${totDays}</div></div>
+    <div class="stat gold"><div class="lbl">إجمالي الساعات (س:د)</div><div class="val">${msTxt(totMs)}</div></div>
+    <div class="stat blue"><div class="lbl">عدد الخبيرات</div><div class="val">${sum.length}</div></div></div>
+    <h3 style="margin-bottom:10px;color:var(--green-d)">👥 ملخص لكل خبيرة</h3>
+    <table style="margin-bottom:22px"><thead><tr><th>الخبيرة</th><th class="num">أيام الدوام</th><th class="num">إجمالي الساعات (س:د)</th></tr></thead><tbody>${sum.map(([id,v])=>`<tr><td><b>${esc(empName(id))}</b></td><td class="num"><b>${Object.keys(v.days).length}</b> يوم</td><td class="num"><b>${msTxt(v.ms)}</b>${v.open?`<div class="hint">+ دوام مفتوح لم يُغلق</div>`:''}</td></tr>`).join('')}</tbody></table>
+    <h3 style="margin-bottom:10px;color:var(--green-d)">🗓 تفصيل كل الأيام</h3>
+    <div style="overflow-x:auto"><table><thead><tr><th>التاريخ</th><th>الخبيرة</th><th>الصيدلية</th><th class="num">من الساعة</th><th>موقع</th><th class="num">إلى الساعة</th><th>موقع</th><th class="num">المدة (س:د)</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.date}</td><td><b>${esc(empName(r.emp))}</b>${r.n>1?` <span class="hint">(جلسة ${r.n})</span>`:''}</td><td>${esc(r.ph||'—')}</td><td class="num">${fmtTime(r.st)}</td><td>${mapLink(r.sl)}</td><td class="num">${r.en?fmtTime(r.en):'<span class="tag">مفتوح</span>'}</td><td>${mapLink(r.el)}</td><td class="num"><b>${(r.st&&r.en)?msTxt(r.en-r.st):'—'}</b></td></tr>`).join('')}</tbody></table></div>
+    <div class="hint" style="margin-top:10px">«مفتوح» = دوام بدأ ولم تُسجَّل نهايته بعد. 📍 = فتح موقع البدء/الإنهاء على خرائط Google. المدة بصيغة ساعات:دقائق.</div>`;
+}
+function exportAttCSV(){
+  const rows=sessRows(_af.from,_af.to,_af.emp);if(!rows.length){toast('لا توجد بيانات','bad');return;}
+  let out=[['سجل الدوام من',_af.from,'إلى',_af.to],[],['التاريخ','الخبيرة','الجلسة','الصيدلية','من الساعة','إلى الساعة','المدة (ساعات)']];
+  rows.forEach(r=>out.push([r.date,empName(r.emp),r.n,r.ph||'',r.st?fmtTime(r.st):'',r.en?fmtTime(r.en):'مفتوح',(r.st&&r.en)?((r.en-r.st)/3600000).toFixed(2):'']));
+  downloadCSV(out,'دوام_'+_af.from+'_'+_af.to+'.csv');
 }
 
 /* ---------- REP STOCK ---------- */
